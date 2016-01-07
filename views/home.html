@@ -1,0 +1,365 @@
+<html ng-app="uploadFile">
+<head>
+  <title>automate Nuget</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="/eikon/EikonWebUI.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <style>
+/* autonuget color */
+.span-star{
+color:red;
+}
+.span-tab{
+margin-left:5em;
+}
+.font-color
+{
+  color:#c3c3c3;
+}
+#progress-eikonstyle{
+width:70%;
+float:left;
+padding:5px;
+background-image:none;
+}
+.edit-jbt{
+background-color:#0a0a0a;
+color:#c2c2c2;
+}
+.showcode{
+  background-color:#2f2f2f;
+  background-image:none;
+  margin:10% 10%;
+}
+.button {
+  -moz-appearance: button;
+  /* Firefox */
+  -webkit-appearance: button;
+  /* Safari and Chrome */
+  padding: 10px;
+  margin: 10px;
+  width: 70px;
+}
+.drop-box {
+  background: #F8F8F8;
+  border: 5px dashed #DDD;
+  width: 200px;
+  height: 65px;
+  text-align: center;
+  padding-top: 25px;
+  margin: 10px;
+}
+.dragover {
+  border: 5px dashed blue;
+}
+  </style>
+</head>
+<body>
+  <!--HEADER WITH JUMBOTRON-->
+  <div class="jumbotron edit-jbt">
+    <h2 align="center">Automated Nuget</h2>
+    <p align="center">file script upload to chocolatey.</p>
+  </div>
+  <!--CONTAINER-->
+  <div class="container" ng-controller="uploadfileController as todoList">
+    <div class="col-md-12">
+      <form class="font-color"  ng-submit="todoList.addPackage()" name="Myform" novalidate>
+        <!--LEFT HAND SIDE => DOC FOR API-->
+        <div class="col-md-6">
+          <h4>API</h4>
+          <p>For upload file to chocolatey we provide api with few steps.</p>
+          <h5><b class="label label-default">STEP1</b> &nbsp;create folder for file upload.</h5>
+          <span>First you must create folder for file upload by post method.</span>
+          <p>POST : http://etappkgmgr.emea1.ciscloud:81/postcreatefolder</p>
+          <h5 class = "label label-success">Example</h5>
+          <h5 class = "label label-danger">AngularJS</h5>
+          <div class="well showcode">
+            <p>var nameOfFolder = { value : "Examplename"}</p>
+            <p>$http.post('http://etappkgmgr.emea1.ciscloud:81/postcreatefolder', nameOfFolder)</br>
+            .success(function(data, status, headers, config)){
+            </br> <span class="span-tab">// do something.<span>
+                </br>}</br>
+                .error(function(data, status, headers, config)){
+                </br> <span class="span-tab">// do something.<span>
+                    </br>}</p>
+          </div>
+          <h5><b class="label label-default">STEP2</b> &nbsp;post file upload.</h5>
+          <span>Second you must should upload file by post method.</span>
+          <p>POST : http://etappkgmgr.emea1.ciscloud:81/postupload</p>
+          <h5 class = "label label-success">Example</h5>
+          <h5 class = "label label-danger">AngularJS</h5>
+          <div class="well showcode">
+            <p>Upload.upload({
+            <br/>url: 'http://etappkgmgr.emea1.ciscloud:81/postupload',
+            <br/>file : file
+            <br/>}).progress(function (evt)){
+            </br> <span class="span-tab">// do something.<span>
+                <br/>})
+                <br/>.success(function(data, status, headers, config){
+                </br> <span class="span-tab">// do something.<span>
+                    <br/>})
+            </p>
+          </div>
+          <p>PS. See also :  AngularJS file upload  <a href="https://github.com/danialfarid/ng-file-upload">https://github.com/danialfarid/ng-file-upload</a></p>
+          <h5><b class="label label-default">STEP3</b> &nbsp;post feed.</h5>
+          <span>Third you must send feedname and command script  by post method.</span>
+          <p>You can separate command script with semi-colon ; </p>
+          <p>POST : http://etappkgmgr.emea1.ciscloud:81/postfeed</p>
+          <h5 class = "label label-success">Example</h5>
+          <h5 class = "label label-danger">AngularJS</h5>
+          <div class="well showcode">
+            <p>var feedname = {
+            <br/><span>feedname : "etap"</span>
+            <br/><span>cmd : "Write-Host hello, world"</span>
+            <br/>}
+            <br/>
+            <br/>$http.post('http://etappkgmgr.emea1.ciscloud:81/postfeed', feedname)
+            <br/>
+            .success(function(data, status, headers, config)){
+            </br> <span class="span-tab">// do something.<span>
+            </br>}</br>
+            .error(function(data, status, headers, config)){
+            </br> <span class="span-tab">// do something.<span>
+            </br>}
+            </p>
+          </div>
+          <h5><b class="label label-default">STEP4</b> &nbsp;post metadata.</h5>
+          <span>Fourth you must send all of metadata by post method.</span>
+          <p>POST : http://etappkgmgr.emea1.ciscloud:81/postdata</p>
+          <h5 class = "label label-success">Example</h5>
+          <h5 class = "label label-danger">AngularJS</h5>
+          <div class="well showcode">
+            var metadata = {
+            <br/>"@": {
+            <br/>"xmlns": 'http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd'
+            <br/>},
+            <br/>"metadata":{
+            <br/>"id": "XXXXX"},
+            <br/>"title": "XXXXX",
+            <br/>"version": "1.0.0",
+            <br/>"authors": "XXXXX",
+            <br/>"owners": "XXXXX",
+            <br/>"summary": "XXXXX",
+            <br/>"description": "XXXXX",
+            <br/>"projectUrl": "XXXXX",
+            <br/>"tags": "XXXXX",
+            <br/>"copyright":'',
+            <br/>"licenseUrl":todoList.licenseUrl,
+            <br/>"requireLicenseAcceptance":'false',
+            <br/>"releaseNotes":''
+            <br/>},
+            <br/>"files": {
+            <br/>"file": [
+            <br/>{
+            <br/>"@" : {
+            <br/>"src" : 'tools\\chocolateyInstall.ps1',
+            <br/>"target" : 'tools\\chocolateyInstall.ps1'
+            }
+            },
+            {
+            <br/>"@" : {
+            <br/>"src" : 'installers\\',
+            <br/>"target" : 'installers\\'
+            }
+            }
+            ]
+            }
+            };
+            <br/>$http.post('http://etappkgmgr.emea1.ciscloud:81/postdata', metadata)
+            <br/>
+            .success(function(data, status, headers, config)){
+            </br> <span class="span-tab">// do something.<span>
+            </br>}</br>
+            .error(function(data, status, headers, config)){
+            </br> <span class="span-tab">// do something.<span>
+            </br>}
+            </p>
+          </div>
+        </div>
+        <!--RIGHT HAND SIDE => UPLOAD PROCESS-->
+        <div class="col-md-6">
+          <h3>Upload execution file to Chocolatey</h3>
+          <hr/>
+          <p>You can upload any execution files to chocolatey,  type of file that uploaded is .nupkg and you can download the uploaded file via http://etappkgmgr.emea1.ciscloud:81/nuget/<feed></p>
+          <hr/>
+          <h3><i class="fa fa-cogs"></i> STEP1</h3>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <span class="span-star" ng-show="Myform.ID.$error.required">*</span>
+              <label><span  ng-show="Myform.ID.$invalid"></span>ID</label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.id" name="ID" placeholder="Enter ID" required>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <span class="span-star" ng-show="Myform.Title.$error.required">*</span>
+              <label><span  ng-show="Myform.Title.$invalid" ></span>Title </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.title" name="Title"  placeholder="Enter Title" required>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <span class="span-star" ng-show="Myform.Version.$error.required">*</span>
+              <label><span  ng-show="Myform.Version.$invalid"></span>Version</label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.version" name="Version" placeholder="Enter Version" required>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <span class="span-star" ng-show="Myform.Authors.$error.required">*</span>
+              <label  ><span  ng-show="Myform.Authors.$invalid"></span>Authors  </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.authors" name="Authors"  placeholder="Enter Authors" required>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <label>Owners  </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.owners"  placeholder="Enter Owners">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <label>Summary  </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.summary"  placeholder="Enter Summary">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <span class="span-star" ng-show="Myform.Description.$error.required">*</span>
+              <label><span  ng-show="Myform.Description.$invalid"></span>Description  </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.description" name="Description" placeholder="Enter Description" required>
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <label>ProjectURL  </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.projecturl"   placeholder="Enter ProjectURL">
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <label>Tags  </label>
+            </div>
+            <div class="col-md-9">
+              <b>:</b> <input type="text" ng-model="todoList.tags"  placeholder="Enter Tags" >
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <div class="col-md-12">
+              <label>Command Script  </label>
+            </div>
+            <div class="col-md-12">
+              <b></b><textarea style="width:auto;" ng-model="todoList.commandscript" placeholder="Enter Script" cols="37" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <hr/>
+          </div>
+          <h3><i class="fa fa-cogs"></i> STEP2</h3>
+          <div class="form-group col-xs-12">
+            <div class="col-xs-3">
+              <label>Upload File  </label>
+            </div>
+            <div class="col-xs-9">
+              <a type="file" ngf-select ngf-change="upload($files)" onclick="this.value = null"  ><u> อัพโหลดไฟล์ที่นี่ </u></a></i></p>{{todoList.nameupload}}
+
+
+            <div class="progress progress-striped active">
+              <div class="progress-bar progress-bar-danger" style="width:{{todoList.progress}};" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{todoList.progress}}" role="progressbar" >
+              </div>
+            <span class="sr-only">{{todoList.progress}}</span>
+            </div>
+            <!--<li ng-repeat="file in todoList.files">
+              <span>{{file.name}} and {{file.progress}}</span>
+              </li> -->
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-xs-3">
+              <label>Architecture  </label>
+            </div>
+            <div class="col-xs-3">
+              <label>
+                <input type="radio" style="opacity:1;" ng-model="todoList.radio" name="x86"  value="x86" ng-required="!todoList.radio" />
+                x86
+              </label>
+            </div>
+            <div class="col-xs-3">
+              <label>
+                <input type="radio" style="opacity:1;" ng-model="todoList.radio" name="x64"  value="x64" ng-required="!todoList.radio" />
+                x64
+              </label>
+            </div>
+            <div class="col-xs-3">
+              <label>
+                <input type="radio" style="opacity:1;"  ng-model="todoList.radio" name="any"   value="any"  ng-required="!todoList.radio"/>
+                any
+              </label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <hr/>
+          </div>
+          <h3><i class="fa fa-cogs"></i> STEP3</h3>
+          <div class="form-group col-md-12">
+            <div class="col-md-3">
+              <p style="display:inline;">Select Feeds</p>
+            </div>
+            <div class="col-md-9">
+              <select ng-model="todoList.fname">
+                <option ng-repeat="element in todoList.feedname" value="{{element.name}}">{{element.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class=" col-md-offset-1 col-md-11">
+            <button id="submit-btn" class="large-style"  ng-click="addAlert()" onclick="document.body.style.cursor='wait'" type="submit" value="submit" style="color:#f93;" ng-disabled="Myform.ID.$invalid || Myform.Title.$invalid || Myform.Version.$invalid || Myform.Authors.$invalid || Myform.Description.$invalid  || !todoList.radio" autocomplete="off"><b>Submit</b></button>
+
+          </div>
+      </form>
+      <div class="col-md-12">
+        <hr/>
+      </div>
+      <h4 style="margin-top:5em;">Link</h4>
+      <a href="https://chocolatey.org">https://chocolatey.org</a>
+      <br/>
+      <a href="https://github.com/chocolatey/chocolatey/wiki/Installation">https://github.com/chocolatey/chocolatey/wiki/Installation</a>
+      <br/>
+      <br/>
+      <h4>Contact</h4>
+      <p>
+      30th floors Thomsonreuters At U Chu Liang Building.
+      </p>
+      <h6>copyright compass-tr@thomsonreuters 2015</h6>
+        </div> <!--END COL-6-->
+    </div> <!--END COL-12-->
+  </div> <!--END CONTAINER-->
+  <!-- Latest compiled and minified JavaScript -->
+  <script type="text/javascript" src="/jquery/jquery.js"></script>
+  <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/eikon/EikonNow-1.3.2.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+  <!--<script type="text/javascript" src="/angular/angular.js"></script>-->
+  <script src="/dist/ng-file-upload-shim.min.js"></script>
+  <script src="/dist/ng-file-upload.min.js"></script>
+  <script type = "text/javascript" src="/angular_script/file_manager_L_mng_sub.js"></script>
+  <script type="text/javascript" src="eikon/ui-bootstrap-tpls-0.12.0.min.js"></script>
+</body>
+</html>

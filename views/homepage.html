@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'homepage'>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Special Project</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Animation CSS -->
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/angular_script/homepage.js"></script>
+
+</head>
+<body id="page-top" class="landing-page">
+<div class="navbar-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Computer Science</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse" ng-controller = 'homepageController'>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="#page-top">Home</a></li>
+                        <li><a class="page-scroll" ng-click = 'lecturer_click()'>Lecturer</a></li>
+                        <li><a class="page-scroll" ng-click = 'subject_click()'>Subject</a></li>
+                        <li><a class="page-scroll" href="#contact">Contact</a></li>
+                        <li><a class="page-scroll" >Management</a></li> <!-- ng-click = 'management_click()' -->
+                        <li><a class="page-scroll" >Login</a></li> <!--  ng-click = 'login_click()' -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</div>
+<div id="inSlider" class="carousel carousel-fade" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#inSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#inSlider" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>เว็บแอปพลิเคชัน<br/>
+                        สำหรับแชร์ข้อมูลรายวิชา<br/>
+                        ในภาควิชา วิทยาการคอมพิวเตอร์<br/>
+                        </h1>
+                    <p>Information for Students.</p>
+                    <p>
+                    </p>
+                </div>
+                <div class="carousel-image wow zoomIn">
+                    <img src="img/landing/perspective1.png" alt="laptop"/>
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+            <div class="header-back one"></div>
+
+        </div>
+
+    </div>
+    <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#inSlider" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<br><br><br>
+<div class="sk-spinner sk-spinner-double-bounce">
+          <div class="sk-double-bounce1"></div>
+          <div class="sk-double-bounce2"></div>
+      </div>
+<section id="features" class="container services"><!Lastest Update>
+    <div class="row">
+        <div class="col-lg-12 wow fadeInRight">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+
+
+                        <h5><!i class="fa fa-slack">Lastest Update (อัพเดทล่าสุด) </i></h5>
+                          <div class="ibox-tools">
+                              <a class="collapse-link">
+                                  <i class="fa fa-chevron-up"></i>
+                              </a>
+                            </div>
+
+
+
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="list-group">
+                            <a class="list-group-item active" href="/students_sub_doc">
+                                <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                                <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
+                                <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 0 - Preface</b> </p>
+                                <p> อัพเดทเมื่อ : 03-1-2559 17:54:02  โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+
+                            </a>
+
+                            <a class="list-group-item" href="/students_sub_doc">
+                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
+                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 1 - Introduction </b> </p>
+                              <p> อัพเดทเมื่อ : 03-1-2559 17:50:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+                            </a>
+
+                            <a class="list-group-item" href="/students_sub_doc">
+                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
+                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 2 - Devide and Conquer </b> </p>
+                              <p> อัพเดทเมื่อ : 03-1-2559 17:47:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+                            </a>
+                            <a class="list-group-item" href="/students_sub_doc">
+                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
+                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 3 - Dynamic Programming </b> </p>
+                              <p> อัพเดทเมื่อ : 03-1-2559 17:40:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+                            </a>
+
+                            <a class="list-group-item" href="/students_sub_doc">
+                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
+                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 4 - Greedy </b> </p>
+                              <p> อัพเดทเมื่อ : 03-1-2559 17:35:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+                            </a>
+                            <a class="list-group-item" href="/students_sub_score">
+                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                              <strong class="list-group-item-text">หัวข้อ : คะแนน </strong>
+                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์คะแนนสอบกลางภาค </b> </p>
+                              <p> อัพเดทเมื่อ : 03-1-2559 16:20:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+                            </a>
+
+                            <a class="list-group-item" href="/students_sub_score">
+                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
+
+                              <strong class="list-group-item-text">หัวข้อ : คะแนน  </strong>
+                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์คะแนนสอบกลางภาค </b> </p>
+                              <p> อัพเดทเมื่อ : 03-1-2559 16:00:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
+
+                            </a>
+                            <a class="list-group-item" href="#">
+                                <h3 class="list-group-item-heading">Updating . . .</h3>
+
+                                <p class="list-group-item-text">Detail... </p>
+                            </a>
+
+                            <a class="list-group-item" href="#">
+                                <h3 class="list-group-item-heading">Updating . . .</h3>
+
+                                <p class="list-group-item-text">Detail... </p>
+                            </a>
+                            <a class="list-group-item" href="#">
+                                <h3 class="list-group-item-heading">Updating . . .</h3>
+
+                                <p class="list-group-item-text">Detail... </p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="sk-spinner sk-spinner-wave">
+                                    <div class="sk-rect1"></div>
+                                    <div class="sk-rect2"></div>
+                                    <div class="sk-rect3"></div>
+                                    <div class="sk-rect4"></div>
+                                    <div class="sk-rect5"></div>
+                                </div>
+<section  class="container features"><!Hottest Update>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <br><br><br><br>
+            <p></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 wow fadeInRight">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Hottest Topic</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                      <div class="forum-item active">
+
+                            </div>
+                            <div class="well">
+
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-shield"></i>
+                                        </div>
+                                        <h3  class="forum-item-title">05506009 Analysis and Design of Algorithm (2/2557) <p>สอนโดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p></h3>
+                                        <div class="forum-sub-title">การแก้ปัญหา การวิเคราะห์ และการออกแบบ อัลกอริทึม สำหรับใช้แก้ปัญหาในกรณีต่างๆ </div>
+                                    </div>
+                                    <div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            45
+                                        </span>
+                                        <div>
+                                            <small>Views</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            35
+                                        </span>
+                                        <div>
+                                            <small>Score</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 forum-info">
+                                        <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 3-1-2559 เวลา 18:05:25</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="well well-lg">
+                              <div class="row">
+                                  <div class="col-md-9">
+                                      <div class="forum-icon">
+                                          <i class="fa fa-shield"></i>
+                                      </div>
+                                      <h3  class="forum-item-title">05506009 Analysis and Design of Algorithm (2/2556)  <p>สอนโดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p></h3>
+                                      <div class="forum-sub-title">การวิเคราะห์ และการออกแบบอัลกอริทึม สำหรับใช้แก้ปัญหาในกรณีต่างๆ </div>
+                                  </div>
+                                  <div class="col-md-1 forum-info">
+                                      <span class="views-number">
+                                          32
+                                      </span>
+                                      <div>
+                                          <small>Views</small>
+                                      </div>
+                                  </div>
+
+
+                                  <div class="col-md-1 forum-info">
+                                      <span class="views-number">
+                                          27
+                                      </span>
+                                      <div>
+                                          <small>Score</small>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-1 forum-info">
+                                      <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 1-1-2559 เวลา 16:05:25</p></div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="well well-lg">
+                              <div class="row">
+                                  <div class="col-md-9">
+                                      <div class="forum-icon">
+                                          <i class="fa fa-bomb"></i>
+                                      </div>
+                                      <h3  class="forum-item-title">05506003  PROGRAMMING FUNDAMENTALS (1/2557) <p>สอนโดย : ผศ.สิริลักษณ์ อนันต์สถิตย์สิน</p></h3>
+                                      <div class="forum-sub-title">การเขียนโปรแกรมขั้นพื้นฐาน ด้วยภาษา Java</div>
+                                  </div>
+                                  <div class="col-md-1 forum-info">
+                                      <span class="views-number">
+                                          28
+                                      </span>
+                                      <div>
+                                          <small>Views</small>
+                                      </div>
+                                  </div>
+
+
+                                  <div class="col-md-1 forum-info">
+                                      <span class="views-number">
+                                          25
+                                      </span>
+                                      <div>
+                                          <small>Score</small>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-1 forum-info">
+                                      <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 15-12-2558 เวลา 11:05:25</p></div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="well well-lg">
+                              <div class="row">
+                                  <div class="col-md-9">
+                                      <div class="forum-icon">
+                                        <i class="fa fa-bookmark"></i>
+                                      </div>
+                                      <h3  class="forum-item-title">05506004  OBJECT-ORIENTED PROGRAMMING (2/2557)<p>สอนโดย : ผศ.สิริลักษณ์ อนันต์สถิตย์สิน</p></h3>
+                                      <div class="forum-sub-title">การเขียนโปรแกรมเชิงออบเจกต์ </div>
+                                  </div>
+                                  <div class="col-md-1 forum-info">
+                                      <span class="views-number">
+                                          19
+                                      </span>
+                                      <div>
+                                          <small>Views</small>
+                                      </div>
+                                  </div>
+
+
+                                  <div class="col-md-1 forum-info">
+                                      <span class="views-number">
+                                          11
+                                      </span>
+                                      <div>
+                                          <small>Score</small>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-1 forum-info">
+                                      <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 18-12-2558 เวลา 13:05:25</p></div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="well well-lg">
+                                <h3>Updating . . .</h3>
+                                Detail...
+                            </div>
+                            <div class="well well-lg">
+                              <h3>Updating . . .</h3>
+                                Detail...
+                            </div>
+                            <div class="well well-lg">
+                              <h3>Updating . . .</h3>
+                                Detail...
+                            </div>
+                            <div class="well well-lg">
+                              <h3>Updating . . .</h3>
+                                Detail...
+                            </div>
+                            <div class="well well-lg">
+                              <h3>Updating . . .</h3>
+                                Detail...
+                            </div>
+                            <div class="well well-lg">
+                              <h3>Updating . . .</h3>
+                                Detail...
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<div class="sk-spinner sk-spinner-rotating-plane"></div>
+<section class="container features"><!Media and Logo>
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <div class="navy-line"></div>
+        <br><br><br><br>
+        <p></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Media</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#">Config option 1</a>
+                        </li>
+                        <li><a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <figure>
+                    <iframe width="510" height="315" src="https://www.youtube.com/embed/Qg4YKBkJxHk" frameborder="0" allowfullscreen></iframe>
+                </figure>
+                </div>
+                </div>
+            </div>
+
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Logo</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="col-lg-4">
+                <img alt="image" class="img-circle" src="img/html_logo.png">
+                    <h3 class="m-b-xs"><strong>HTML 5</strong></h3>
+                </div>
+                <div class="col-lg-4">
+                <img alt="image" class="img-circle" src="img/Logo/angular1.jpg">
+                    <h3 class="m-b-xs"><strong>AngularJS</strong></h3>
+                </div>
+                <div class="col-lg-4">
+                <img alt="image" class="img-circle" src="img/Logo/nodejs1.png">
+                    <h3 class="m-b-xs"><strong>NodeJs</strong></h3>
+                </div>
+                <div class="col-lg-4">
+                <img alt="image" class="img-circle" src="img/Logo/sails.png">
+                    <h3 class="m-b-xs"><strong>SailsJS</strong></h3>
+                </div>
+                <div class="col-lg-4">
+                <img alt="image" class="img-circle" src="img/Logo/elasticsearch.png">
+                    <h3 class="m-b-xs"><strong>Elasticsearch</strong></h3>
+                </div>
+                <div class="col-lg-4">
+                <img alt="image" class="img-circle" src="img/Logo/css.png">
+                    <h3 class="m-b-xs"><strong>CSS</strong></h3>
+                </div>
+            </div>
+
+            </div>
+        </div>
+        </div>
+
+</section>
+
+
+
+<section id="contact" class="gray-section contact">
+    <div class="container">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1>ติดต่อเรา</h1>
+                <p>ผู้ใช้งานเว็บไซต์สามารถติดต่อเราผ่านช่องทางด้านล่างนี้</p>
+            </div>
+        </div>
+        <div class="row m-b-lg">
+            <div class="col-lg-3 col-lg-offset-3">
+                <address>
+                    <strong><span class="navy">ข้อมูลการติดต่อ</span></strong><br/>
+                    Email : thumrongvorakul@hotmail.com<br/>
+                    <abbr title="Phone">P:</abbr> 088-0997944
+                </address>
+            </div>
+            <div class="col-lg-4">
+                <p class="text-color">  คณะวิทยาศาสตร์ <br>ภาควิชาวิทยาการคอมพิวเตอร์ <br> สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <a href="mailto:test@email.com" class="btn btn-primary">Send us mail</a>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+                <p><strong>&copy; Computer Science</strong><br/> สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mainly scripts -->
+<script src="/js/jquery-2.1.1.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="/js/inspinia.js"></script>
+<script src="/js/plugins/pace/pace.min.js"></script>
+<script src="/js/plugins/wow/wow.min.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('body').scrollspy({
+            target: '.navbar-fixed-top',
+            offset: 80
+        });
+
+        // Page scrolling feature
+        $('a.page-scroll').bind('click', function(event) {
+            var link = $(this);
+            $('html, body').stop().animate({
+                scrollTop: $(link.attr('href')).offset().top - 50
+            }, 500);
+            event.preventDefault();
+        });
+    });
+
+    var cbpAnimatedHeader = (function() {
+        var docElem = document.documentElement,
+                header = document.querySelector( '.navbar-default' ),
+                didScroll = false,
+                changeHeaderOn = 200;
+        function init() {
+            window.addEventListener( 'scroll', function( event ) {
+                if( !didScroll ) {
+                    didScroll = true;
+                    setTimeout( scrollPage, 250 );
+                }
+            }, false );
+        }
+        function scrollPage() {
+            var sy = scrollY();
+            if ( sy >= changeHeaderOn ) {
+                $(header).addClass('navbar-scroll')
+            }
+            else {
+                $(header).removeClass('navbar-scroll')
+            }
+            didScroll = false;
+        }
+        function scrollY() {
+            return window.pageYOffset || docElem.scrollTop;
+        }
+        init();
+
+    })();
+
+    // Activate WOW.js plugin for animation on scrol
+    new WOW().init();
+
+</script>
+
+</body>
+</html>
