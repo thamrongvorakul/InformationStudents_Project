@@ -23,15 +23,8 @@ angular.module('login',[])
       $http.post('/search_data', jsonData)
       .success(function(data, status, headers, config)
       {
-        
-          if (data[0]._source.password === $scope.password)
-          {
-            $scope.long_password = '';
-            location.href = "/";
-          }
-          else {
-            $scope.long_password = "รหัสผ่านผิดพลาด";
-          }
+
+          location.href = "/"
 
 
 

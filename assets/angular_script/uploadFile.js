@@ -7,6 +7,7 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       todoList.todos = [];
       todoList.feedname = [];
       todoList.fname = [];
+      $scope.files_name = [];
       var radiovalue = '';
       todoList.nameupload = 'No File Chosen.';
       $scope.name_of_file = '';
@@ -16,13 +17,17 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       $scope.date_hw = "11-11-1111";
 
 
+
       $http.post('/get_files')
       .success(function(data ,status,headers,config)
       {
-          $scope.files_len = data.length;
-          $scope.filename = data[0];
-          console.log(data.length);
-          console.log($scope.filename);
+
+          for (var i=0 ; i<data.length ; i++)
+          {
+            console.log(data[i]);
+            $scope.files_name.push({name : data[i]});
+
+          }
       })
       .error(function(data,status,headers,config){
 
@@ -30,11 +35,12 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
 
 
 
-      $http.get('/getdata_on_combobox').success(function(data, status, headers, config)
+      $http.get('/getdata_on_combobox')
+      .success(function(data, status, headers, config)
       {
         for(var i=0;i<data.length;i++)
         {
-            todoList.feedname.push({name : data[i]['Feed_Name']});
+             todoList.feedname.push({name : data[i]['Feed_Name']});
         }
       }).error(function(data, status, headers, config)
       {

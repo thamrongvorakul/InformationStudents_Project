@@ -52,29 +52,6 @@ module.exports = {
     return res.send('Response OK');
   },
 
-  /*upload: function  (req, res)
-    {
-        var data = req.allParams();
-
-        console.log('in upload function');
-        req.file('file').upload({dirname : path_hw},function (err, files)
-          {
-
-              console.log('file upload success.');
-
-              fileuploadname = path.basename(files[0].fd.split('/').reverse()[0]);
-              console.log(fileuploadname);
-              typefile = fileuploadname.split('.').pop();
-              console.log(typefile);
-              if (err)
-              {
-                  return res.negotiate(err);
-                  return res.serverError(err);
-              }
-          });
-    console.log(fileuploadname);
-    return res.send('Response OK');
-  },*/
 
   bulkinsert: function (req, res) {
       var dataJson = req.allParams();
@@ -94,8 +71,18 @@ module.exports = {
 
   get_files: function (req,res){
     var files = fs.readdirSync('D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/homework/');
-    console.log(files[0]);
-    return res.send(files);
+    var data ;
+      return res.send(files);
+    /*for (var i=0;i< files.length ; i++)
+    {
+      console.log(files[i]);
+      data = [
+        {"Files_Name" : files[i]}
+      ];
+
+
+    }*/
+
   }
 
 

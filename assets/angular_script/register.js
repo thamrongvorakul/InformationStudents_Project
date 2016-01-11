@@ -32,16 +32,12 @@ angular.module('register', [])
    $http.post('/bulkinsert', jsonData).success(function(data, status, headers, config)
             {
               $window.alert('Register Complete');
-              $http.post('/send_data',jsonData).success(function(data ,status,headers,config)
-              {
 
-              }).error(function(data,status,headers,config){
-
-              });
 
 
               location.href = 'login';
-            }).error(function(data, status, headers, config)
+            })
+            .error(function(data, status, headers, config)
             {
             });
 

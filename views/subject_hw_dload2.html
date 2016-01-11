@@ -274,9 +274,50 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-7">
                     <div class="ibox float-e-margins animated fadeInRight" >
                         <div class="ibox-content" id="ibox-content" >
+
+                          <div id="vertical-timeline" class="vertical-container dark-timeline left-orientation">
+                              <div class="vertical-timeline-block"  ng-repeat = "item in files_name">
+                                  <div class="vertical-timeline-icon navy-bg">
+                                      <i class="fa fa-file-text"></i>
+                                  </div>
+
+                                  <div class="vertical-timeline-content" >
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+
+                                      <h2>{{item.name}}</h2><br>
+                                      <p>รายละเอียดเพิ่มเติม<p>
+
+                                      <input type="text" class="form-control" placeholder="รายละเอียดเพิ่มเติมของไฟล์" required="" ng-model = "detail"></input>
+                                      <!--<a href="http://localhost:1337/FileUpload/Lec.A/Algorithm/homework/ba04a2e7-39ec-42f2-8bf6-b745c39fec6e.jpg" download ="" >Download</a>-->
+                                      <div>
+                                        <span class="vertical-date">
+                                            <p>กำหนดส่งงาน</p>
+                                             <input type="text" class="form-control" placeholder="04-12-2015" required="" ng-model = "date"></input><br>
+                                        </span><br>
+                                        <span>
+                                          11-11-2016
+                                        </span>
+                                      <br><button class="btn btn-outline btn-primary dim" type="button" ><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
+
+                                    </div>
+
+                                  </div>
+
+                              </div>
+                          </div>
+
 
                         <div id="vertical-timeline" class="vertical-container dark-timeline left-orientation">
                             <div class="vertical-timeline-block" ng-repeat = "item in uploader.queue">

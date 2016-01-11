@@ -27,7 +27,6 @@ module.exports.routes = {
   'GET /forgot_password' : {view :'forgot_password'},
   'GET /lecturer_add_sub2' : { view : 'file_manager_L_add_sub2'},
   'GET /lecturer_add_sub' : {view:'file_manager_L_add_sub'},
-  'GET /contacts_Lec' : {view : 'contacts_Lec'},
   'GET /privateinfo' : {view:'file_manager_L_mng_privateInfo'},
   'GET /lecturer_mng_sub' : {view:'file_manager_L_mng_sub'},
   'GET /students_sub_doc' : {view:'subject_doc_dload'},
@@ -47,6 +46,7 @@ module.exports.routes = {
 
 
   // api เรียกข้อมูลมาใส่ combobox
+  'GET /contacts_Lec' : 'PageController.showContact_Lec',
   'GET /getdata_on_combobox' : 'getData_on_combobox_Controller.getdata_on_combobox',
 
 
