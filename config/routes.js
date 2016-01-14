@@ -34,7 +34,6 @@ module.exports.routes = {
   'GET /students_sub_hw' : {view:'subject_hw_dload'},
   'GET /students_sub_news' : {view:'subject_news_dload'},
   'GET /students_sub_score' : {view:'subject_score_dload'},
-  'GET /profile_lec' : {view : 'profile_Lec'},
   'GET /home' : {view : 'home'},
   'GET /subject_doc_dload2' : {view : 'subject_doc_dload2'},
   'GET /subject_hw_dload2' : {view : 'subject_hw_dload2'},
@@ -46,12 +45,26 @@ module.exports.routes = {
 
 
   // api เรียกข้อมูลมาใส่ combobox
-  'GET /contacts_Lec' : 'PageController.showContact_Lec',
+  //'GET /contacts_Lec' : 'PageController.showContact_Lec',
+  'GET /contacts_Lec' : {view : 'contacts_Lec'},
   'GET /getdata_on_combobox' : 'getData_on_combobox_Controller.getdata_on_combobox',
 
 
-
-
+  'GET /profile_Lec_kritsada' : {view : 'profile_Lec_kritsada'},
+  'GET /profile_Lec_Teera' : {view : 'profile_Lec_Teera'},
+  'GET /profile_Lec_Anantaporn' : {view : 'profile_Lec_Anantaporn'},
+  'GET /profile_Lec_Jiraporn' : {view : 'profile_Lec_Jiraporn'},
+  'GET /profile_Lec_Rungrad' : {view : 'profile_Lec_Rungrad'},
+  'GET /profile_Lec_Saichon' : {view : 'profile_Lec_Saichon'},
+  'GET /profile_Lec_Sangkorn' : {view : 'profile_Lec_Sangkorn'},
+  'GET /profile_Lec_Santana' : {view : 'profile_Lec_Santana'},
+  'GET /profile_Lec_Sarun' : {view : 'profile_Lec_Sarun'},
+  'GET /profile_Lec_Sirilak' : {view : 'profile_Lec_Sirilak'},
+  'GET /profile_Lec_Tirawat' : {view : 'profile_Lec_Tirawat'},
+  'GET /profile_Lec_Warangkana' : {view : 'profile_Lec_Warangkana'},
+  'GET /profile_Lec_Wisan' : {view : 'profile_Lec_Wisan'},
+  'GET /profile_Lec_Nuansawat' : {view : 'profile_Lec_Nuansawat'},
+  'GET /profile_Lec_Nantika' : {view : 'profile_Lec_Nantika'},
 
 
 

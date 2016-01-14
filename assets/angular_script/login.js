@@ -24,7 +24,7 @@ angular.module('login',[])
       .success(function(data, status, headers, config)
       {
 
-          location.href = "/"
+
 
 
 
