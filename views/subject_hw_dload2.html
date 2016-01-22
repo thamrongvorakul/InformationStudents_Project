@@ -229,11 +229,12 @@
                                               <th ng-show="uploader.isHTML5">ขนาด</th>
                                               <th ng-show="uploader.isHTML5">ดำเนินการ</th>
                                               <th>สถานะ</th>
+                                              <th>Actions<th>
 
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr ng-repeat="item in uploader.queue">
+                                          <tr ng-repeat="item in uploader.queue" id = "mySelectQueue">
                                               <td><strong>{{ item.file.name }}</strong></td>
                                               <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
                                               <td ng-show="uploader.isHTML5">
@@ -242,9 +243,21 @@
                                                   </div>
                                               </td>
                                               <td class="text-center">
+
                                                   <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
                                                   <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                                                   <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                              </td>
+                                              <td nowrap>
+                                                  <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                      <span class="glyphicon glyphicon-upload"></span> Upload
+                                                  </button>
+                                                  <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                  </button>
+                                                  <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()" ng-disabled = "item.isSuccess">
+                                                      <span class="glyphicon glyphicon-trash"></span> Remove
+                                                  </button>
                                               </td>
 
                                           </tr>
@@ -280,20 +293,14 @@
                         <div class="ibox-content" id="ibox-content" >
 
                           <div id="vertical-timeline" class="vertical-container dark-timeline left-orientation">
-                              <div class="vertical-timeline-block"  ng-repeat = "item in files_name">
+                              <div class="vertical-timeline-block" ng-repeat = "item in files_name" id ="mySelect" >
                                   <div class="vertical-timeline-icon navy-bg">
                                       <i class="fa fa-file-text"></i>
                                   </div>
 
                                   <div class="vertical-timeline-content" >
-                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                    <button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name)">
                                         <span class="glyphicon glyphicon-trash"></span> Remove
-                                    </button>
-                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                    </button>
-                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                        <span class="glyphicon glyphicon-upload"></span> Upload
                                     </button>
 
                                       <h2>{{item.name}}</h2><br>
@@ -318,45 +325,6 @@
                               </div>
                           </div>
 
-
-                        <div id="vertical-timeline" class="vertical-container dark-timeline left-orientation">
-                            <div class="vertical-timeline-block" ng-repeat = "item in uploader.queue">
-                                <div class="vertical-timeline-icon navy-bg">
-                                    <i class="fa fa-file-text"></i>
-                                </div>
-
-                                <div class="vertical-timeline-content" >
-                                  <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                      <span class="glyphicon glyphicon-trash"></span> Remove
-                                  </button>
-                                  <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                  </button>
-                                  <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                      <span class="glyphicon glyphicon-upload"></span> Upload
-                                  </button>
-
-                                    <h2>{{item.file.name}}</h2><br>
-                                    <p>รายละเอียดเพิ่มเติม<p>
-
-                                    <input type="text" class="form-control" placeholder="รายละเอียดเพิ่มเติมของไฟล์" required="" ng-model = "detail"></input>
-                                    <!--<a href="http://localhost:1337/FileUpload/Lec.A/Algorithm/homework/ba04a2e7-39ec-42f2-8bf6-b745c39fec6e.jpg" download ="" >Download</a>-->
-                                    <div>
-                                      <span class="vertical-date">
-                                          <p>กำหนดส่งงาน</p>
-                                           <input type="text" class="form-control" placeholder="04-12-2015" required="" ng-model = "date"></input><br>
-                                      </span><br>
-                                      <span>
-                                        {{date | date:'yyyy-MM-dd'}}
-                                      </span>
-                                    <br><button class="btn btn-outline btn-primary dim" type="button" ><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
-
-                                  </div>
-
-                                </div>
-
-                            </div>
-                        </div>
 
                     </div>
                     </div>

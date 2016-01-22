@@ -20,11 +20,10 @@ angular.module('login',[])
         }
       };
 
-      $http.post('/search_data', jsonData)
+      $http.post('/test_login', jsonData)
       .success(function(data, status, headers, config)
       {
-
-
+        console.log('5555');
 
 
 

@@ -40,7 +40,7 @@ module.exports.routes = {
   'GET /subject_news_dload2' : {view : 'subject_news_dload2'},
   'GET /subject_score_dload2' : {view : 'subject_score_dload2'},
   'GET /index' :{view : 'index'},
-
+  'GET /profileLec' : {view : 'profile_lecturer'},
 
 
 
@@ -75,7 +75,12 @@ module.exports.routes = {
   'POST /postupload' : 'uploadfileController.upload',
   'POST /send_data' : 'send_dataController.send_data',
   'POST /bulkinsert_upload' : 'uploadfileController.bulkinsert',
-  'POST /get_files' : 'uploadfileController.get_files'
+  'POST /get_files' : 'uploadfileController.get_files',
+  'POST /test_login' : 'loginController.test_login',
+  'POST /test_login2' : 'loginController.test_login2',
+  'POST /search_data_teacher' : 'profilelecController.search_data_teacher',
+  'POST /reset_count_name' : 'loginController.reset_count_name',
+  'POST /remove_files' : 'uploadfileController.remove_files'
 
 
   /***************************************************************************

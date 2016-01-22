@@ -7,7 +7,6 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       todoList.todos = [];
       todoList.feedname = [];
       todoList.fname = [];
-      $scope.files_name = [];
       var radiovalue = '';
       todoList.nameupload = 'No File Chosen.';
       $scope.name_of_file = '';
@@ -15,18 +14,24 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       $scope.detail = '5555';
       $scope.date_log = moment().format('MMMM Do YYYY, h:mm:ss a');
       $scope.date_hw = "11-11-1111";
+      $scope.button_file_name = '';
 
 
+
+
+      $scope.remove_queue = function (files_name){
+        /*var x = document.getElementById("mySelectQueue");
+        x.remove(files_name);*/
+
+      };
 
       $http.post('/get_files')
       .success(function(data ,status,headers,config)
-      {
-
+      {   $scope.files_name = [];
           for (var i=0 ; i<data.length ; i++)
           {
             console.log(data[i]);
             $scope.files_name.push({name : data[i]});
-
           }
       })
       .error(function(data,status,headers,config){
@@ -34,17 +39,46 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       });
 
 
+      $scope.remove_files = function (files_name){
 
-      $http.get('/getdata_on_combobox')
-      .success(function(data, status, headers, config)
-      {
-        for(var i=0;i<data.length;i++)
-        {
-             todoList.feedname.push({name : data[i]['Feed_Name']});
+
+        var data2 = {
+          'files_name' : files_name
         }
-      }).error(function(data, status, headers, config)
-      {
-      });
+
+        $http.post ('/get_files')
+
+        .success(function(data){
+
+
+          var x = document.getElementById("mySelect");
+          var index = data.indexOf(files_name);
+          x.remove(index);
+
+            $http.post('/remove_files' , data2)
+            .success(function(data ,status,headers,config)
+            {
+
+            })
+            .error(function(data,status,headers,config){
+
+            });
+
+        })
+
+      };
+
+
+            $http.get('/getdata_on_combobox')
+            .success(function(data, status, headers, config)
+            {
+              for(var i=0;i<data.length;i++)
+              {
+                   todoList.feedname.push({name : data[i]['Feed_Name']});
+              }
+            }).error(function(data, status, headers, config)
+            {
+            });
 
 
       var uploader = $scope.uploader = new FileUploader({
@@ -55,7 +89,6 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
         uploader.filters.push({
             name: 'customFilter',
             fn: function(item /*{File|FileLikeObject}*/, options) {
-                console.log(this.queue.length);
                 return this.queue.length < 10;
             }
         });
@@ -74,6 +107,18 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
           //  console.info('onAfterAddingAll', addedFileItems);
         };
         uploader.onBeforeUploadItem = function(item) {
+          $http.post('/get_files')
+          .success(function(data ,status,headers,config)
+          {   $scope.files_name = [];
+              for (var i=0 ; i<data.length ; i++)
+              {
+                $scope.files_name.push({name : data[i]});
+                console.log(data[i]);
+              }
+          })
+          .error(function(data,status,headers,config){
+
+          });
 
           var dataJson = {
             "header" : { "index" : "upload_log" , "type" : "2555"
@@ -88,15 +133,21 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
           $http.post('/bulkinsert_upload',dataJson).success(function(data ,status,headers,config)
           {
               console.log('Put data to elasticsearch success');
+
           }).error(function(data,status,headers,config){
 
           });
 
-            $scope.name_of_file = item.file.name;
+
           //  console.log (item.file.name);
           //  console.info('onBeforeUploadItem', item);
         };
         uploader.onProgressItem = function(fileItem, progress) {
+           $scope.text_complete = '';
+           if (progress  === 100)
+           {
+             $scope.text_complete = 'Uploaded';
+           }
             //console.info('onProgressItem', fileItem, progress);
         };
         uploader.onProgressAll = function(progress) {
@@ -139,16 +190,7 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
         }
       };
 
-      $scope.downloadFile = function (){
-        $http.post('/download').success(function(data, status, headers, config)
-                 {
 
-
-
-                 }).error(function(data, status, headers, config)
-                 {
-                 });
-      }
   }]);
 
 /*angular.module('uploadFile',['ngFileUpload'])
