@@ -39,7 +39,7 @@ module.exports = {
                       ID_NO: dataJson.data.ID_NO,
                       FName: dataJson.data.FName,
                       LName: dataJson.data.LName,
-
+                      password : dataJson.data.password,
                       email: dataJson.data.email_id,
                       encryptedPassword: encryptedPassword,
                       lastLoggedIn: new Date(),
@@ -55,7 +55,7 @@ module.exports = {
                       client.bulk({
                         body : [
                             { index:  { _index: dataJson.header.index , _type:dataJson.header.type , _id: dataJson.data.FName + '::' + dataJson.data.LName} },
-                            { ID_NO: dataJson.data.ID_NO , FName :dataJson.data.FName , LName :  dataJson.data.LName ,email_id :dataJson.data.email_id ,password: dataJson.data.password , status_login: dataJson.data.status_login}
+                            { ID_NO: dataJson.data.ID_NO , FName :dataJson.data.FName , LName :  dataJson.data.LName ,email_id :dataJson.data.email_id ,encryptedPassword:encryptedPassword,password: dataJson.data.password , status_login: dataJson.data.status_login}
                         ]
                       }, function (error, response){
                           console.log(error);
@@ -72,11 +72,6 @@ module.exports = {
                 });
               }
             });
-
-
-
-
-
           },
           bulkupdate: function (req, res) {
               client.bulk({

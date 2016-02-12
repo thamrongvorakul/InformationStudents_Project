@@ -9,13 +9,12 @@ var    client = new elasticsearch.Client({
       var folderuploadname;
       var fileuploadname;
       var feedname;
-      var cmdscript =' ';
       var scripter;
       var typefile;
-      var pathUpWri = 'C:/nuget-automated/assets/nugetpackages/';
-      var pathforChoco = 'C:\\nuget-automated\\assets\\nugetpackages\\';
-      var pathforCreateDir = 'C:\\nuget-automated\\assets\\nugetpackages\\';
       var path_hw = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/homework/';
+      var path_doc = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/documents/';
+      var path_news = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/news/';
+      var path_score = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/score/';
 
 
 
@@ -36,10 +35,22 @@ module.exports = {
             upload: function  (req, res)
               {
                   var data = req.allParams();
+                  var path_keep ;
 
-                  console.log('in upload function');
+                  if (data.path === "homework"){
+                    path_keep = path_hw;
+                  }
+                  else if (data.path === "documents"){
+                    path_keep = path_doc;
+                  }
+                  else {
+                    path_keep = path_score;
+                  }
+
+
+                  console.log(path_keep);
                   req.file('file').upload({
-                    dirname : path_hw,
+                    dirname : path_keep,
                     saveAs: function(__newFile, cb) {
                        cb(null, __newFile.filename);
                      },
@@ -47,12 +58,7 @@ module.exports = {
                   function (err, files)
                     {
 
-                        console.log('file upload success.');
-
-                        fileuploadname = path.basename(files[0].fd.split('/').reverse()[0]);
-                        console.log(fileuploadname);
-                        typefile = fileuploadname.split('.').pop();
-                        console.log(typefile);
+                      
                         if (err)
                         {
                             return res.negotiate(err);

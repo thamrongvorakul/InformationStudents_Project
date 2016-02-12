@@ -219,44 +219,25 @@
                                 <h4>ชื่อวิชาที่สอน</h4>
                                 <div class="hr-line-dashed"></div>
 
-                                <div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Subject Name 1 <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Subject Name 2</a></li>
-                                        <li><a href="#">Subject Name 3</a></li>
-                                        <li><a href="#">Subject Name 4</a></li>
-                                        <li><a href="#">Subject Name 5</a></li>
-                                    </ul>
-                                </div>
+
+                                <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "subject_name_select">
+                                  <option   ng-repeat = "item in subject_search" value="{{item.subject}}" >{{item.subject}}</option>
+                               </select>
 
                                 <br><br>
 
                                 <h4>หัวข้อที่ต้องการจัดการ</h4>
                                 <div class="hr-line-dashed"></div>
-                                <div class="col-sm-2 m-b-xs">
-                                  <select class="input-sm form-control input-s-sm inline" ng-model = "todoList.fname">
+                                  <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "todoList.fname">
                                     <option ng-repeat = "element in todoList.feedname" value="{{element.name}}" >{{element.name}}</option>
                                   </select>
-                              </div><br><br>
-                              <!--  <div class="btn-group">
-
-                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle" >-- เลือกหัวข้อที่ต้องการอัพเดท -- <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a  ng-repeat="element in todoList.feedname" value="{{element.name}}">{{element.name}}</a></li>
-                                </div>-->
-
+                              <br><br>
 
                                 <div class="hr-line-dashed"></div>
-                                <h4>ไฟล์ที่อัพโหลด</h4>
-
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ชื่อไฟล์ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i></p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ชื่อไฟล์ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i></p>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-cloud-upload"> &nbsp;&nbsp;
-
                                   <!--<a type="file" ngf-select ngf-change="upload($files)" onclick="this.value = null"  ><u> อัพโหลดไฟล์ที่นี่ </u></a>-->
-                                  <a ng-click = "changepath_on_combobox()"><u> อัพโหลดไฟล์ที่นี </u> <a></i></p>
-
-
+                                      <div>
+                                    <button  class="btn btn-primary " style="display: block; margin: 0 auto; width: 25%;"  ng-click = "changepath_on_combobox()">Go to upload page</button>
+                                    </div>
                                 <!--<div class="progress progress-striped active">
                                   <div class="progress-bar progress-bar-danger" style="width:{{todoList.progress}};" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{todoList.progress}}" role="progressbar" >
                                   </div>

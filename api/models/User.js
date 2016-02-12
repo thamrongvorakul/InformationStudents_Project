@@ -13,8 +13,6 @@ module.exports = {
     type: 'string',
     required: true
     },
-
-
     FName: {
     type: 'string',
     required: true
@@ -24,41 +22,30 @@ module.exports = {
     type: 'string',
     required: true
     },
-  // The user's title at their job (or something)
-  // e.g. Genius
 
-  // The user's email address
-  // e.g. nikola@tesla.com
     email: {
       type: 'email',
       required: true,
       unique: true
     },
-
-  /*  password: {
-      type :'string',
-      required : true
-    },*/
-
-  // The encrypted password for the user
-  // e.g. asdgh8a249321e9dhgaslcbqn2913051#T(@GHASDGA
+    password: {
+      type: 'string',
+      required: true,
+    },
    encryptedPassword: {
     type: 'string',
     required: true
-  },
+    },
 
-  // The timestamp when the the user last logged in
-  // (i.e. sent a username and password to the server)
-  lastLoggedIn: {
-    type: 'date',
-    required: true,
-    defaultsTo: new Date(0)
-  },
+    lastLoggedIn: {
+      type: 'date',
+      required: true,
+      defaultsTo: new Date(0)
+    },
 
-  // url for gravatar
-  gravatarUrl: {
-    type: 'string'
-  }
+    gravatarUrl: {
+      type: 'string'
+    }
 }
 
 };

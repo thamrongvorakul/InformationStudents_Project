@@ -9,7 +9,6 @@ angular.module('login',[])
     $scope.long_password = '';
 
 
-
     $scope.login_click = function (){
 
       var jsonData = {
@@ -20,20 +19,20 @@ angular.module('login',[])
         }
       };
 
-      $http.post('/test_login', jsonData)
+      $http.post('/search_data', jsonData)
       .success(function(data, status, headers, config)
       {
-        console.log('5555');
-
-
-
+          location.href = "/";
       })
-      .error(function(data, status, headers, config)
-      {
-      });
+      .catch(function onError(sailsResponse) {
 
-      };
-
+      // Handle known error type(s).
+      // Invalid username / password combination.
+      if (sailsResponse.status === 400 || 404) {
+          $scope.wrong_password = "ชื่อผู้ใช้งาน หรือรหัสผ่านผิดพลาด";
+      }
+      })
+    }
 
     $scope.changepath_to_forgotpassword =  function(){
         location.href = "forgot_password";

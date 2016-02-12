@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = 'getfiles'>
 
 <head>
 
@@ -21,7 +21,7 @@
         <script src="/dist/text/moment.min.js"></script>
         <script src="/dist/angular-momentjs.js"></script>
         <script src="/dist/angular-momentjs.min.js"></script>
-        <script type="text/javascript" src="/angular_script/uploadFile.js"></script>
+        <script type="text/javascript" src="/angular_script/getfiles.js"></script>
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
@@ -29,7 +29,7 @@
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller = 'getfilesHomeworkController'>
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="ibox float-e-margins">
+                    <div class="ibox float-e-margins" ng-repeat = 'item in files'>
                         <div class="ibox-content" id="ibox-content">
 
                         <div id="vertical-timeline" class="vertical-container dark-timeline left-orientation">
@@ -134,45 +134,16 @@
                                 </div>
 
                                 <div class="vertical-timeline-content">
-                                    <h2>ชื่อไฟล์การบ้าน</h2>
-                                    <p>อธิบายหัวข้อ
+                                    <h2>{{item.name}}</h2>
+                                    <p>อธิบายหัวข้อ <br>
+                                      {{description}}
                                     </p>
-                                    <button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
+                                    <a href = '/FileUpload/Lec.A/Algorithm/homework/{{item.name}}' download = "">
+                                      <button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
+                                    </a>
                                     <span class="vertical-date">
                                         กำหนดส่งการบ้าน <br/>
-                                        <small>ม.ค. 4, 58</small>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon navy-bg">
-                                    <i class="fa fa-file-text"></i>
-                                </div>
-
-                                <div class="vertical-timeline-content">
-                                    <h2>ชื่อไฟล์การบ้าน</h2>
-                                    <p>อธิบายหัวข้อ</p>
-                                    <button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
-                                    <span class="vertical-date">
-                                        กำหนดส่งการบ้าน <br/>
-                                        <small>ม.ค. 4, 58</small>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon navy-bg">
-                                    <i class="fa fa-file-text"></i>
-                                </div>
-
-                                <div class="vertical-timeline-content">
-                                    <h2>ชื่อไฟล์การบ้าน</h2>
-                                    <p>อธิบายหัวข้อ</p>
-                                    <button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
-                                    <span class="vertical-date">
-                                        กำหนดส่งการบ้าน <br/>
-                                        <small>ม.ค. 4, 58</small>
+                                        <small>{{date}}</small>
                                     </span>
                                 </div>
                             </div>

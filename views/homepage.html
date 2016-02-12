@@ -24,10 +24,10 @@
     <script type="text/javascript" src="/angular_script/homepage.js"></script>
 
 </head>
-<body id="page-top" class="landing-page">
-<div class="navbar-wrapper">
+<body id="page-top" class="landing-page" >
+<div class="navbar-wrapper" ng-controller = 'homepageController' >
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
+            <div class="container" ng-init = "init(<%= JSON.stringify(me.email) %>)">
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -37,14 +37,14 @@
                     </button>
                     <a class="navbar-brand" href="#">Computer Science</a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse" ng-controller = 'homepageController'>
+                <div id="navbar" class="navbar-collapse collapse" >
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="page-scroll" href="#page-top">Home</a></li>
                         <li><a class="page-scroll" ng-click = 'lecturer_click()'>Lecturer</a></li>
                         <li><a class="page-scroll" ng-click = 'subject_click()'>Subject</a></li>
                         <li><a class="page-scroll" href="#contact">Contact</a></li>
                         <li><a class="page-scroll" >Management</a></li> <!-- ng-click = 'management_click()' -->
-                        <li><a class="page-scroll" >Login</a></li> <!--  ng-click = 'login_click()' -->
+                        <li><a class="page-scroll" ng-click = 'login_click(<%= JSON.stringify(me.title) %>)' ><%= me.title %></a></li> <!--  ng-click = 'login_click()' -->
                     </ul>
                 </div>
             </div>

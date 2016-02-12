@@ -8094,3 +8094,10 @@ body.md-skin {
     display: none;
   }
 }
+#resizing_select {
+ width: 50px;
+}
+
+#width_tmp_select{
+ display : none;
+} 

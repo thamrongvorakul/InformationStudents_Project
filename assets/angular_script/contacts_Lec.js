@@ -1,334 +1,82 @@
-angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload' ])
-.controller('contactslecController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,
-  function ( $scope, $rootScope,Upload, $http , FileUploader  )
+angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorageModule' ,'ngCookies'])
+.controller('contactslecController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , 'localStorageService' , '$cookies',
+  function ( $scope, $rootScope,Upload, $http , FileUploader ,  localStorageService , $cookies)
   {
-      $scope.wisan = "อ.วิสันต์ ตั้งวงษ์เจริญ";
-      $scope.sangkorn = "อ.ศังกรศรัณย์ ล่องชูผล";
-      $scope.rungrat = "ดร.รุ่งรัตน์ เวียงศรีพนาวัลย์";
-      $scope.santana = "อ.สันธนะ อู่อุดมยิ่ง";
-      $scope.tirawat="รศ.ธีรวัฒน์ ประกอบผล";
-      $scope.jiraporn = "ผศ.ดร.จีรพร วีระพันธุ์";
-      $scope.nantika = "ผศ.ดร.นันทิกา เบญจเทพานันท์";
-      $scope.sarun = "ผศ.ดร.ศรัณย์ อินทโกสุม";
-      $scope.siriluk = "ผศ.สิริลักษณ์ อนันต์สถิตย์สิน";
-      $scope.nuansawat= "ผศ.ดร.นวลสวาท หิรัญสกลวงศ์";
-      $scope.kritsada = "ผศ.กฤษฎา บุศรา";
-      $scope.anantaporn = "ดร.อนันตพร ศรีสวัสดิ์";
-      $scope.warangkana = "ดร.วรางคณา กิ้มปาน";
-      $scope.saichon = "อ.สายชล ใจเย็น";
-      $scope.teera = "อ.ธีระ ศิริธีรากุล";
-      var data = {
-        "name" : ''
-      };
 
 
-      $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
+      $scope.data_teacher_show_contacts = [];
 
-      $scope.wisan_click = function (){
-
-
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-         data = {
-          "name" : $scope.wisan
+      $http.post('/search_data_teacher_to_show_contacts')
+      .success(function(data){
+        console.log('5555');
+        for ( var i = 0 ; i< data.length ; i++){
+          $scope.data_teacher_show_contacts.push({data : data[i]});
+          console.log(data[i]);
         }
-        $http.post('/test_login2' , data).success(function(data){
-
-          location.href = '/profilelec' ;
-
-        });
-
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-      }
-
-      $scope.sangkorn_click = function (){
-
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-         data = {
-          "name" : $scope.sangkorn
-        }
-        $http.post('/test_login2' , data).success(function(data){
-
-          location.href = '/profilelec' ;
-
-        });
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-      }
-
-      $scope.rungrat_click = function (){
-
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-         data = {
-          "name" : $scope.rungrat
-        }
-        $http.post('/test_login2' , data).success(function(data){
-
-          location.href = '/profilelec' ;
-
-        });
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-      }
-
-      $scope.santana_click = function (){
-
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-         data = {
-          "name" : $scope.santana
-        }
-        $http.post('/test_login2' , data).success(function(data){
-
-          location.href = '/profilelec' ;
-
-        });
-        $http.post('/reset_count_name' , data).success(function(data){
-            console.log('reset value in count_name');
-        });
-
-      }
-
-
-      $scope.tirawat_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.tirawat
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
       });
 
-      }
+
+      $scope.wisan_click = function (name_lec){
+        $scope.education = [];
+        $scope.research = [];
+        $scope.subject_hold = [];
+        $scope.name_lec = '';
+        $scope.path_file_pic_main = '';
+        $scope.path_file_pic_icon = '';
+        $scope.room_lec = '';
+        $scope.email = '';
+        $scope.homepage = '';
+        $scope.tel_no = '';
 
 
-      $scope.jiraporn_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.jiraporn
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
-
-      $scope.nantika_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.nantika
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
+        console.log(name_lec);
+                  data2 = {
+                  'Name' : name_lec
+                  };
 
 
-      $scope.sarun_click = function (){
 
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
 
-          data = {
-          "name" : $scope.sarun
-          }
-          $http.post('/test_login2' , data).success(function(data){
+                              $http.post('/search_data_teacher' , data2)
+                              .success(function(data ,status, headers, config)
+                              {
 
-            location.href = '/profilelec' ;
+                                  $scope.name_lec = data[0]['_source']['Name'];
+                                  $scope.path_file_pic_main = data[0]['_source']['path_file_pic_main'];
+                                  $scope.path_file_pic_icon = data[0]['_source']['path_file_pic_icon']
+                                  $scope.room_lec = data[0]['_source']['aboutme']['room'];
+                                  $scope.email = data[0]['_source']['aboutme']['E-mail'];
+                                  $scope.homepage = data[0]['_source']['aboutme']['honepage'];
+                                  $scope.tel_no = data[0]['_source']['aboutme']['tel_no'];
 
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
+                                  for (var i = 0 ; i< data[0]['_source']['education'].length ; i++)
+                                  {
 
-      }
+                                    $scope.education.push({education : data[0]['_source']['education'][i]});
+                                  }
+                                  for (var i = 0 ; i< data[0]['_source']['research'].length ; i++)
+                                  {
 
-      $scope.siriluk_click = function (){
+                                    $scope.research.push({research : data[0]['_source']['research'][i]});
+                                  }
+                                  for (var i = 0 ; i< data[0]['_source']['subject_holding'].length ; i++)
+                                  {
 
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
+                                    $scope.subject_hold.push({subject_hold : data[0]['_source']['subject_holding'][i]});
 
-          data = {
-          "name" : $scope.siriluk
-          }
-          $http.post('/test_login2' , data).success(function(data){
+                                  }
 
-            location.href = '/profilelec' ;
 
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
+                            })
+                            .error(function(data, status, headers, config)
+                            {
+                              console.log('Error' + data);
+                            });
+
+
+
 
       }
 
 
-      $scope.nuansawat_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.nuansawat
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
-
-      $scope.kritsada_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.kritsada
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
-
-      $scope.anantaporn_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.anantaporn
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
-
-      $scope.warangkana_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.warangkana
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
-
-      $scope.saichon_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.saichon
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
-
-      $scope.teera_click = function (){
-
-          $http.post('/reset_count_name' , data).success(function(data){
-              console.log('reset value in count_name');
-          });
-
-          data = {
-          "name" : $scope.teera
-          }
-          $http.post('/test_login2' , data).success(function(data){
-
-            location.href = '/profilelec' ;
-
-          });
-          $http.post('/reset_count_name' , data).success(function(data){
-          console.log('reset value in count_name');
-      });
-
-      }
   }]);

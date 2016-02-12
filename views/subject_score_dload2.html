@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = "getfiles">
 
 <head>
 
@@ -13,12 +13,23 @@
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/angular_script/getfiles.js"></script>
 </head>
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller= "getfilesScoreController">
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -182,87 +193,123 @@
                         <li>
                             <a href="landing.html">Home</a>
                         </li>
-                        
+
                         <li class="active">
                             <strong>Subject</strong>
                         </li>
                     </ol>
                 </div>
             </div>
-        <div class="wrapper wrapper-content">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="ibox ">
-                        <div class="ibox-content">
-                            <div class="file-manager">
-                                <h5>Upload:</h5>
-                                <p>Description</p><br>
-                                <div class="hr-line-dashed"></div>
+            <div class="wrapper wrapper-content">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="ibox ">
+                            <div class="ibox-content">
 
-                                <button class="btn btn-primary btn-block">Upload Files</button>
-                                <div class="hr-line-dashed"></div><br>
+                              <div class="file-manager">
+                                  <h5>Upload:</h5>
+                                  <p>Description</p><br>
 
-                                <p>Upload in Progress</p>
-                                <div class="progress progress-striped active">
-                                    <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class="progress-bar progress-bar-success">
-                                        <span class="sr-only">40% Complete (success)</span>
+                                  <div class="hr-line-dashed"></div>
+
+
+
+                                    <input type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+
+                                    <div class="hr-line-dashed"></div><br>
+
+
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th width="50%">ชื่อไฟล์</th>
+                                                <th ng-show="uploader.isHTML5">ขนาด</th>
+                                                <th ng-show="uploader.isHTML5">ดำเนินการ</th>
+                                                <th>สถานะ</th>
+                                                <th>ตัวเลือก</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in uploader.queue">
+                                                <td><strong>{{ item.file.name }}</strong></td>
+                                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                                <td ng-show="uploader.isHTML5">
+                                                    <div class="progress" style="margin-bottom: 0;">
+                                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                                </td>
+                                                <td nowrap>
+                                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                      <div class="hr-line-dashed"></div><br>
+                                <!--  <button class="btn btn-primary btn-block" ngf-select ngf-change="upload($files)" onclick="this.value = null" >Upload Files</button>-->
+                                  <button  type="file" class="btn btn-primary btn-block"   ng-click="uploader.uploadAll()"  ng-disabled="!uploader.getNotUploadedItems().length" >Upload All Files</button>
+
+                                    <div class="hr-line-dashed"></div><br>
+
+
+                                  <p>Upload in Progress</p>
+
+                                  <div class="progress progress-striped active" style="">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }">{{uploader.progress}} %</div>
+                                  </div>
+                                  <!--<div class="progress progress-striped active">
+                                    <div class="progress-bar progress-bar-danger" style="width:{{todoList.progress}};" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{todoList.progress}}" role="progressbar" >
                                     </div>
-                                </div>
-                                
-                                <div class="clearfix"></div>
+                                  <span class="sr-only">{{todoList.progress}}</span>-->
+
+                                  <div class="clearfix"></div>
+                              </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-9">
+                    <div class="col-lg-7">
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="ibox-content forum-container" ng-repeat = "item in files" id = 'mySelect'>
+                                <div class="forum-item active" >
+                                  <p align = 'right' ><button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name)">
+                                      <span class="glyphicon glyphicon-trash"></span> Remove
+                                  </button> </p>
 
-                    <div class="wrapper wrapper-content animated fadeInRight">
-                        <div class="ibox-content forum-container">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <a href="#"><img alt="image" class="img-responsive" src="img/profile_big.jpg"></a>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="forum-icon">
+                                                <i class="fa fa-file-pdf-o"></i>
+                                            </div>
+                                            <a href="#" class="forum-item-title">{{ item.name }}</a>
+                                            <div class="forum-sub-title">อธิบายหัวข้อ</div>
+
+                                        </div>
+                                        <div class="col-md-2">
+
+                                            <a href = '/FileUpload/Lec.A/Algorithm/documents/{{item.name}}' download = "">
+                                              <button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download" >ดาวน์โหลด</i></button>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <h4><strong>ชื่อวิชา</strong></h4>
-                                    <p>อธิบายหัวข้อ</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p align="right"><button class="btn btn-outline btn-primary " type="button"><i class="fa fa-download"> ดาวน์โหลด</i></button></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ibox-content forum-container">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <a href="#"><img alt="image" class="img-responsive" src="img/profile_big.jpg"></a>
-                                </div>
-                                <div class="col-md-7">
-                                    <h4><strong>ชื่อวิชา</strong></h4>
-                                    <p>อธิบายหัวข้อ</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p align="right"><button class="btn btn-outline btn-primary " type="button"><i class="fa fa-download"> ดาวน์โหลด</i></button></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ibox-content forum-container">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <a href="#"><img alt="image" class="img-responsive" src="img/profile_big.jpg"></a>
-                                </div>
-                                <div class="col-md-7">
-                                    <h4><strong>ชื่อวิชา</strong></h4>
-                                    <p>อธิบายหัวข้อ</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p align="right"><button class="btn btn-outline btn-primary " type="button"><i class="fa fa-download"> ดาวน์โหลด</i></button></p>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         <div class="footer">
             <div class="pull-right">
                 10GB of <strong>250GB</strong> Free.

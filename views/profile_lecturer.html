@@ -22,14 +22,18 @@
     <script src="/dist/angular-cookies.min.js"></script>
     <script src="/dist/ng-file-upload.min.js"></script>
     <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
+
     <script type="text/javascript" src="/angular_script/profile_Lec.js"></script>
 
 </head>
 
 <body>
 
-    <div id="wrapper" ng-controller= 'profilelecController'>
 
+    <div id="wrapper" ng-controller= 'profilelecController'>
+    
       <nav class="navbar-default navbar-static-side" role="navigation" >
           <div class="sidebar-collapse">
               <ul class="nav metismenu" id="side-menu">
@@ -80,7 +84,8 @@
                             <a href="/contacts_Lec">Lecturer</a>
                         </li>
                         <li class="active">
-                            <strong>{{name_lec}}</strong>
+                            <strong ></strong>
+
                         </li>
                     </ol>
                 </div>
@@ -99,7 +104,7 @@
 
                             <div class="ibox-content profile-content">
                                 <p align = "center"><img alt="image" class="img-responsive animated fadeInRight" src="{{path_file_pic_main}}"></p>
-                                <h4><strong>{{name_lec}}</strong></h4>
+                                <h4><strong >{{name_lec}}</strong></h4>
                                 <p><i class="fa fa-map-marker"></i> ห้องพัก : {{room_lec}}</p>
                                 <h5>
                                     About me
@@ -202,7 +207,7 @@
             </div>
         </div>
 
-        </div>
+      </div>
         </div>
 
 

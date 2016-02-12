@@ -16,163 +16,35 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       $scope.date_hw = "11-11-1111";
       $scope.button_file_name = '';
 
+      $scope.subject_name_select = '';
 
-
-
-      $scope.remove_queue = function (files_name){
-        /*var x = document.getElementById("mySelectQueue");
-        x.remove(files_name);*/
-
-      };
-
-      $http.post('/get_files')
-      .success(function(data ,status,headers,config)
-      {   $scope.files_name = [];
-          for (var i=0 ; i<data.length ; i++)
-          {
-            console.log(data[i]);
-            $scope.files_name.push({name : data[i]});
-          }
-      })
-      .error(function(data,status,headers,config){
-
-      });
-
-
-      $scope.remove_files = function (files_name){
-
-
-        var data2 = {
-          'files_name' : files_name
+      $http.get('/getdata_on_combobox')
+      .success(function(data, status, headers, config)
+      {
+        for(var i=0;i<data.length;i++)
+        {
+              todoList.feedname.push({name : data[i]['Feed_Name']});
         }
-
-        $http.post ('/get_files')
-
-        .success(function(data){
-
-
-          var x = document.getElementById("mySelect");
-          var index = data.indexOf(files_name);
-          x.remove(index);
-
-            $http.post('/remove_files' , data2)
-            .success(function(data ,status,headers,config)
-            {
-
-            })
-            .error(function(data,status,headers,config){
-
-            });
-
-        })
-
-      };
-
-
-            $http.get('/getdata_on_combobox')
-            .success(function(data, status, headers, config)
-            {
-              for(var i=0;i<data.length;i++)
-              {
-                   todoList.feedname.push({name : data[i]['Feed_Name']});
-              }
-            }).error(function(data, status, headers, config)
-            {
-            });
-
-
-      var uploader = $scope.uploader = new FileUploader({
-          url: '/postupload'
+      }).error(function(data, status, headers, config)
+      {
 
       });
-        // FILTERS
-        uploader.filters.push({
-            name: 'customFilter',
-            fn: function(item /*{File|FileLikeObject}*/, options) {
-                return this.queue.length < 10;
-            }
-        });
 
-        // CALLBACKS
+      var data = {
+        "index" : "subject",
+        "Lec_Name" : "Archarn.Anek Thamrongvorakul"
+      };
 
-        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+      $scope.subject_search = [];
+      $http.post('/getdata_on_subject_search' , data)
+      .success (function(data){
+        for (var i=0 ;i< data.length ; i++){
+          console.log(data[i]);
 
-          //  console.info('onWhenAddingFileFailed', item, filter, options);
-        };
-        uploader.onAfterAddingFile = function(fileItem) {
-          //  console.info('onAfterAddingFile', fileItem);
-        };
-        uploader.onAfterAddingAll = function(addedFileItems) {
-            //console.log(addedFileItems.length);
-          //  console.info('onAfterAddingAll', addedFileItems);
-        };
-        uploader.onBeforeUploadItem = function(item) {
-          $http.post('/get_files')
-          .success(function(data ,status,headers,config)
-          {   $scope.files_name = [];
-              for (var i=0 ; i<data.length ; i++)
-              {
-                $scope.files_name.push({name : data[i]});
-                console.log(data[i]);
-              }
-          })
-          .error(function(data,status,headers,config){
-
-          });
-
-          var dataJson = {
-            "header" : { "index" : "upload_log" , "type" : "2555"
-
-            },
-            "data" : {
-              "detail" : $scope.detail,
-              "date_log" : $scope.date_log,
-              "homework_date" : $scope.date_hw
-            }
-          }
-          $http.post('/bulkinsert_upload',dataJson).success(function(data ,status,headers,config)
-          {
-              console.log('Put data to elasticsearch success');
-
-          }).error(function(data,status,headers,config){
-
-          });
-
-
-          //  console.log (item.file.name);
-          //  console.info('onBeforeUploadItem', item);
-        };
-        uploader.onProgressItem = function(fileItem, progress) {
-           $scope.text_complete = '';
-           if (progress  === 100)
-           {
-             $scope.text_complete = 'Uploaded';
-           }
-            //console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onProgressAll = function(progress) {
-          //  console.info('onProgressAll', progress);
-        };
-        uploader.onSuccessItem = function(fileItem, response, status, headers) {
-          //  console.info('onSuccessItem', fileItem, response, status, headers);
-        };
-        uploader.onErrorItem = function(fileItem, response, status, headers) {
-          ///  console.info('onErrorItem', fileItem, response, status, headers);
-        };
-        uploader.onCancelItem = function(fileItem, response, status, headers) {
-          //  console.info('onCancelItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteItem = function(fileItem, response, status, headers) {
-          //  console.info('onCompleteItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteAll = function() {
-          //  console.info('onCompleteAll');
-        };
-
-      //  console.info('uploader', uploader);
-
-
-
+          $scope.subject_search.push({subject : data[i]["_source"]["Subject_Name"]})
+        }
+          console.log("YEAH");
+      });
 
       $scope.changepath_on_combobox = function (){
         if (todoList.fname === "เอกสารประกอบการเรียน"){
@@ -192,90 +64,3 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
 
 
   }]);
-
-/*angular.module('uploadFile',['ngFileUpload'])
-  .controller('uploadfileController', ['$scope','$window', '$http', 'Upload', function($scope, $window, $http, Upload)
-  {
-
-    var todoList = this;
-          todoList.todos = [];
-          todoList.feedname = [];
-          todoList.fname = [];
-          var radiovalue = '';
-          todoList.nameupload = 'No File Chosen.';
-          $scope.$watch('files', function ()
-          {
-            $scope.upload($scope.files);
-          });
-          $scope.upload = function (files)
-          {
-          if (files && files.length)
-            {
-                  for (var i = 0; i < files.length; i++)
-                  {
-                      var file = files[i];
-                      Upload.upload(
-                        {
-                            url: '/postupload',
-                            file: file
-                        }).progress(function (evt)
-                        {
-                            console.log('555');
-                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                            todoList.progress = progressPercentage+'%';
-                            $scope.dynamic = progressPercentage;
-                            todoList.nameupload = evt.config.file.name;
-                            console.log('progress: ' + progressPercentage + '% '+ $scope.dynamic + evt.config.file.name);
-                        }).success(function (data, status, headers, config)
-                        {
-                        });
-                  }
-          }
-        };
-
-
-  /*  $scope.nameupload = 'No File Chosen';
-
-    $scope.$watch('files', function ()
-      {
-        $scope.uploadFile($scope.files);
-      });
-
-    $scope.uploadFile = function (files)    $http.get('/api/json/Feeds_GetFeeds').success(function(data, status, headers, config)
-      {
-        for(var i=0;i<data.length;i++)
-        {
-            todoList.feedname.push({name : data[i]['Feed_Name']});
-        }
-      }).error(function(data, status, headers, config)
-      {
-      });
-    {
-      console.log('555');
-      if (files && files.length)
-      {
-            console.log('555111');
-            for (var i = 0; i < files.length; i++)
-            {
-                      var file = files[i];
-                      Upload.upload(
-                        {
-                            url: '/postupload',
-                            file: file
-                        }).progress(function (evt)
-                        {
-                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                            $scope.progress = progressPercentage+'%';
-                            $scope.dynamic = progressPercentage;
-                            $scope.nameupload = evt.config.file.name;
-                            console.log('progress: ' + progressPercentage + '% '+ $scope.dynamic + evt.config.file.name);
-                        }).success(function (data, status, headers, config)
-                        {
-                        });
-              }
-          }
-            else { console.log('sss')
-          }
-    };
-
-  }]);*/

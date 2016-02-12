@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = "lectureraddsub">
 
 <head>
 
@@ -10,7 +10,18 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/angular_script/lec_add_sub2.js"></script>
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
@@ -18,7 +29,7 @@
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller = "lectureraddsubController">
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -204,57 +215,56 @@
 
                                 <h4>เพิ่มรายวิชา</h4>
                                 <div class="hr-line-dashed"></div>
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="5" cols="50" wrap="physical">คำอธิบายรายวิชา</textarea></p><br><br>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="5" cols="50" wrap="physical" placeholder="คำอธิบายเกี่ยวกับวิชา" ng-model="Description"></textarea></p><br><br>
 
                                 <h4>ปีการศึกษา</h4>
-                                <div class="hr-line-dashed"></div>
-                                
-                                <div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">2/2558 <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">1/2558</a></li>
-                                        <li><a href="#" class="font-bold">2/2558</a></li>
-                                        <li><a href="#">1/2559</a></li>
-                                        <li><a href="#">1/2559</a></li>
-                                    </ul>
-                                </div>
+                                <div class="form-group">
+
+                              <div class = "col-lg-4">
+
+                                  <span>เทอม :&nbsp; <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "term_Select">
+                                  <option  align="center" ng-repeat = "item in term_arr" value="{{item.term}}" >{{item.term}}</option>
+                                </select>
+
+
+                                  &nbsp;&nbsp;&nbsp;&nbsp;ปีการศึกษา :&nbsp; <select data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "year_Select">
+                                  <option  ng-repeat = "item in year_arr" value="{{item.year}}" >{{item.year}}</option>
+                                </select></span>
+                              </div>
 
                                 <br><br><br>
-                                
+
                                 <h4>ข้อมูลรายวิชา</h4>
                                 <div class="hr-line-dashed"></div>
-
-                                <p> รหัสวิชา
-                                <div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">0550xxxx <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">0550xxxx</a></li>
-                                        <li><a href="#">0550xxxx</a></li>
-                                        <li><a href="#">0550xxxx</a></li>
-                                        <li><a href="#">0550xxxx</a></li>
-                                    </ul>
+                                <div class="col-lg-2">
+                                  รหัสวิชา : <input type="text"  placeholder="กรอกรหัสวิชา" class="form-control" ng-model = "subject_id">
                                 </div>
-                                </p>
-
-                                <p> ชื่อวิชา
-                                <div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">Subject Name 1 <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Subject Name 2</a></li>
-                                        <li><a href="#">Subject Name 3</a></li>
-                                        <li><a href="#">Subject Name 4</a></li>
-                                        <li><a href="#">Subject Name 5</a></li>
-                                    </ul>
+                                <div class="col-lg-3">
+                                  ชื่อวิชา  : <input type="text" placeholder="กรอกชื่อวิชา (ชื่อเต็ม)" class="form-control" ng-model = "subject_name">
                                 </div>
-                                </p><br>
-                                <p><i class="fa fa-plus-square-o"> เพิ่มวิชาถัดไป</i></p>
-
+                                <br><br><br>
+                                <div class="hr-line-dashed"></div>
+                                <div >
+                                 <button  class="btn btn-primary " style="display: block; margin: 0 auto; width: 25%;" ng-click= "subject_add_save_click()">Save</button>
+                                </div>
                                 <div class="clearfix"></div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="file-manager">
+
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="footer">
             <div class="pull-right">
@@ -285,7 +295,20 @@
                 animationHover(this, 'pulse');
             });
         });
+
+              $(".dropdown-menu li a").click(function(){
+        var selText = $(this).text();
+        $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+      });
+
+      $(document).ready(function() {
+ $('#resizing_select').change(function(){
+    $("#width_tmp_option").html($('#resizing_select option:selected').text());
+    $(this).width($("#width_tmp_select").width());
+ });
+});
     </script>
+
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
           host: '161.246.60.104:9200',
+          log : 'trace'
       });
 
 
@@ -23,10 +24,34 @@ module.exports = {
           })
           .then (function(res){
             var hits = res.hits.hits;
-             response.send(hits);
+            response.send(hits);
           })
 
+        },
+
+        search_data_teacher_to_show_contacts : function (request,response){
+          client.search({
+              index: 'teacher',
+              type : 'data',
+              body : {
+                size : "20",
+                query : {
+                  match_all : {
+                    
+                  }
+                }
+              }
+          })
+          .then (function(res){
+            var hits = res.hits.hits;
+            console.log(hits.length);
+            response.send(hits);
+          })
         }
+
+
+
+
 
 
 

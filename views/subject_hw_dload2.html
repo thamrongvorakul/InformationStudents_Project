@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id = "ng-app" ng-app = 'uploadFile'>
+<html id = "ng-app" ng-app = 'getfiles'>
 
 <head>
 
@@ -24,13 +24,15 @@
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-momentjs.js"></script>
     <script src="/dist/angular-momentjs.min.js"></script>
-    <script type="text/javascript" src="/angular_script/uploadFile.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+
+    <script type="text/javascript" src="/angular_script/getfiles.js"></script>
 
 </head>
 
 <body>
 
-    <div id="wrapper" ng-controller = 'uploadfileController' nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+    <div id="wrapper" ng-controller = 'getfilesHomeworkController' nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -316,7 +318,10 @@
                                         <span>
                                           11-11-2016
                                         </span>
-                                      <br><button class="btn btn-outline btn-primary dim" type="button" ><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
+
+                                      <a href="/FileUpload/Lec.A/Algorithm/homework/{{item.name}}" download ="">
+                                       <br><button class="btn btn-outline btn-primary dim" type="button" ><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
+                                      </a>
 
                                     </div>
 

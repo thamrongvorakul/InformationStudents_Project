@@ -17,11 +17,9 @@ module.exports = {
             User.findOne({
             email: data.data.email_id
             }, function foundUser(err, user) {
-            if (err) return res.negotiate(err);
-            if (!user) return res.notFound();
+            if (err) return response.negotiate(err);
+            if (!user) return response.notFound();
 
-            // Compare password attempt from the form params to the encrypted password
-            // from the database (`user.password`)
             require('machinepack-passwords').checkPassword({
               passwordAttempt: data.data.password,
               encryptedPassword: user.encryptedPassword
@@ -41,24 +39,16 @@ module.exports = {
 
                 // Store user id in the user session
                 request.session.me = user.id;
-                client.search({
-                    index: data.header.index,
-                    body: {
-                      query: {
-                        match_phrase: {
-                          email_id: data.data.email_id
-                        }
-                      }
-                    }
-                })
-                .then(function (res) {
-                    hits = res.hits.hits;
-                })
+
+                console.log(user.id);
 
                 // All done- let the client know that everything worked.
                 return response.ok();
               }
             });
+            // Compare password attempt from the form params to the encrypted password
+            // from the database (`user.password`)
+
           });
         },
 
@@ -114,6 +104,7 @@ module.exports = {
           var dataJson = req.allParams();
           count_name = dataJson.name;
         }
+
 
 
 

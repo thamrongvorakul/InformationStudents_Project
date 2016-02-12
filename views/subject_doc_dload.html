@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = 'getfiles'>
 
 <head>
 
@@ -14,11 +14,23 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script type="text/javascript" src="/angular_script/getfiles.js"></script>
+
 </head>
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller = 'getfilesDocumentsController'>
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -120,200 +132,22 @@
                     <div class="wrapper wrapper-content animated fadeInRight">
                         <div class="ibox-content forum-container">
 
-                            <div class="forum-item active">
+                            <div class="forum-item active" ng-repeat  = 'item in files'>
                                 <div class="row">
                                     <div class="col-md-10">
                                         <div class="forum-icon">
                                             <i class="fa fa-file-pdf-o"></i>
                                         </div>
-                                        <a  class="forum-item-title">Chapter 0 - Preface</a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/0-preface.pdf" >อ่าน</a></div>
+                                        <a  class="forum-item-title">{{item.name}}</a>
+                                        <div class="forum-sub-title">รายละเอียด {{description}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/{{item.name}}" >อ่าน</a></div>
                                     </div>
 
                                     <div class="col-md-2">
                                     <!--  <a href="http://localhost:1337/FileUpload/Lec.A/Algorithm/documents/0-preface.pdf"></a>-->
 
-                                        <a href="/FileUpload/Lec.A/Algorithm/documents/0-preface.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
+                                        <a href="/FileUpload/Lec.A/Algorithm/documents/{{item.name}}" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 1 - Introduction</a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/1-introduction.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/1-introduction.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 2 - Devide_Conqure</a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/2-divide_conqure.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/2-divide_conqure.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                      <a href="#" class="forum-item-title">Chapter 3 - Dynamic Programming</a>
-                                      <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/3-dynamicProgramming.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/3-dynamicProgramming.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 4 - Greedy </a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/4-Greedy.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/4-Greedy.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 5 - Backtracking </a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/5-backtracking.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/5-backtracking.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 6.1 - Sorting</a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/6-1sorting.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/6-1sorting.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 6.2 - Sorting (Continued) </a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/6-2sorting.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/6-2sorting.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 7 - Heap Priority Queue </a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/7-heapPriorityqueue.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/7-heapPriorityqueue.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 8.1 - Graph A (Continued)</a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/8.1-GraphA.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/8.1-GraphA.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="forum-item active">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <a href="#" class="forum-item-title">Chapter 8.2 - Graph B (Continued)</a>
-                                        <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/8.2-graphB.pdf" >อ่าน</a></div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <a href="/FileUpload/Lec.A/Algorithm/documents/8.2-graphB.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                    </div>
-                                </div>
-                              </div>
-
-                                <div class="forum-item active">
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="forum-icon">
-                                                <i class="fa fa-file-pdf-o"></i>
-                                            </div>
-                                            <a href="#" class="forum-item-title">Chapter 9 - String Matching </a>
-                                            <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/9-StringMatching.pdf" >อ่าน</a></div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                          <a href="/FileUpload/Lec.A/Algorithm/documents/9-StringMatching.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                        </div>
-                                </div>
-                              </div>
-
-                                    <div class="forum-item active">
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <div class="forum-icon">
-                                                    <i class="fa fa-file-pdf-o"></i>
-                                                </div>
-                                                <a href="#" class="forum-item-title">Chapter 10 - Number Theory </a>
-                                                <div class="forum-sub-title">รายละเอียด ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/FileUpload/Lec.A/Algorithm/documents/10-NumberTheory.pdf" >อ่าน</a></div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                              <a href="/FileUpload/Lec.A/Algorithm/documents/10-NumberTheory.pdf" download =""><button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download">ดาวน์โหลด</i></button></a>
-                                            </div>
-                                        </div>
                             </div>
                     </div>
                 </div>

@@ -21,16 +21,12 @@
  */
 
 module.exports.routes = {
-  'GET /' : {view : 'homepage'},
   'GET /register' : {view : 'register'},
-  'GET /login' : {view : 'login'},
   'GET /forgot_password' : {view :'forgot_password'},
   'GET /lecturer_add_sub2' : { view : 'file_manager_L_add_sub2'},
-  'GET /lecturer_add_sub' : {view:'file_manager_L_add_sub'},
   'GET /privateinfo' : {view:'file_manager_L_mng_privateInfo'},
   'GET /lecturer_mng_sub' : {view:'file_manager_L_mng_sub'},
   'GET /students_sub_doc' : {view:'subject_doc_dload'},
-  'GET /students_sub' : {view:'file_manager_S_subject'},
   'GET /students_sub_hw' : {view:'subject_hw_dload'},
   'GET /students_sub_news' : {view:'subject_news_dload'},
   'GET /students_sub_score' : {view:'subject_score_dload'},
@@ -43,30 +39,19 @@ module.exports.routes = {
   'GET /profileLec' : {view : 'profile_lecturer'},
 
 
-
   // api เรียกข้อมูลมาใส่ combobox
   //'GET /contacts_Lec' : 'PageController.showContact_Lec',
-  'GET /contacts_Lec' : {view : 'contacts_Lec'},
+  'GET /' : 'PageController.showHomepage',
+  'GET /contacts_Lec' : 'PageController.showContact_Lec',
+  'GET /students_sub' : 'PageController.showSubject',
+  'GET /login' : 'PageController.showLogin',
+
   'GET /getdata_on_combobox' : 'getData_on_combobox_Controller.getdata_on_combobox',
+  'GET /getdata_on_term_subject' : 'getData_on_combobox_Controller.getdata_on_term_subject',
+  'GET /getdata_on_year_subject' : 'getData_on_combobox_Controller.getdata_on_year_subject',
 
 
-  'GET /profile_Lec_kritsada' : {view : 'profile_Lec_kritsada'},
-  'GET /profile_Lec_Teera' : {view : 'profile_Lec_Teera'},
-  'GET /profile_Lec_Anantaporn' : {view : 'profile_Lec_Anantaporn'},
-  'GET /profile_Lec_Jiraporn' : {view : 'profile_Lec_Jiraporn'},
-  'GET /profile_Lec_Rungrad' : {view : 'profile_Lec_Rungrad'},
-  'GET /profile_Lec_Saichon' : {view : 'profile_Lec_Saichon'},
-  'GET /profile_Lec_Sangkorn' : {view : 'profile_Lec_Sangkorn'},
-  'GET /profile_Lec_Santana' : {view : 'profile_Lec_Santana'},
-  'GET /profile_Lec_Sarun' : {view : 'profile_Lec_Sarun'},
-  'GET /profile_Lec_Sirilak' : {view : 'profile_Lec_Sirilak'},
-  'GET /profile_Lec_Tirawat' : {view : 'profile_Lec_Tirawat'},
-  'GET /profile_Lec_Warangkana' : {view : 'profile_Lec_Warangkana'},
-  'GET /profile_Lec_Wisan' : {view : 'profile_Lec_Wisan'},
-  'GET /profile_Lec_Nuansawat' : {view : 'profile_Lec_Nuansawat'},
-  'GET /profile_Lec_Nantika' : {view : 'profile_Lec_Nantika'},
-
-
+  'GET /logout' : 'logoutController.logout',
 
   //api
   'POST /bulkinsert' : 'RegisterController.bulkinsert',
@@ -79,9 +64,18 @@ module.exports.routes = {
   'POST /test_login' : 'loginController.test_login',
   'POST /test_login2' : 'loginController.test_login2',
   'POST /search_data_teacher' : 'profilelecController.search_data_teacher',
-  'POST /reset_count_name' : 'loginController.reset_count_name',
-  'POST /remove_files' : 'uploadfileController.remove_files'
+  'POST /search_data_teacher_to_show_contacts' : 'profilelecController.search_data_teacher_to_show_contacts',
 
+  'POST /reset_count_name' : 'loginController.reset_count_name',
+  'POST /remove_files' : 'uploadfileController.remove_files',
+
+  'POST /get_files_homework' : 'getfilesController.get_files_homework',
+  'POST /get_files_documents' : 'getfilesController.get_files_documents',
+  'POST /get_files_news' : 'getfilesController.get_files_news',
+  'POST /get_files_score' : 'getfilesController.get_files_score',
+  'POST /insert_news_data' : 'getfilesController.insert_news_data',
+  'POST /insert_data_to_db_teacher' : 'lec_sub_addController.insert_data_to_db_teacher',
+  'POST /getdata_on_subject_search' : 'getData_on_combobox_Controller.getdata_on_subject_search'
 
   /***************************************************************************
   *                                                                          *

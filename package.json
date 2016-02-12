@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "angular-local-storage": "^0.2.2",
     "angular-momentjs": "^0.2.2",
     "bower": "^1.4.1",
     "ejs": "~0.8.4",

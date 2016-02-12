@@ -32,10 +32,7 @@ angular.module('register', [])
    $http.post('/bulkinsert', jsonData).success(function(data, status, headers, config)
             {
               $window.alert('Register Complete');
-
-
-
-              location.href = 'login';
+              console.log(data.id);
             })
             .error(function(data, status, headers, config)
             {
@@ -44,10 +41,7 @@ angular.module('register', [])
   };
 
   $scope.changepath =  function(){
-
-
-
-      //location.href = "login";
+      location.href = "login";
   };
 
 

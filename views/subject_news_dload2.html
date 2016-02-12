@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = 'getfiles'>
 
 <head>
 
@@ -14,11 +14,24 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/angular_script/getfiles.js"></script>
+
 </head>
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller = 'getfilesNewsController'>
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -182,7 +195,7 @@
                         <li>
                             <a href="landing.html">Home</a>
                         </li>
-                        
+
                         <li class="active">
                             <strong>Subject</strong>
                         </li>
@@ -191,57 +204,46 @@
             </div>
         <div class="wrapper wrapper-content">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="ibox ">
                         <div class="ibox-content">
                             <div class="file-manager">
-                                <h5>Upload:</h5>
-                                <p>Description</p><br>
+                                <h5>Video Name:</h5>
+                                <input type="text" placeholder="Write Video Name..." class="form-control" ng-model = 'VDO_Name'>
                                 <div class="hr-line-dashed"></div>
 
-                                <button class="btn btn-primary btn-block">Upload Files</button>
-                                <div class="hr-line-dashed"></div><br>
+                                <h5>Link:</h5>
+                                <input type="text" placeholder="Insert URL" class="form-control" ng-model = 'VDO_Link'>
+                                <div class="hr-line-dashed"></div>
 
-                                <p>Upload in Progress</p>
-                                <div class="progress progress-striped active">
-                                    <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" role="progressbar" class="progress-bar progress-bar-success">
-                                        <span class="sr-only">40% Complete (success)</span>
+                                <h5>Description:</h5>
+                                <div class="social-comment">
+                                    <div class="media-body">
+                                         <textarea class="form-control" placeholder="Write Description..." ng-model = 'VDO_Description'></textarea>
                                     </div>
                                 </div>
-                                
+                                <div class="hr-line-dashed"></div><br><br>
+
+                                <button class="btn btn-primary btn-block" ng-click = 'submit_news_click()'>Submit</button><br>
+
                                 <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <div class="ibox float-e-margins animated fadeInRight">
+                <div class="col-lg-8" >
+                    <div class="ibox float-e-margins animated fadeInRight" ng-repeat = "item in files">
                         <div class="ibox-content">
                             <figure>
-                                <iframe width="760" height="349" src="http://www.youtube.com/embed/bwj2s_5e12U" frameborder="0" allowfullscreen></iframe>    
+                                <iframe width="760" height="349"  ng-src="{{trustSrc(item.name._source.Embed_Code)}}" frameborder="0" allowfullscreen></iframe>
                             </figure>
                             <br>
-                            <h4><strong>ชื่อวิดีโอ 1</strong></h4>
-                            <p><i class="fa fa-clock-o"></i> Uploaded on October 27, 2011</p>
+                            <h4><strong>{{item.name._source.Video_Name}}</strong></h4>
+                            <p><i class="fa fa-clock-o"></i> {{item.name._source.Date_Upload}}</p>
                             <h5>
-                                ชื่อหัวข้อ 1
+                                วิดีโอประกอบการสอน
                             </h5>
-                            <p>อธิบายหัวข้อ</p>
-                        </div>
-                    </div>
-
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-content">
-                            <figure>
-                                <iframe width="760" height="349" src="http://www.youtube.com/embed/bwj2s_5e12U" frameborder="0" allowfullscreen></iframe>    
-                            </figure>
-                            <br>
-                            <h4><strong>ชื่อวิดีโอ 2</strong></h4>
-                            <p><i class="fa fa-clock-o"></i> Uploaded on October 27, 2011</p>
-                            <h5>
-                                ชื่อหัวข้อ 2
-                            </h5>
-                            <p>อธิบายหัวข้อ</p>
+                            <p>{{item.name._source.Description}}</p>
                         </div>
                     </div>
                 </div>
