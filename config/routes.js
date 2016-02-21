@@ -37,8 +37,8 @@ module.exports.routes = {
   'GET /subject_score_dload2' : {view : 'subject_score_dload2'},
   'GET /index' :{view : 'index'},
   'GET /profileLec' : {view : 'profile_lecturer'},
-
-
+  'GET /project_detail' : {view : 'project_detail'},
+  'GET /compose_mail' : {view :'mail_compose'},
   // api เรียกข้อมูลมาใส่ combobox
   //'GET /contacts_Lec' : 'PageController.showContact_Lec',
   'GET /' : 'PageController.showHomepage',
@@ -75,7 +75,11 @@ module.exports.routes = {
   'POST /get_files_score' : 'getfilesController.get_files_score',
   'POST /insert_news_data' : 'getfilesController.insert_news_data',
   'POST /insert_data_to_db_teacher' : 'lec_sub_addController.insert_data_to_db_teacher',
-  'POST /getdata_on_subject_search' : 'getData_on_combobox_Controller.getdata_on_subject_search'
+  'POST /getdata_on_subject_search' : 'getData_on_combobox_Controller.getdata_on_subject_search',
+  'POST /get_data_on_elasticsearch' :'lec_sub_addController.get_data_on_elasticsearch',
+  'POST /delete_subject_on_elasticsearch' : 'lec_sub_addController.delete_subject_on_elasticsearch',
+  'POST /get_term_year' : 'uploadfileController.get_term_year',
+  'POST /put_mailbox_to_elasticsearch' : 'mailboxController.put_mailbox_to_elasticsearch'
 
   /***************************************************************************
   *                                                                          *

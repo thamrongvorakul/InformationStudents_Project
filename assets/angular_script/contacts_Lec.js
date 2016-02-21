@@ -1,20 +1,51 @@
-angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorageModule' ,'ngCookies'])
+angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorageModule' ,'ngCookies' , 'summernote' ])
 .controller('contactslecController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , 'localStorageService' , '$cookies',
-  function ( $scope, $rootScope,Upload, $http , FileUploader ,  localStorageService , $cookies)
+  function ( $scope, $rootScope,Upload, $http , FileUploader ,  localStorageService , $cookies )
   {
 
 
-      $scope.data_teacher_show_contacts = [];
 
+      $scope.data_teacher_show_contacts = [];
+      $scope.message_for_mail = '';
+      $scope.subject_for_mail = '';
+      $scope.lecname_for_mail = '';
+
+      $scope.send_mail_click = function (){
+        var data = {
+          "header" : {
+            "index" : "mailbox",
+            "type" : "send"
+          },
+          "data" : {
+            "Lec_Name" : "Archarn.Anek Thamrongvorakul",
+            "Std_Name" : "Wichittra Iam-Itsara",
+            "Subject" : $scope.subject_for_mail,
+            "Message" : $scope.message_for_mail,
+            "Date" : moment().format('MMMM Do YYYY, h:mm:ss a'),
+            "Status" : "0"
+          }
+        };
+
+        $http.post('/put_mailbox_to_elasticsearch' , data)
+        .success(function(data){
+          alert('Send Mail Success !!');
+        });
+
+      };
+      $scope.init_lecname = function (lecname){
+        $scope.lecname_for_mail = lecname;
+      }
       $http.post('/search_data_teacher_to_show_contacts')
       .success(function(data){
-        console.log('5555');
         for ( var i = 0 ; i< data.length ; i++){
           $scope.data_teacher_show_contacts.push({data : data[i]});
-          console.log(data[i]);
         }
       });
 
+      $scope.test_click = function (){
+        console.log($scope.lecname_for_mail);
+        console.log($scope.message_for_mail );
+      };
 
       $scope.wisan_click = function (name_lec){
         $scope.education = [];
@@ -29,7 +60,6 @@ angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorag
         $scope.tel_no = '';
 
 
-        console.log(name_lec);
                   data2 = {
                   'Name' : name_lec
                   };

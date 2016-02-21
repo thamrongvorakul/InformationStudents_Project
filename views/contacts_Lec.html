@@ -10,21 +10,27 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
+    <link href="css/summernote-bs3.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/summernote/summernote/v0.7.3/dist/summernote.css" rel="stylesheet">
+
 
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/summernote/summernote/v0.7.2/dist/summernote.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="/dist/angular-summernote.min.js"></script>
     <script src="/dist/ng-file-upload-shim.min.js"></script>
     <script src="/dist/ng-file-upload.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
     <script src="/dist/angular-cookies.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+
+
     <script src="/dist/angular-cookies.min.js"></script>
     <script src="/dist/text/angular-file-upload.min.js"></script>
-    <script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
     <script type="text/javascript" src="/angular_script/contacts_Lec.js"></script>
 
 </head>
@@ -41,8 +47,7 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Guest</strong>
-                             </a>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Guest</strong></a>
                 </li>
 
             </ul>
@@ -90,17 +95,41 @@
             </div>
         <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
-            <div class="col-lg-4" ng-repeat = "item in data_teacher_show_contacts"><!อ.วิสันต์>
-                <div class="contact-box center-version" >
+            <div class="col-lg-4 " ng-repeat = "item in data_teacher_show_contacts"><!อ.วิสันต์>
 
-                    <a ng-click = "wisan_click(item.data._source.Name)" data-toggle="modal" data-target="#myModal4" >
+                <div class="contact-box center-version " >
+
+                    <a ng-click = "wisan_click(item.data._source.Name)"  data-toggle="modal" data-target="#myModal4" >
+
+                      <img alt="image" class="img-circle" src="{{item.data._source.path_file_pic_icon}}" >
+
+
+                      <h3 class="m-b-xs"><strong >{{item.data._source.Name}}</strong></h3>
+
+
+                      <div class="font-bold" >{{item.data._source.position}} </div>
+                      <address class="m-t-md">
+                          <strong>ติดต่อ</strong><br>
+                          ห้องพัก : {{item.data._source.aboutme.room}}<br>
+                          อีเมล : {{item.data._source.aboutme.email}}<br>
+                          <abbr title="Phone">P:</abbr>  {{item.data._source.aboutme.tel_no}}
+                      </address>
+
+
+                  <div class="contact-box-footer">
+                      <div class="m-t-xs btn-group">
+                          <a class="btn btn-xs btn-white"><i class="fa fa-toggle-on" ></i> Status</a>
+                          <a class="btn btn-xs btn-white" ng-click="init_lecname(item.data._source.Name)"data-toggle="modal" data-target="#myModal5"><i class="fa fa-envelope"></i> Email</a>
+
+                      </div>
+                  </div></a>
                         <div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
 
                             <div class="modal-dialog">
                                 <div class="modal-content animated fadeIn">
 
                                   <div class="ibox-content profile-content">
-                                      <p align = "center"><img alt="image" class="img-responsive animated fadeInRight" src="{{path_file_pic_main}}"></p>
+                                      <p align = "center"><img alt="image" class="img-responsive animated fadeInLeft" src="{{path_file_pic_main}}"></p>
                                       <h4><strong >{{name_lec}}</strong></h4>
                                       <p><i class="fa fa-map-marker"></i> ห้องพัก : {{room_lec}}</p>
                                       <h5>
@@ -178,37 +207,46 @@
                                 </div>
                             </div>
                         </div>
-                        <img alt="image" class="img-circle" src="{{item.data._source.path_file_pic_icon}}" >
-
-
-                        <h3 class="m-b-xs"><strong >{{item.data._source.Name}}</strong></h3>
-
-
-                        <div class="font-bold" >{{item.data._source.position}} </div>
-                        <address class="m-t-md">
-                            <strong>ติดต่อ</strong><br>
-                            ห้องพัก : {{item.data._source.aboutme.room}}<br>
-                            อีเมล : {{item.data._source.aboutme.E-mail}}<br>
-                            <abbr title="Phone">P:</abbr>  {{item.data._source.aboutme.tel_no}}
-                        </address>
-
-                    </a>
-                    <div class="contact-box-footer">
-                        <div class="m-t-xs btn-group">
-                            <a class="btn btn-xs btn-white"><i class="fa fa-toggle-on" ></i> Status</a>
-                            <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
-
-                        </div>
-                    </div>
 
 
                 </div>
+
             </div>
+            <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <h4 class="modal-title">Send Mails</h4>
+                              <div class="mail-body">
+                                <form class="form-horizontal"  >
+                                    <div class="form-group"><label class="col-sm-2 control-label">To:</label>
+                                        <div class="col-sm-10"><input type="text" class="form-control" value="{{lecname_for_mail}}"></div>
+                                    </div>
+                                    <div class="form-group"><label class="col-sm-2 control-label">Subject:</label>
+                                        <div class="col-sm-10"><input type="text" class="form-control" value = "{{subject_for_mail}}" ng-model="subject_for_mail"></div>
+                                    </div>
+                                </form>
 
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                          <div class="mail-text h-200">
+                            <summernote height="500" ng-model="message_for_mail"> </summernote>
 
+                          <div class="clearfix"></div>
 
-
-
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <div class="mail-body text-right tooltip-demo">
+                              <a href="#" ng-click="send_mail_click()" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send"><i class="fa fa-reply"></i> Send</a>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         </div>
@@ -224,15 +262,14 @@
         </div>
         </div>
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="js/inspinia.js"></script>
+        <script src="js/plugins/pace/pace.min.js"></script>
+        <script src="js/plugins/iCheck/icheck.min.js"></script>
+
+
 
 
 </body>

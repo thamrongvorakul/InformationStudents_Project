@@ -1,7 +1,7 @@
 var app = angular.module('lectureraddsub', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize' ]);
 
-app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,
-  function ( $scope, $rootScope,Upload, $http , FileUploader   )
+app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'$window',
+  function ( $scope, $rootScope,Upload, $http , FileUploader  ,$window )
   {
     $scope.term_arr = [];
     $scope.year_arr = [];
@@ -10,6 +10,16 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     $scope.subject_id = '';
     $scope.subject_name = '';
     $scope.Description = '';
+
+    $http.post('/get_data_on_elasticsearch' , {Lec_Name : 'Archarn.Anek Thamrongvorakul'})
+    .success (function (data){
+        $scope.subject_arr = [];
+        for (var i=0 ; i<data.length ; i++){
+          $scope.subject_arr.push({data : data[i]})
+        }
+
+    });
+
     $http.get('/getdata_on_term_subject')
     .success(function(data, status, headers, config)
     {
@@ -33,6 +43,21 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     }).error(function(data, status, headers, config)
     {
     });
+
+
+    $scope.remove_click = function (id,type){
+      console.log(id + "  " + type);
+      var data = {
+          "header" : {"type":type , "id" : id}
+      };
+
+      $http.post('/delete_subject_on_elasticsearch' , data )
+      .success(function(data){
+        alert('ลบวิชาที่เลือกเรียบร้อย !!');
+        location.reload();
+      });
+
+    };
 
     $scope.subject_add_save_click = function (){
 

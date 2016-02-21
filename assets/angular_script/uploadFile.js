@@ -1,7 +1,7 @@
 
-angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-momentjs'])
-.controller('uploadfileController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , '$moment',
-  function ( $scope, $rootScope,Upload, $http , FileUploader , $moment )
+angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-momentjs','LocalStorageModule','angular.filter'])
+.controller('uploadfileController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , '$moment','localStorageService' ,
+  function ( $scope, $rootScope,Upload, $http , FileUploader , $moment ,  localStorageService)
   {
       var todoList = this;
       todoList.todos = [];
@@ -17,6 +17,33 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       $scope.button_file_name = '';
 
       $scope.subject_name_select = '';
+      $scope.term = '';
+      $scope.year = '';
+
+      $scope.change_subject = function (){
+        var data = {
+          subject_name : $scope.subject_name_select
+        };
+        $scope.term_year_arr = [];
+        $http.post('/get_term_year' , data)
+        .success(function(data){
+          for (var i=0 ; i< data.length ; i++){
+            $scope.term_year_arr.push({data : data[i]['_source']['Term'],
+                                        data2 : data[i]['_type']})
+          }
+        });
+      };
+
+
+      if ($scope.subject_name_select !== ''){
+        var data = {
+          subject : $scope.subject_name_select
+        };
+        $http.post('/get_term_and_year' , data)
+        .success(function(data){
+        })
+      }
+
 
       $http.get('/getdata_on_combobox')
       .success(function(data, status, headers, config)
@@ -27,7 +54,6 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
         }
       }).error(function(data, status, headers, config)
       {
-
       });
 
       var data = {
@@ -39,25 +65,33 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       $http.post('/getdata_on_subject_search' , data)
       .success (function(data){
         for (var i=0 ;i< data.length ; i++){
-          console.log(data[i]);
-
           $scope.subject_search.push({subject : data[i]["_source"]["Subject_Name"]})
         }
-          console.log("YEAH");
       });
 
       $scope.changepath_on_combobox = function (){
         if (todoList.fname === "เอกสารประกอบการเรียน"){
+          localStorageService.set("subject_name", $scope.subject_name_select);
+          localStorageService.set("term", $scope.term);
+          localStorageService.set("year", $scope.year);
           location.href = 'subject_doc_dload2'
         }
         else if (todoList.fname === "การบ้าน"){
-
+          localStorageService.set("subject_name", $scope.subject_name_select);
+          localStorageService.set("term", $scope.term);
+          localStorageService.set("year", $scope.year);
           location.href = 'subject_hw_dload2'
         }
         else if (todoList.fname === "อัพเดทข่าวสาร"){
+          localStorageService.set("subject_name", $scope.subject_name_select);
+          localStorageService.set("term", $scope.term);
+          localStorageService.set("year", $scope.year);
           location.href = 'subject_news_dload2'
         }
         else if (todoList.fname === "คะแนนสอบ"){
+          localStorageService.set("subject_name", $scope.subject_name_select);
+          localStorageService.set("term", $scope.term);
+          localStorageService.set("year", $scope.year);
           location.href = 'subject_score_dload2'
         }
       };

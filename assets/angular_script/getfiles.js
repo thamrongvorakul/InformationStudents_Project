@@ -1,7 +1,7 @@
-var app = angular.module('getfiles', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize' ]);
+var app = angular.module('getfiles', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize','LocalStorageModule' ]);
 
-app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,
-  function ( $scope, $rootScope,Upload, $http , FileUploader   )
+app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'localStorageService' ,
+  function ( $scope, $rootScope,Upload, $http , FileUploader  ,localStorageService )
   {
     $scope.description = 'ไฟล์การบ้าน';
     $scope.date = '11-11-2559';
@@ -13,6 +13,8 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
         $scope.files.push({name : data[i]});
       }
     });
+
+    console.log(localStorageService.get('subject_name'));
 
     var todoList = this;
     todoList.todos = [];
@@ -27,16 +29,17 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
     $scope.date_hw = "11-11-1111";
     $scope.button_file_name = '';
 
+    console.log($scope.date_log);
 
 
 
-    $scope.remove_queue = function (files_name){
-      /*var x = document.getElementById("mySelectQueue");
-      x.remove(files_name);*/
 
-    };
-
-    $http.post('/get_files')
+    $http.post('/get_files_homework' , {
+      subject :  localStorageService.get('subject_name'),
+      term : localStorageService.get('term'),
+      year : localStorageService.get('year'),
+      Lec_Name : 'Archarn.Anek Thamrongvorakul'
+    })
     .success(function(data ,status,headers,config)
     {   $scope.files_name = [];
         for (var i=0 ; i<data.length ; i++)
@@ -46,15 +49,17 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
         }
     })
     .error(function(data,status,headers,config){
-
     });
 
 
     $scope.remove_files = function (files_name){
-
-
       var data2 = {
-        'files_name' : files_name
+        files_name : files_name,
+        subject :  localStorageService.get('subject_name'),
+        term : localStorageService.get('term'),
+        year : localStorageService.get('year'),
+        Lec_Name : 'Archarn.Anek Thamrongvorakul',
+        path : 'homework'
       }
 
       $http.post ('/get_files')
@@ -116,7 +121,12 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
         //  console.info('onAfterAddingAll', addedFileItems);
       };
       uploader.onBeforeUploadItem = function(item) {
-        item.formData.push({path:'homework'});
+        item.formData.push({path:'homework',
+                            subject :  localStorageService.get('subject_name'),
+                            term : localStorageService.get('term'),
+                            year : localStorageService.get('year'),
+                            Lec_Name : 'Archarn.Anek Thamrongvorakul'
+                            });
         $http.post('/get_files')
         .success(function(data ,status,headers,config)
         {   $scope.files_name = [];
@@ -186,8 +196,8 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
 
   }]);
 
-app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,
-    function ( $scope, $rootScope,Upload, $http , FileUploader   )
+app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'localStorageService' ,
+    function ( $scope, $rootScope,Upload, $http , FileUploader ,localStorageService   )
     {
 
       $scope.description = 'ไฟล์เอกสาประกอบการเรียน';
@@ -198,7 +208,7 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
       $scope.date_hw = "11-11-1111";
       $scope.button_file_name = '';
 
-
+      console.log( localStorageService.get('subject_name'));
       $http.post('/get_files_documents').success(function(data){
         $scope.files = [];
 
@@ -211,8 +221,12 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
 
       $scope.remove_files = function (files_name){
         var data2 = {
-          'files_name' : files_name
-        }
+          files_name : files_name,
+          subject :  localStorageService.get('subject_name'),
+          term : localStorageService.get('term'),
+          year : localStorageService.get('year'),
+          Lec_Name : 'Archarn.Anek Thamrongvorakul',
+          path : 'homework'        }
 
         $http.post ('/get_files_documents')
 
@@ -263,7 +277,12 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
           //  console.info('onAfterAddingAll', addedFileItems);
         };
         uploader.onBeforeUploadItem = function(item) {
-          item.formData.push({path:'documents'});
+          item.formData.push({path:'documents',
+                              subject :  localStorageService.get('subject_name'),
+                              term : localStorageService.get('term'),
+                              year : localStorageService.get('year'),
+                              Lec_Name : 'Archarn.Anek Thamrongvorakul'
+                              });
           $http.post('/get_files')
           .success(function(data ,status,headers,config)
           {   $scope.files = [];
@@ -464,6 +483,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
             //  console.info('onAfterAddingAll', addedFileItems);
           };
           uploader.onBeforeUploadItem = function(item) {
+
             $http.post('/get_files')
             .success(function(data ,status,headers,config)
             {   $scope.files = [];
@@ -555,7 +575,12 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
 
           $scope.remove_files = function (files_name){
             var data2 = {
-              'files_name' : files_name
+              files_name : files_name,
+              subject :  localStorageService.get('subject_name'),
+              term : localStorageService.get('term'),
+              year : localStorageService.get('year'),
+              Lec_Name : 'Archarn.Anek Thamrongvorakul',
+              path : 'homework'
             }
 
             $http.post ('/get_files_score')
@@ -607,7 +632,12 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
               //  console.info('onAfterAddingAll', addedFileItems);
             };
             uploader.onBeforeUploadItem = function(item) {
-              item.formData.push({path:'score'});
+              item.formData.push({path:'score',
+                                  subject :  localStorageService.get('subject_name'),
+                                  term : localStorageService.get('term'),
+                                  year : localStorageService.get('year'),
+                                  Lec_Name : 'Archarn.Anek Thamrongvorakul'
+                                  });
               $http.post('/get_files')
               .success(function(data ,status,headers,config)
               {   $scope.files = [];

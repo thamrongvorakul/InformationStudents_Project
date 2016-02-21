@@ -6,7 +6,6 @@ var    client = new elasticsearch.Client({
       });
       var path = require('path');
       var fs = require('fs');
-      var path_hw = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/homework/';
       var path_doc = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/documents/';
       var path_news = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/news/';
       var path_score = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/score/';
@@ -17,6 +16,14 @@ module.exports = {
 
 
             get_files_homework: function (req,res){
+              var data = req.allParams();
+              var lec_name_split = data.Lec_Name.split(" ");
+              var subject_split = data.subject.split(" ");
+              var lec_name = '';
+              var subject = '';
+              for (var i=0;i<lec_name_split.length;i++){lec_name = lec_name + lec_name_split[i]};
+              for (var i=0;i<subject_split.length;i++){subject = subject+subject_split[i]};
+              var path_hw = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/homework/';
               var files = fs.readdirSync(path_hw);
 
               files.sort(function(a, b) {

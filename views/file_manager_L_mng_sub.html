@@ -19,6 +19,9 @@
     <script src="/dist/ng-file-upload-shim.min.js"></script>
     <script src="/dist/ng-file-upload.min.js"></script>
     <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
+    <script src="/dist/angular-filter.min.js"></script>
+    <script src="/dist/angular-filter.js"></script>
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-momentjs.js"></script>
     <script src="/dist/angular-momentjs.min.js"></script>
@@ -51,15 +54,17 @@
                         CS
                     </div>
                 </li>
-
+                <li>
+                    <a href="/project_detail"><i class="fa fa-th-large"></i> <span class="nav-label">ข้อมูลเบื้องต้น</span></a>
+                </li>
                 <li>
                     <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลส่วนตัว</span></a>
                 </li>
                 <li>
                     <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลการสอน</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="file_manager_L_add_sub.html">เพิ่มรายวิชา</a></li>
-                        <li><a href="file_manager_L_mng_sub.html">จัดการรายวิชาที่สอน</a></li>
+                      <li><a href="/lecturer_add_sub2">เพิ่มรายวิชา</a></li>
+                      <li><a href="/lecturer_mng_sub">จัดการรายวิชาที่สอน</a></li>
                     </ul>
                 </li>
             </ul>
@@ -220,10 +225,22 @@
                                 <div class="hr-line-dashed"></div>
 
 
-                                <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "subject_name_select">
-                                  <option   ng-repeat = "item in subject_search" value="{{item.subject}}" >{{item.subject}}</option>
+                                <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "subject_name_select" ng-change="change_subject()">
+                                  <option   ng-repeat = "item in subject_search | unique: 'subject'" value="{{item.subject}}" >{{item.subject}}</option>
                                </select>
 
+                                <br><br>
+
+                                <h4>ปีการศึกษาที่ต้องการ</h4>
+
+                                <div class="hr-line-dashed"></div>
+                                  เทอม : <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "term">
+                                    <option ng-repeat = "item in term_year_arr| unique: 'data'" value="{{item.data}}" >{{item.data}}</option>
+                                  </select>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ปี : <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "year">
+                                    <option ng-repeat = "item in term_year_arr | unique: 'data2'" value="{{item.data2}}" >{{item.data2}}</option>
+                                  </select>
                                 <br><br>
 
                                 <h4>หัวข้อที่ต้องการจัดการ</h4>

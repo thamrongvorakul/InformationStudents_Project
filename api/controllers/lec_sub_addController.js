@@ -25,25 +25,61 @@ module.exports = {
     });
 
     var exec = require('child_process').exec,child;
-    var str_name = dataJson.data.Lec_Name.replace(" " , "");
+    var str_lec_name_split = dataJson.data.Lec_Name.split(" ");
+    var str_sub_split = dataJson.data.Subject_Name.split(" ");
+    var str_name = '';
+    var str_sub = '';
+    for (var i =0;i<str_lec_name_split.length; i++){str_name = str_name + str_lec_name_split[i]};
+    for (var i =0;i<str_sub_split.length; i++){str_sub = str_sub + str_sub_split[i]};
 
-    var str_sub = dataJson.data.Subject_Name.replace(" ", "");
-          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\homework',
+          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\homework',
           function (error, stdout, stderr)
           {
           });
-          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\documents',
+          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\documents',
           function (error, stdout, stderr)
           {
           });
-          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\news',
+          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\news',
           function (error, stdout, stderr)
           {
           });
-          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\score',
+          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\score',
           function (error, stdout, stderr)
           {
           });
     return res.ok();
-  }
+  },
+
+    get_data_on_elasticsearch : function (req,res){
+      var dataJson = req.allParams();
+      client.search({
+            index: 'subject',
+            body: {
+              size : "100",
+              query: {
+                match_phrase: {
+                  Lec_Name: dataJson.Lec_Name
+                }
+              }
+            }
+          })
+          .then(function (response) {
+              var hits = response.hits.hits;
+              res.send(hits);
+          })
+    },
+
+    delete_subject_on_elasticsearch : function (req,res){
+      var dataJson = req.allParams();
+            client.delete({
+                    index: 'subject',
+                    type: dataJson.header.type,
+                    id: dataJson.header.id
+            },
+            function (error, response) {
+              return res.ok();
+            });
+    }
+
 };

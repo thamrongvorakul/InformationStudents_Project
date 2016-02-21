@@ -42,26 +42,24 @@
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
                              </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="profile.html">Profile</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="mailbox.html">Mailbox</a></li>
-                            <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
+
                         </ul>
                     </div>
                     <div class="logo-element">
                         CS
                     </div>
                 </li>
-
+                <li>
+                    <a href="/project_detail"><i class="fa fa-th-large"></i> <span class="nav-label">ข้อมูลเบื้องต้น</span></a>
+                </li>
                 <li>
                     <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลส่วนตัว</span></a>
                 </li>
                                 <li>
                     <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลการสอน</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="file_manager_L_add_sub.html">เพิ่มรายวิชา</a></li>
-                        <li><a href="file_manager_L_mng_sub.html">จัดการรายวิชาที่สอน</a></li>
+                        <li><a href="/lecturer_add_sub2">เพิ่มรายวิชา</a></li>
+                        <li><a href="/lecturer_mng_sub">จัดการรายวิชาที่สอน</a></li>
                     </ul>
                 </li>
             </ul>
@@ -82,7 +80,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to Website. <strong>Archarn.ANEK THAMRONGVORAKUL</strong></span>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -215,6 +213,7 @@
 
                                 <h4>เพิ่มรายวิชา</h4>
                                 <div class="hr-line-dashed"></div>
+
                                 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="5" cols="50" wrap="physical" placeholder="คำอธิบายเกี่ยวกับวิชา" ng-model="Description"></textarea></p><br><br>
 
                                 <h4>ปีการศึกษา</h4>
@@ -253,18 +252,63 @@
                         </div>
                     </div>
                 </div>
+              </div>
+              <div class="col-lg-12">
+                  <div class="ibox float-e-margins">
+                      <div class="ibox-content">
+                        <h3>รายวิชาที่ดูแล</h3>
+                      </div>
+
+                      <div class="wrapper wrapper-content animated fadeInRight" >
+                          <div class="row">
+                              <div class="col-lg-4" ng-repeat="item in subject_arr">
+                                  <div class="ibox">
+                                      <div class="ibox-title">
+                                          <span class="label label-primary pull-right">NEW</span>
+                                          <h5>{{item.data._source.Subject_Id}} : {{item.data._source.Subject_Name}}</h5>
+                                      </div>
+                                      <div class="ibox-content">
+                                          <div class="team-members">
+                                              <a href="#"><img alt="member" class="img-circle" src="img/Lecturer_Pic/1.1_profile.jpg"></a>
+                                          </div>
+                                          <h4>รายละเอียดของวิชา :<strong>{{item.data._source.Subject_Name}}</strong></h4>
+                                          <p>
+                                            {{item.data._source.Description}}
+                                          </p>
+                                          <div>
+                                              <span>ปีการศึกษา {{item.data._source.Term}}/{{item.data._type}}</span>
+                                              <div class="progress progress-mini">
+                                                  <div style="width: 100%;" class="progress-bar"></div>
+                                              </div><br>
+                                              <div class="col-lg-8">
+                                              <h4>โดย : {{item.data._source.Lec_Name}}</h4>
+                                            </div>
+
+                                              <p align="right"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> Edit</button>
+                                              <button class="btn btn-warning " type="button" ng-click = "remove_click(item.data._id , item.data._type)"><i class="fa fa-warning"></i> <span class="bold">Remove</span></button></p>
+
+                                          </div>
+
+
+                                      </div>
+                                  </div>
+
+
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+
             </div>
 
 
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        <div class="file-manager">
 
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+
         </div>
         <div class="footer">
             <div class="pull-right">
