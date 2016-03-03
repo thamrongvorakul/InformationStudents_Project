@@ -43,12 +43,21 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     }).error(function(data, status, headers, config)
     {
     });
+    var lec_name = 'Archarn.Anek Thamrongvorakul';
+    var lec_name_split = lec_name.split(" ");
+    var lec_name_after_split = '';
+    for (var i=0 ; i< lec_name_split.length ; i++){lec_name_after_split = lec_name_after_split + lec_name_split[i]};
 
-
-    $scope.remove_click = function (id,type){
+    $scope.remove_click = function (id,type,sub_name,term){
       console.log(id + "  " + type);
+      console.log(sub_name , term);
       var data = {
-          "header" : {"type":type , "id" : id}
+          "header" : {"type":type , "id" : id},
+          "data" : {
+            Subject_Name : sub_name,
+            Term : term,
+            Lec_Name : lec_name_after_split
+          }
       };
 
       $http.post('/delete_subject_on_elasticsearch' , data )
@@ -72,15 +81,25 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
           "Term" : $scope.term_Select,
           "Description" : $scope.Description,
           "Lec_Name" : "Archarn.Anek Thamrongvorakul",
-          "Created_By" : "Archarn.Anek Thamrongvorakul"
+          "Created_By" : "Archarn.Anek Thamrongvorakul",
+          "Date_Upload" : moment().format('MMMM Do YYYY, h:mm:ss a'),
+          "View_Count" : "0"
         }
       };
-
+      var sub_name_split = $scope.subject_name.split(" ");
+      var sub_name = '';
+      for (var i =0 ; i< sub_name_split.length ; i++){sub_name = sub_name + sub_name_split[i] + "_"}
+      var data2 = {
+        Subject_Name : sub_name,
+        Subject_Term : $scope.term_Select,
+        Subject_Year : $scope.year_Select
+      };
       $http.post('/insert_data_to_db_teacher' , data)
       .success(function(data){
-        console.log('put data to elasticsearch complete');
-        location.reload();
-      })
+        $http.post('/insert_type_for_log_follow' , data2).success(function(){
+          location.reload();
+        });
+      });
 
 
     };

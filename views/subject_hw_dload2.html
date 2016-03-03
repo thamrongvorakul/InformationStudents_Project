@@ -233,7 +233,6 @@
                                               <th ng-show="uploader.isHTML5">ดำเนินการ</th>
                                               <th>สถานะ</th>
                                               <th>Actions<th>
-
                                           </tr>
                                       </thead>
                                       <tbody>
@@ -292,7 +291,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="ibox float-e-margins animated fadeInRight" >
-                        <div class="ibox-content" id="ibox-content" >
+                        <div class="ibox-content  style1 lazur-bg" id="ibox-content" >
 
                           <h2 align="center"> UPLOADED FILES <h2>
 
@@ -310,27 +309,14 @@
                                   </div>
 
                                   <div class="vertical-timeline-content" >
-                                    <button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name)">
+                                    <button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name._source.File_Name[0].filename , item.name._id)">
                                         <span class="glyphicon glyphicon-trash"></span> Remove
                                     </button>
 
-                                      <h2>{{item.name}}</h2><br>
-                                      <p>รายละเอียดเพิ่มเติม<p>
-
-                                      <input type="text" class="form-control" placeholder="รายละเอียดเพิ่มเติมของไฟล์" required="" ng-model = "detail"></input>
-                                      <!--<a href="http://localhost:1337/FileUpload/Lec.A/Algorithm/homework/ba04a2e7-39ec-42f2-8bf6-b745c39fec6e.jpg" download ="" >Download</a>-->
+                                      <h2>{{item.name._source.File_Name[0].filename}}</h2><br>
+                                      <p> อัพโหลดเมื่อ : {{item.name._source.Date_Upload}} </p>
+                                      <a href='/FileUpload/{{item.name._source.Lec_Name}}/{{item.name._source.Subject}}/{{item.name._source.Term}}.{{item.name._source.Year}}/{{item.name._type}}/{{item.name._source.File_Name[0].filename}}' download ="" >Download</a>
                                       <div>
-                                        <span class="vertical-date">
-                                            <p>กำหนดส่งงาน</p>
-                                             <input type="text" class="form-control" placeholder="04-12-2015" required="" ng-model = "date"></input><br>
-                                        </span><br>
-                                        <span>
-                                          11-11-2016
-                                        </span>
-
-                                      <a href="/FileUpload/Lec.A/Algorithm/homework/{{item.name}}" download ="">
-                                       <br><button class="btn btn-outline btn-primary dim" type="button" ><i class="fa fa-download">&nbsp;&nbsp;ดาวน์โหลด</i></button>
-                                      </a>
 
                                     </div>
 
@@ -345,14 +331,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
-        </div>
+      
 
         </div>
             </div>

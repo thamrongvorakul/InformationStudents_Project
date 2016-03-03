@@ -39,7 +39,7 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Archarn.Anek Thamrongvorakul</strong>
                              </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
 
@@ -204,59 +204,109 @@
                     </ol>
                 </div>
             </div>
+
+
+            <div class="wrapper wrapper-content" >
+
+                <div class="row">
+                  <div class="loginColumns animated fadeInDown">
+                      <div class="row">
+
+
+                          <div class="col-md-12">
+
+                              <h2 align="center" class="font-bold">เพิ่มวิชาที่ต้องการ</h2>
+
+                              <p align="center">
+                                  กรุณาระบุรายละเอียดของวิชา เทอม ปีการศึกษา รหัสวิชา รวมไปถึงชื่อวิชา
+                              </p>
+
+                              <p align="center">
+                                  โดยข้อมูลที่ใส่ลงไปนั้นจะถูกนำไปแสดงในส่วนของหน้าจัดการรายวิชา
+                              </p>
+
+                              <p align="center">
+                                  หมายเหตุ* อาจารย์สามารถแก้ไข และลบรายวิชาของตนเองได้ จากหัวข้อด้านล่าง "รายวิชาที่ดูแล"
+                              </p>
+
+    <br><br>
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="ibox-content">
+                                <form class="m-t widget style1 lazur-bg" role="form" >
+                                  <h2 align="center"  >Create Subject</h2>
+                                </form>
+                                  <form class="m-t" role="form" >
+
+                                    <div class="ibox-content">
+                                        <div class="file-manager">
+
+
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                              <h4 align="center">กรอกรายละเอียดวิชา<h4><br>
+                                              <p align="center"><input type="text" style = "width : 650px;"placeholder="รายละเอียดวิชา" class="form-control" ng-model = 'Description'></p>
+                                          <br>
+                                            <h4 align="center">ปีการศึกษา</h4><br>
+
+                                            <div class="form-group">
+
+
+                                              <p align="center">
+                                              <span>เทอม :&nbsp; <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "term_Select">
+                                              <option  align="center" ng-repeat = "item in term_arr" value="{{item.term}}" >{{item.term}}</option>
+                                            </select>
+
+
+                                              &nbsp;&nbsp;&nbsp;&nbsp;ปีการศึกษา :&nbsp; <select data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "year_Select">
+                                              <option  ng-repeat = "item in year_arr" value="{{item.year}}" >{{item.year}}</option>
+                                            </select></span>
+                                          </p>
+
+                                            <br>
+
+                                            <h4 align="center">ข้อมูลรายวิชา</h4><br>
+                                          <p align="center">
+                                            <div class = "col-md-2"></div>
+                                            <div class="col-md-3">
+                                              รหัสวิชา : <input type="text"  style = "width : 150px;  " placeholder="กรอกรหัสวิชา" class="form-control" ng-model = "subject_id"></input>
+                                            </div>
+                                            <div class="col-md-6">
+                                              ชื่อวิชา  : <input type="text" style = "width : 300px; " placeholder="กรอกชื่อวิชา (ชื่อเต็ม)" class="form-control" ng-model = "subject_name"></input>
+                                            </div>
+                                            <br><br><br><br>
+                                            <div class="hr-line-dashed"></div>
+                                            <div>
+                                             <button  class="btn btn-primary " style="display: block; margin: 0 auto; width: 25%;" ng-click= "subject_add_save_click()">Save</button>
+                                           </div> </p>
+                                            <div class="clearfix"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                          </div>
+                      </div>
+                      <hr/>
+
+                  </div>
+
+                        </div>
+                    </div>
+                </div>
         <div class="wrapper wrapper-content">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
-                        <div class="ibox-content">
-                            <div class="file-manager">
 
-                                <h4>เพิ่มรายวิชา</h4>
-                                <div class="hr-line-dashed"></div>
-
-                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="5" cols="50" wrap="physical" placeholder="คำอธิบายเกี่ยวกับวิชา" ng-model="Description"></textarea></p><br><br>
-
-                                <h4>ปีการศึกษา</h4>
-                                <div class="form-group">
-
-                              <div class = "col-lg-4">
-
-                                  <span>เทอม :&nbsp; <select  data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "term_Select">
-                                  <option  align="center" ng-repeat = "item in term_arr" value="{{item.term}}" >{{item.term}}</option>
-                                </select>
-
-
-                                  &nbsp;&nbsp;&nbsp;&nbsp;ปีการศึกษา :&nbsp; <select data-toggle="dropdown" class="btn btn-primary dropdown-toggle" ng-model = "year_Select">
-                                  <option  ng-repeat = "item in year_arr" value="{{item.year}}" >{{item.year}}</option>
-                                </select></span>
-                              </div>
-
-                                <br><br><br>
-
-                                <h4>ข้อมูลรายวิชา</h4>
-                                <div class="hr-line-dashed"></div>
-                                <div class="col-lg-2">
-                                  รหัสวิชา : <input type="text"  placeholder="กรอกรหัสวิชา" class="form-control" ng-model = "subject_id">
-                                </div>
-                                <div class="col-lg-3">
-                                  ชื่อวิชา  : <input type="text" placeholder="กรอกชื่อวิชา (ชื่อเต็ม)" class="form-control" ng-model = "subject_name">
-                                </div>
-                                <br><br><br>
-                                <div class="hr-line-dashed"></div>
-                                <div >
-                                 <button  class="btn btn-primary " style="display: block; margin: 0 auto; width: 25%;" ng-click= "subject_add_save_click()">Save</button>
-                                </div>
-                                <div class="clearfix"></div>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
               </div>
               <div class="col-lg-12">
                   <div class="ibox float-e-margins">
-                      <div class="ibox-content">
-                        <h3>รายวิชาที่ดูแล</h3>
+                      <div class="ibox-content ">
+                        <h2 align = "center" class="widget style1 lazur-bg">รายวิชาที่ดูแล</h2>
                       </div>
 
                       <div class="wrapper wrapper-content animated fadeInRight" >
@@ -285,7 +335,7 @@
                                             </div>
 
                                               <p align="right"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> Edit</button>
-                                              <button class="btn btn-warning " type="button" ng-click = "remove_click(item.data._id , item.data._type)"><i class="fa fa-warning"></i> <span class="bold">Remove</span></button></p>
+                                              <button class="btn btn-warning " type="button" ng-click = "remove_click(item.data._id , item.data._type , item.data._source.Subject_Name , item.data._source.Term)"><i class="fa fa-warning"></i> <span class="bold">Remove</span></button></p>
 
                                           </div>
 

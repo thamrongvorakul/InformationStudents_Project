@@ -1,18 +1,15 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: 'localhost:9200',
+          host: '161.246.60.104:9200',
           log : 'trace'
       });
 
 module.exports = {
 
 
-          bulkinsert: function (req, res) {
-              var dataJson = req.allParams();
-
-
-
+          insert_user_data: function (req, res) {
+            var dataJson = req.allParams();
             var Passwords = require('machinepack-passwords');
 
             // Encrypt a string using the BCrypt algorithm.
@@ -35,39 +32,82 @@ module.exports = {
                   success: function(gravatarUrl) {
                   // Create a User with the params sent from
                   // the sign-up form --> signup.ejs
-                    User.create({
-                      ID_NO: dataJson.data.ID_NO,
-                      FName: dataJson.data.FName,
-                      LName: dataJson.data.LName,
-                      password : dataJson.data.password,
-                      email: dataJson.data.email_id,
-                      encryptedPassword: encryptedPassword,
-                      lastLoggedIn: new Date(),
-                      gravatarUrl: gravatarUrl
-                    }, function userCreated(err, newUser) {
-                      if (err) {
+                    if (dataJson.data.Type_User === 'student')
+                    {
+                        User.create({
+                          Type_User : dataJson.data.Type_User,
+                          Title : dataJson.data.Title,
+                          ID_NO: dataJson.data.ID_NO,
+                          FName: dataJson.data.FName,
+                          LName: dataJson.data.LName,
+                          password : dataJson.data.password,
+                          email: dataJson.data.email_id,
+                          encryptedPassword: encryptedPassword,
+                          lastLoggedIn: new Date(),
+                          gravatarUrl: gravatarUrl
+                        }, function userCreated(err, newUser) {
+                          if (err) {
 
-                        console.log("err: ", err);
-                        console.log("err.invalidAttributes: ", err.invalidAttributes)
-                        return res.negotiate(err);
+                            console.log("err: ", err);
+                            console.log("err.invalidAttributes: ", err.invalidAttributes)
+                            return res.negotiate(err);
+                          }
+
+                          client.bulk({
+                            body : [
+                                { index:  { _index: dataJson.header.index , _type:dataJson.header.type , _id: dataJson.data.FName + '::' + dataJson.data.LName} },
+                                { Type_User : dataJson.data.Type_User,Title : dataJson.data.Title,ID_NO: dataJson.data.ID_NO , FName :dataJson.data.FName , LName :  dataJson.data.LName ,email_id :dataJson.data.email_id ,encryptedPassword:encryptedPassword,password: dataJson.data.password }
+                            ]
+                          }, function (error, response){
+                              console.log(error);
+                          });
+                          // Log user in
+                          req.session.me = newUser.id;
+
+                          // Send back the id of the new user
+                          return res.json({
+                            id: newUser.id
+                          });
+                        });
                       }
+                      else if (dataJson.data.Type_User === 'teacher'){
+                        User.create({
 
-                      client.bulk({
-                        body : [
-                            { index:  { _index: dataJson.header.index , _type:dataJson.header.type , _id: dataJson.data.FName + '::' + dataJson.data.LName} },
-                            { ID_NO: dataJson.data.ID_NO , FName :dataJson.data.FName , LName :  dataJson.data.LName ,email_id :dataJson.data.email_id ,encryptedPassword:encryptedPassword,password: dataJson.data.password , status_login: dataJson.data.status_login}
-                        ]
-                      }, function (error, response){
-                          console.log(error);
-                      });
-                      // Log user in
-                      req.session.me = newUser.id;
+                          Type_User : dataJson.data.Type_User,
+                          Title : dataJson.data.Title,
+                          ID_NO : dataJson.data.ID_NO,
+                          FName: dataJson.data.FName,
+                          LName: dataJson.data.LName,
+                          password : dataJson.data.password,
+                          email: dataJson.data.email_id,
+                          encryptedPassword: encryptedPassword,
+                          lastLoggedIn: new Date(),
+                          gravatarUrl: gravatarUrl
+                        }, function userCreated(err, newUser) {
+                          if (err) {
 
-                      // Send back the id of the new user
-                      return res.json({
-                        id: newUser.id
-                      });
-                    });
+                            console.log("err: ", err);
+                            console.log("err.invalidAttributes: ", err.invalidAttributes)
+                            return res.negotiate(err);
+                          }
+
+                          client.bulk({
+                            body : [
+                                { index:  { _index: dataJson.header.index , _type:dataJson.header.type , _id: dataJson.data.FName + '::' + dataJson.data.LName} },
+                                { Type_User : dataJson.data.Type_User , Title: dataJson.data.Title , ID_NO: dataJson.data.ID_NO ,FName :dataJson.data.FName , LName :  dataJson.data.LName ,email_id :dataJson.data.email_id ,encryptedPassword:encryptedPassword,password: dataJson.data.password }
+                            ]
+                          }, function (error, response){
+                              console.log(error);
+                          });
+                          // Log user in
+                          req.session.me = newUser.id;
+
+                          // Send back the id of the new user
+                          return res.json({
+                            id: newUser.id
+                          });
+                        });
+                      }
                   }
                 });
               }

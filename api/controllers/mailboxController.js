@@ -22,6 +22,25 @@ module.exports = {
           res.ok();
         } ,
 
+        search_mailbox_subject : function (req,res){
+
+          var data = req.allParams();
+          client.search({
+              index: data.header.index,
+              type : data.header.type,
+              body: {
+                query: {
+                  match_phrase: {
+                    Subject: data.data.Subject
+                  }
+                }
+              }
+          })
+          .then(function (response) {
+              var hits = response.hits.hits;
+              return res.send(hits);
+        });
+      }
 
 
 };

@@ -23,6 +23,7 @@
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-momentjs.js"></script>
     <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
     <script type="text/javascript" src="/angular_script/getfiles.js"></script>
 </head>
@@ -208,7 +209,6 @@
 
                               <div class="file-manager">
                                   <h5>Upload:</h5>
-                                  <p>Description</p><br>
 
                                   <div class="hr-line-dashed"></div>
 
@@ -280,28 +280,33 @@
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="wrapper wrapper-content animated fadeInRight">
-                            <div class="ibox-content forum-container" ng-repeat = "item in files" id = 'mySelect'>
+                        <div class="ibox float-e-margins animated fadeInRight" >
+                            <div class="ibox-content  style1 lazur-bg" id="ibox-content" >
+
+                              <h2 align="center"> UPLOADED FILES <h2>
+
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="ibox float-e-margins animated fadeInRight">
+                            <div class="ibox-content forum-container" ng-repeat = "item in files_name" id = 'mySelect'>
                                 <div class="forum-item active" >
-                                  <p align = 'right' ><button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name)">
-                                      <span class="glyphicon glyphicon-trash"></span> Remove
-                                  </button> </p>
+
 
                                     <div class="row">
                                         <div class="col-md-10">
                                             <div class="forum-icon">
                                                 <i class="fa fa-file-pdf-o"></i>
                                             </div>
-                                            <a href="#" class="forum-item-title">{{ item.name }}</a>
-                                            <div class="forum-sub-title">อธิบายหัวข้อ</div>
+                                            <a href="#" class="forum-item-title">{{ item.name._source.File_Name[0].filename }}</a>
+                                            <div class="forum-sub-title">อัพโหลดเมื่อ : {{item.name._source.Date_Upload}}</div>
 
                                         </div>
-                                        <div class="col-md-2">
-
-                                            <a href = '/FileUpload/Lec.A/Algorithm/documents/{{item.name}}' download = "">
-                                              <button class="btn btn-outline btn-primary dim" type="button"><i class="fa fa-download" >ดาวน์โหลด</i></button>
-                                            </a>
-                                        </div>
+                                        <div class= "col-lg-2">
+                                        <p align = 'right' ><button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name._source.File_Name[0].filename , item.name._id)">
+                                            <span class="glyphicon glyphicon-trash"></span> Remove
+                                        </button> </p></div>
                                     </div>
                                 </div>
 
@@ -310,14 +315,7 @@
                     </div>
                 </div>
             </div>
-        <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
-        </div>
+
 
         </div>
             </div>

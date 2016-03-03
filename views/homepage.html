@@ -8,26 +8,23 @@
     <meta name="author" content="">
 
     <title>Special Project</title>
-
-    <!-- Bootstrap core CSS -->
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Animation CSS -->
     <link href="css/animate.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
     <script type="text/javascript" src="/angular_script/homepage.js"></script>
 
 </head>
 <body id="page-top" class="landing-page" >
 <div class="navbar-wrapper" ng-controller = 'homepageController' >
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container" ng-init = "init(<%= JSON.stringify(me.email) %>)">
+            <div class="container" ng-init = "init( <%= JSON.stringify(me.email) %> , <%= JSON.stringify(me.management) %> ,
+              <%= JSON.stringify(me.title_user) %>  , <%= JSON.stringify(me.name) %>,<%= JSON.stringify(me.lname) %>) ">
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -41,9 +38,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="page-scroll" href="#page-top">Home</a></li>
                         <li><a class="page-scroll" ng-click = 'lecturer_click()'>Lecturer</a></li>
-                        <li><a class="page-scroll" ng-click = 'subject_click()'>Subject</a></li>
+                        <li><a class="page-scroll" href = '/select_subject_term'>Subject</a></li>
                         <li><a class="page-scroll" href="#contact">Contact</a></li>
-                        <li><a class="page-scroll" >Management</a></li> <!-- ng-click = 'management_click()' -->
+                        <li><a class="page-scroll" ng-if = "management_2 !== '1' " href = "/lecturer_detail">Management</a></li> <!-- ng-click = 'management_click()' -->
                         <li><a class="page-scroll" ng-click = 'login_click(<%= JSON.stringify(me.title) %>)' ><%= me.title %></a></li> <!--  ng-click = 'login_click()' -->
                     </ul>
                 </div>
@@ -74,7 +71,7 @@
 
             </div>
             <!-- Set background for slide in css -->
-            <div class="header-back one"></div>
+            <div class="col-lg-12 header-back one"></div>
           </div>
           <div class="item">
               <div class="container">
@@ -106,6 +103,7 @@
           <div class="sk-double-bounce2"></div>
       </div>
 <section id="features" class="container services" ><!Lastest Update>
+
     <div class="row">
         <div class="col-lg-12 wow fadeInRight">
                 <div class="ibox float-e-margins">

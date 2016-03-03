@@ -1,8 +1,7 @@
 
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
       });
 
 
@@ -37,7 +36,7 @@ module.exports = {
                 size : "20",
                 query : {
                   match_all : {
-                    
+
                   }
                 }
               }

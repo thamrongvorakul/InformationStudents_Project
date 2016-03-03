@@ -9,17 +9,16 @@ module.exports = {
 
 	showHomepage: function (req, res) {
 
-		// If not logged in, show the public view.
 		if (!req.session.me) {
 			return res.view('homepage' ,{
 				me : {
-					title : 'Log In'
+					title : 'Log In',
+					management : '1'
 				}
 			});
 		}
 
-		// Otherwise, look up the logged-in user and show the logged-in view,
-		// bootstrapping basic user data in the HTML sent from the server
+
 		User.findOne(req.session.me, function (err, user){
 			if (err) {
 				return res.negotiate(err);
@@ -29,29 +28,46 @@ module.exports = {
 				sails.log.verbose('Session refers to a user who no longer exists- did you delete a user, then try to refresh the page with an open tab logged-in as that user?');
 				return res.view('homepage');
 			}
-
-			return res.view('homepage', {
-				me: {
-					title : 'Log Out',
-					id: user.id,
-					name: user.name,
-					email: user.email,
-				}
-			});
-
+			if (user.Type_User === 'student'){
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						name: user.name,
+						email: user.email,
+					}
+				});
+			}
+			else if (user.Type_User === 'teacher')
+			{
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : 'Management',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						name: user.name,
+						email: user.email,
+					}
+				});
+			}
 		});
 	},
-
+	
 	showContact_Lec: function (req, res) {
 
-    // If not logged in, show the public view.
     if (!req.session.me) {
       return res.view('login');
     }
 
-    // Otherwise, look up the logged-in user and show the logged-in view,
-    // bootstrapping basic user data in the HTML sent from the server
-    User.findOne(req.session.me, function (err, user){
+
+    User.findOne(req.session.me, function (err, user ){
       if (err) {
         return res.negotiate(err);
       }
@@ -62,11 +78,12 @@ module.exports = {
       }
 
       return res.view('contacts_Lec', {
-        me: {
+        me2: {
           id: user.id,
           name: user.name,
           email: user.email,
         }
+
       });
 
     });
@@ -74,13 +91,11 @@ module.exports = {
 
 	showSubject: function (req, res) {
 
-    // If not logged in, show the public view.
     if (!req.session.me) {
       return res.view('login');
     }
 
-    // Otherwise, look up the logged-in user and show the logged-in view,
-    // bootstrapping basic user data in the HTML sent from the server
+
     User.findOne(req.session.me, function (err, user){
       if (err) {
         return res.negotiate(err);
@@ -104,13 +119,11 @@ module.exports = {
 
 	showLogin: function (req, res) {
 
-		// If not logged in, show the public view.
 		if (!req.session.me) {
 			return res.view('login');
 		}
 
-		// Otherwise, look up the logged-in user and show the logged-in view,
-		// bootstrapping basic user data in the HTML sent from the server
+
 		User.findOne(req.session.me, function (err, user){
 			if (err) {
 				return res.negotiate(err);

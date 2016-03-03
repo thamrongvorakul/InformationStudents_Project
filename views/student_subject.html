@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html ng-app='student_subject'>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard รายวิชา</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/angular_script/student_subject.js"></script>
+
+</head>
+
+<body class="top-navigation" ng-controller = 'student_subjectController'>
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+                <a href="#" class="navbar-brand">{{select_sub_name}}</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a aria-expanded="false" role="button" href="layouts.html"> {{select_sub_name}} ( {{select_term}}/{{select_year}}  )</a>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="login.html">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        </div>
+
+
+        <div class="wrapper wrapper-content">
+            <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">เยี่ยมชม</span>
+                            <h5>Views</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{views_count_all}}</h1>
+                            <div class="stat-percent font-bold text-success"> <i class="fa fa-bolt"></i></div>
+                            <small>จำนวนผู้เข้าชม</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-info pull-right">ติดตาม</span>
+                            <h5>Followers</h5>
+                        </div>
+                        <div class="ibox-content">
+                                    <h1 class="no-margins">{{followers_count_all}}</h1>
+                                    <div class="stat-percent font-bold text-info"> <i class="fa fa-level-up"></i></div>
+                                    <small>จำนวนคนติดตาม</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>กดติดตามตรงนี้ !!</h5>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                              <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <h1 class="no-margins" ><a  ng-click="like_click()">{{status_like_unlike}}</a></h1>
+                                    <div class="font-bold text-navy"> <small align="center">{{text_show}}</small></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>ให้คะแนนวิชา </h5>
+                            <div class="ibox-tools">
+                                <span class="label label-primary">{{select_sub_name}}</span>
+                            </div>
+                        </div>
+                        <div class="ibox-content ">
+                          <h1 align = "center"><a> SCORE </a><h1>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="row " >
+
+                    <div class="col-lg-12">
+                      <div class="row m-t-sm">
+                          <div class="col-lg-12">
+                          <div class="panel blank-panel">
+                          <div class="panel-heading ">
+                              <div class="panel-options">
+                                  <ul class="nav nav-tabs">
+                                      <li class="active"><a href="#tab-1" data-toggle="tab">เอกสารประกอบการเรียน</a></li>
+                                      <li class=""><a href="#tab-2" data-toggle="tab">การบ้าน</a></li>
+                                      <li class=""><a href="#tab-3" data-toggle="tab">อัพเดทข่าวสาร</a></li>
+                                      <li class=""><a href="#tab-4" data-toggle="tab">คะแนนสอบ</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+
+                    <div class="panel-body">
+
+                  <div class="tab-content">
+
+                    <!-- Tab1 -->
+            <div class="tab-pane active" id="tab-1">
+                <div class="mail-box-header">
+
+                    <form method="get" action="index.html" class="pull-right mail-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="search" placeholder="Search File">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <h2>
+                        ไฟล์ทั้งหมด ({{files_count_documents}})
+                    </h2>
+                    <div class="mail-tools tooltip-demo m-t-md">
+
+                    </div>
+                </div>
+                    <div class="mail-box">
+
+                    <table class="table table-hover table-mail">
+                      <thead>
+                        <tr>
+                          <th> # </th>
+                          <th> ชื่อไฟล์ </th>
+                          <th> ผู้อัพโหลด </th>
+                          <th> เวลา </th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                    <tbody>
+
+                    <tr class="unread" ng-repeat = "item in files_documents">
+                        <td >
+                          1
+                        </td>
+                        <td class="mail-ontact"><a href="mail_detail.html">{{item.data._source.File_Name[0].filename}}</a></td>
+                        <td class="mail-subject"><a href="mail_detail.html">{{item.data._source.Lec_Name_Upload}}</a></td>
+                        <td >{{item.data._source.Date_Upload}}</td>
+                        <td><a href='/FileUpload/{{item.data._source.Lec_Name}}/{{item.data._source.Subject}}/{{item.data._source.Term}}.{{item.data._source.Year}}/{{item.data._type}}/{{item.data._source.File_Name[0].filename}}' download ="" >
+                            <button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Download File"><i class="fa fa-download"></i> </button></a></td>
+                    </tr>
+
+                    </tbody>
+                    </table>
+
+
+                    </div>
+
+                </div>
+
+                <!--  Tab 2-->
+                <div class="tab-pane" id="tab-2">
+
+                  <div class="mail-box-header">
+
+                      <form method="get" action="index.html" class="pull-right mail-search">
+                          <div class="input-group">
+                              <input type="text" class="form-control input-sm" name="search" placeholder="Search File">
+                              <div class="input-group-btn">
+                                  <button type="submit" class="btn btn-sm btn-primary">
+                                      Search
+                                  </button>
+                              </div>
+                          </div>
+                      </form>
+                      <h2>
+                          ไฟล์ทั้งหมด ({{files_count_homework}})
+                      </h2>
+                      <div class="mail-tools tooltip-demo m-t-md">
+
+                      </div>
+                  </div>
+                      <div class="mail-box">
+
+                      <table class="table table-hover table-mail">
+                        <thead>
+                          <tr>
+                            <th> # </th>
+                            <th> ชื่อไฟล์ </th>
+                            <th> ผู้อัพโหลด </th>
+                            <th> เวลา </th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                      <tbody>
+
+                      <tr class="unread" ng-repeat = "item in files_homework">
+                          <td >
+                            1
+                          </td>
+                          <td class="mail-ontact"><a href="mail_detail.html">{{item.data._source.File_Name[0].filename}}</a></td>
+                          <td class="mail-subject"><a href="mail_detail.html">{{item.data._source.Lec_Name_Upload}}</a></td>
+                          <td >{{item.data._source.Date_Upload}}</td>
+                          <td><a href='/FileUpload/{{item.data._source.Lec_Name}}/{{item.data._source.Subject}}/{{item.data._source.Term}}.{{item.data._source.Year}}/{{item.data._type}}/{{item.data._source.File_Name[0].filename}}' download ="" >
+                              <button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Download File"><i class="fa fa-download"></i> </button></a></td>
+                      </tr>
+
+                      </tbody>
+                      </table>
+
+
+                      </div>
+
+                          </div>
+
+
+                                    <!-- tab3 -->
+                                    <div class="tab-pane" id="tab-3">
+                                        <div class="full-height-scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                  <div class="social-feed-box" ng-repeat = "item in files_news | orderBy : 'name._source.Date_Upload':true" id ="mySelect">
+                                                    <div class="social-avatar">
+                                                            <a href="" class="pull-left">
+                                                                <img alt="image" src="{{item.name._source.path_file_pic_icon}}">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <a href="#">
+                                                                    {{item.name._source.Lec_Name}}
+                                                                </a>
+                                                                <small class="text-muted">{{item.name._source.Date_Upload}}</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="social-body">
+                                                            <p>
+                                                                {{item.name._source.Message}}
+                                                            </p>
+                                                            <div ng-if = "item.name._source.Type === 'clip'" >
+                                                            <h4><strong>ชื่อคลิป :</strong> {{item.name._source.Video_Name}}  </h4>
+                                                            <h4>
+                                                                <strong>คำอธิบาย : </strong> {{item.name._source.Description}}
+                                                            </h4><br>
+                                                            <figure >
+                                                                <iframe width="760" height="349"  ng-src="{{trustSrc(item.name._source.Embed_Code)}}" frameborder="0" allowfullscreen></iframe>
+                                                            </figure>
+                                                          </div>
+                                                            <br>
+
+                                                        </div>
+
+
+
+                                                  </div>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+                                  </div>
+                                  <!-- tab 4 -->
+                                  <div class="tab-pane" id="tab-4">
+
+                                    <div class="mail-box-header">
+
+                                        <form method="get" action="index.html" class="pull-right mail-search">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm" name="search" placeholder="Search File">
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        Search
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <h2>
+                                            ไฟล์ทั้งหมด ({{files_count_score}})
+                                        </h2>
+                                        <div class="mail-tools tooltip-demo m-t-md">
+
+                                        </div>
+                                    </div>
+                                        <div class="mail-box">
+
+                                        <table class="table table-hover table-mail">
+                                          <thead>
+                                            <tr>
+                                              <th> # </th>
+                                              <th> ชื่อไฟล์ </th>
+                                              <th> ผู้อัพโหลด </th>
+                                              <th> เวลา </th>
+                                              <th></th>
+                                            </tr>
+                                          </thead>
+                                        <tbody>
+
+                                        <tr class="unread" ng-repeat = "item in files_score">
+                                            <td >
+                                              1
+                                            </td>
+                                            <td class="mail-ontact"><a href="mail_detail.html">{{item.data._source.File_Name[0].filename}}</a></td>
+                                            <td class="mail-subject"><a href="mail_detail.html">{{item.data._source.Lec_Name_Upload}}</a></td>
+                                            <td >{{item.data._source.Date_Upload}}</td>
+                                            <td><a href='/FileUpload/{{item.data._source.Lec_Name}}/{{item.data._source.Subject}}/{{item.data._source.Term}}.{{item.data._source.Year}}/{{item.data._type}}/{{item.data._source.File_Name[0].filename}}' download ="" >
+                                                <button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Download File"><i class="fa fa-download"></i> </button></a></td>
+                                        </tr>
+
+                                        </tbody>
+                                        </table>
+
+
+                                        </div>
+
+                                            </div>
+                          </div>
+
+                          </div>
+
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <div>
+                                        <span class="pull-right text-right">
+                                        <small>Average value of sales in the past month in: <strong>United states</strong></small>
+                                            <br/>
+                                            All sales: 162,862
+                                        </span>
+                                    <h3 class="font-bold no-margins">
+                                        Half-year revenue margin
+                                    </h3>
+                                    <small>Sales marketing.</small>
+                                </div>
+
+                                <div class="m-t-sm">
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div>
+                                            <canvas id="lineChart" height="114"></canvas>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ul class="stat-list m-t-lg">
+                                                <li>
+                                                    <h2 class="no-margins">2,346</h2>
+                                                    <small>Total orders in period</small>
+                                                    <div class="progress progress-mini">
+                                                        <div class="progress-bar" style="width: 48%;"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <h2 class="no-margins ">4,422</h2>
+                                                    <small>Orders in last month</small>
+                                                    <div class="progress progress-mini">
+                                                        <div class="progress-bar" style="width: 60%;"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="m-t-md">
+                                    <small class="pull-right">
+                                        <i class="fa fa-clock-o"> </i>
+                                        Update on 16.07.2015
+                                    </small>
+                                    <small>
+                                        <strong>Analysis of sales:</strong> The value has been changed over time, and last month reached a level over $50,000.
+                                    </small>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <span class="label label-warning pull-right">Data has changed</span>
+                                <h5>User activity</h5>
+                            </div>
+                            <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>Striped Table </h5>
+                      <div class="ibox-tools">
+                          <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                          </a>
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                              <i class="fa fa-wrench"></i>
+                          </a>
+                          <ul class="dropdown-menu dropdown-user">
+                              <li><a href="#">Config option 1</a>
+                              </li>
+                              <li><a href="#">Config option 2</a>
+                              </li>
+                          </ul>
+                          <a class="close-link">
+                              <i class="fa fa-times"></i>
+                          </a>
+                      </div>
+                  </div>
+                  <div class="ibox-content">
+                      <div id="calendar"></div>
+                  </div>
+              </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2015
+            </div>
+        </div>
+
+        </div>
+        </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <!-- Flot -->
+    <script src="js/plugins/flot/jquery.flot.js"></script>
+    <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="js/plugins/flot/jquery.flot.resize.js"></script>
+
+    <!-- ChartJS-->
+    <script src="js/plugins/chartJs/Chart.min.js"></script>
+
+    <!-- Peity -->
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <!-- Peity demo -->
+    <script src="js/demo/peity-demo.js"></script>
+
+
+    <script>
+
+    </script>
+
+</body>
+
+</html>

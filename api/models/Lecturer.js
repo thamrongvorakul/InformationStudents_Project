@@ -9,18 +9,15 @@ module.exports = {
 
   attributes: {
 
+    Title: {
+    type: 'string',
+    required: true
+    },
     Type_User : {
       type : 'string',
       required : true
     },
-    Title: {
-      type : 'string',
-      required : true
-    },
-    ID_NO: {
-    type: 'string',
-    required: true
-    },
+
     FName: {
     type: 'string',
     required: true
@@ -36,15 +33,15 @@ module.exports = {
       required: true,
       unique: true
     },
-
-   encryptedPassword: {
-    type: 'string',
-    required: true
-    },
     password: {
       type: 'string',
       required: true,
     },
+   encryptedPassword: {
+    type: 'string',
+    required: true
+    },
+
     lastLoggedIn: {
       type: 'date',
       required: true,

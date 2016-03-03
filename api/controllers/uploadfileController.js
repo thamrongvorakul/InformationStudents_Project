@@ -47,22 +47,25 @@ module.exports = {
               fs.unlink(path_keep + data.files_name , function(err){
                   if (err) throw err;
               });
-              return res.ok();
+              client.delete({
+                      index: 'upload_log',
+                      type: data.path,
+                      id: data.id
+              },
+              function (error, response) {
+                return res.ok();
+
+              });
             },
 
             upload: function  (req, res)
               {
                   var data = req.allParams();
-                  var lec_name_split = data.Lec_Name.split(" ");
-                  var subject_split = data.subject.split(" ");
-                  var lec_name = '';
-                  var subject = '';
-                  for (var i=0;i<lec_name_split.length;i++){lec_name = lec_name + lec_name_split[i]};
-                  for (var i=0;i<subject_split.length;i++){subject = subject+subject_split[i]};
-                  var path_hw = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/homework/';
-                  var path_doc = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/documents/';
-                  var path_news = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/news/';
-                  var path_score = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/score/';
+
+                  var path_hw = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/homework/';
+                  var path_doc = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/documents/';
+                  var path_news = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
+                  var path_score = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
                   var path_keep ;
 
                   if (data.path === "homework"){
@@ -76,8 +79,8 @@ module.exports = {
                   }
 
 
-                  console.log(path_keep);
                   req.file('file').upload({
+
                     dirname : path_keep,
                     saveAs: function(__newFile, cb) {
                        cb(null, __newFile.filename);
@@ -85,7 +88,15 @@ module.exports = {
                   },
                   function (err, files)
                     {
-
+                      client.bulk({
+                        body :[
+                            { index : { _index: 'upload_log' , _type: data.path } },
+                            { Lec_Name_Upload : data.Lec_Name_Default ,Lec_Name : data.Lec_Name,Subject: data.subject,Subject_Name : data.subject_default, Term : data.term , Year : data.year , Path_Upload : path_keep ,
+                              Date_Upload : data.Date_Upload , File_Name : files},
+                        ]
+                      }, function (error, response){
+                          console.log(error);
+                      });
 
                         if (err)
                         {
@@ -93,37 +104,40 @@ module.exports = {
                             return res.serverError(err);
                         }
                     });
-              console.log(fileuploadname);
               return res.send('Response OK');
             },
 
 
-            bulkinsert: function (req, res) {
-                var dataJson = req.allParams();
-
-                console.log(fileuploadname);
-                client.bulk({
-                  body : [
-                      { index:  { _index: dataJson.header.index , _type:dataJson.header.type , _id: fileuploadname} },
-                      { Type_Folder : "homework" ,Lec_Name : "Lec.A" , Subject_Name : "Algorithm" , File_Name : fileuploadname , Description : dataJson.data.detail , Homework_Date : dataJson.data.homework_date , Date_Log : dataJson.data.date_log}
-                  ]
-                }, function (error, response){
-                    console.log(error);
-                });
-
-                return res.send('Success');
-            },
 
             get_files: function (req,res){
-              var data = req.allParams();
+              var dataJson = req.allParams();
+              var files ;
+              client.search({
+                  index: 'upload_log',
+                  type : dataJson.path,
+                  body: {
+                    size : "100",
+                    query: {
+                      bool: {
+                        must :[
+                          {match_phrase : {Subject_Name : dataJson.subject_default}},
+                          {match_phrase : {Term : dataJson.term}},
+                          {match_phrase : {Year : dataJson.year}}
+                        ]
+                      }
+                    }
+                  }
+              })
+              .then(function (response) {
+                  hits = response.hits.hits;
+                  files = fs.readdirSync(hits[0]["_source"]["Path_Upload"]);
 
-              var files = fs.readdirSync('D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/homework/');
-              return res.send(files);
+              })
+                return res.send(files);
             },
 
             get_term_year : function (req,res){
               var dataJson = req.allParams();
-              console.log(55555);
               client.search({
                     index: 'subject',
                     body: {

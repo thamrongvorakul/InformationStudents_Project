@@ -1,61 +1,67 @@
 <!DOCTYPE html>
-<html ng-app = 'getfiles'>
+<html ng-app='contactsLec'>
 
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Subject</title>
+    <title>INSPINIA | Mailbox</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
+    <link href="css/summernote-bs3.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/summernote/summernote/v0.7.3/dist/summernote.css" rel="stylesheet">
+
 
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/summernote/summernote/v0.7.2/dist/summernote.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="/dist/angular-summernote.min.js"></script>
     <script src="/dist/ng-file-upload-shim.min.js"></script>
     <script src="/dist/ng-file-upload.min.js"></script>
-    <script src="/dist/text/angular-file-upload.min.js"></script>
-    <script src="/dist/text/moment.min.js"></script>
-    <script src="/dist/angular-momentjs.js"></script>
-    <script src="/dist/angular-momentjs.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
+    <script src="/dist/angular-cookies.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
-    <script type="text/javascript" src="/angular_script/getfiles.js"></script>
+
+
+    <script src="/dist/angular-cookies.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script type="text/javascript" src="/angular_script/contacts_Lec.js"></script>
+
 
 </head>
 
 <body>
 
-    <div id="wrapper" ng-controller = 'getfilesNewsController'>
+    <div id="wrapper" ng-controller='contactslecController'>
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu"><!แถบเมนูข้าง>
+            <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Archarn.Anek Thamrongvorakul</strong>
-                             </a>
-
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
+                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="profile.html">Profile</a></li>
+                            <li><a href="contacts.html">Contacts</a></li>
+                            <li><a href="mailbox.html">Mailbox</a></li>
+                            <li class="divider"></li>
+                            <li><a href="login.html">Logout</a></li>
+                        </ul>
                     </div>
                     <div class="logo-element">
-                        CS
+                        IN+
                     </div>
-                </li>
-
-                <li>
-                    <a href="file_manager2.html"><i class="fa fa-th-large"></i> <span class="nav-label">เพิ่มรายวิชา</span></a>
-                </li>
-                <li>
-                    <a href="file_manager2.html"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการรายวิชาที่สอน</span></a>
                 </li>
             </ul>
 
@@ -64,7 +70,7 @@
 
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-        <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
             <form role="search" class="navbar-form-custom" action="search_results.html">
@@ -183,140 +189,67 @@
 
         </nav>
         </div>
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-9">
-                    <h2>Subject</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="landing.html">Home</a>
-                        </li>
 
-                        <li class="active">
-                            <strong>Subject</strong>
-                        </li>
-                    </ol>
-                </div>
-            </div>
         <div class="wrapper wrapper-content">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="ibox ">
-                      <div class="ibox-content">
-                            <h3 align="center"> Upload Video </h3>
-                      </div>
-                        <div class="ibox-content">
-                            <div class="file-manager">
-                                <h4>Video Name:</h4>
-                                <input type="text" placeholder="Write Video Name..." class="form-control" ng-model = 'VDO_Name'>
-                                <div class="hr-line-dashed"></div>
+        <div class="row">
 
-                                <h4>Link:</h4>
-                                <input type="text" placeholder="Insert URL" class="form-control" ng-model = 'VDO_Link'>
-                                <div class="hr-line-dashed"></div>
-
-                                <h4>Description:</h4>
-                                <div class="social-comment">
-                                    <div class="media-body">
-                                         <textarea class="form-control" placeholder="Write Description..." ng-model = 'VDO_Description'></textarea>
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div><br><br>
-
-                                <button class="btn btn-primary btn-block" style="display: block; margin: 0 auto; width: 50%;" ng-click = 'submit_news_click()'>Submit</button><br>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                        <div class="ibox ">
-                          <div class="ibox-content">
-                                <h3 align="center">Upload Message </h3>
-                          </div>
-                            <div class="ibox-content">
-                                <div class="file-manager">
-
-
-                                    <h4>Message:</h4>
-                                    <div class="social-comment">
-                                        <div class="media-body">
-                                             <textarea class="form-control" placeholder="Write Description..." ng-model = 'news_message'></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="hr-line-dashed"></div><br><br>
-
-                                    <button class="btn btn-primary btn-block" style="display: block; margin: 0 auto; width: 50%;" ng-click = 'submit_news_message()'>Submit</button><br>
-
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-lg-9 animated fadeInRight">
+            <div class="mail-box-header">
+                <div class="pull-right tooltip-demo">
+                    <a href="mail_compose.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-reply"></i> Reply</a>
+                    <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>
+                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
-                <div class="col-lg-8" >
-                  <div class="ibox-content  style1 lazur-bg" id="ibox-content" >
+                <h2>
+                    View Message
+                </h2>
+                <div class="mail-tools tooltip-demo m-t-md">
 
-                    <h2 align="center"> FEED <h2>
 
-              </div><br>
-                  <div class="social-feed-box" ng-repeat = "item in files | orderBy : 'name._source.Date_Upload':true" id ="mySelect">
-                    <div class="social-avatar">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="{{item.name._source.path_file_pic_icon}}">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    {{item.name._source.Lec_Name}}
-                                </a>
-                                <small class="text-muted">{{item.name._source.Date_Upload}}</small>
-                            </div>
-                        </div>
-                        <div class="social-body">
-                            <p>
-                                {{item.name._source.Message}}
-                            </p>
-                            <div ng-if = "item.name._source.Type === 'clip'" >
-                            <h4><strong>ชื่อคลิป :</strong> {{item.name._source.Video_Name}}  </h4>
-                            <h4>
-                                <strong>คำอธิบาย : </strong> {{item.name._source.Description}}
-                            </h4><br>
-                            <figure >
-                                <iframe width="760" height="349"  ng-src="{{trustSrc(item.name._source.Embed_Code)}}" frameborder="0" allowfullscreen></iframe>
-                            </figure>
+                    <h3>
+                        <span class="font-noraml">Subject: </span>{{subject}}
+                    </h3>
+                    <h5>
+                        <span class="pull-right font-noraml">{{date}}</span>
+                        <span class="font-noraml">From: </span>{{Std_Name}}
+                    </h5>
+                </div>
+            </div>
+                <div class="mail-box">
+
+
+                <div class="mail-body" ng-bind-html="message">
+                  {{message}}
+                </div>
+
+                        <div class="mail-body text-left tooltip-demo">
+                          <summernote height = "400"></summernote>
+                          <div class="mail-body text-right tooltip-demo">
+                                  <a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Reply</a>
                           </div>
-                            <br>
-
-                            <div class="btn-group">
-                                <button class="btn btn-danger btn-xs" ng-click = "remove_click(item.name._type , item.name._id)"><i class="fa fa-thumbs-up"></i> REMOVE!</button>
-                            </div>
                         </div>
-                  </div>
+                        <div class="clearfix"></div>
 
 
                 </div>
-
-
             </div>
+        </div>
+        </div>
+
+        </div>
         </div>
 
 
-        </div>
-            </div>
-
-
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
-
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('.file-box').each(function() {
-                animationHover(this, 'pulse');
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
             });
         });
     </script>

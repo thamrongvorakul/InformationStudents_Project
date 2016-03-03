@@ -1,4 +1,3 @@
-'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
           host: '161.246.60.104:9200',
@@ -6,9 +5,6 @@ var    client = new elasticsearch.Client({
       });
       var path = require('path');
       var fs = require('fs');
-      var path_doc = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/documents/';
-      var path_news = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/news/';
-      var path_score = 'D:/InformationStudents/assets/FileUpload/Lec.A/Algorithm/score/';
 
 
 module.exports = {
@@ -16,30 +12,59 @@ module.exports = {
 
 
             get_files_homework: function (req,res){
-              var data = req.allParams();
-              var lec_name_split = data.Lec_Name.split(" ");
-              var subject_split = data.subject.split(" ");
-              var lec_name = '';
-              var subject = '';
-              for (var i=0;i<lec_name_split.length;i++){lec_name = lec_name + lec_name_split[i]};
-              for (var i=0;i<subject_split.length;i++){subject = subject+subject_split[i]};
-              var path_hw = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/homework/';
-              var files = fs.readdirSync(path_hw);
 
-              files.sort(function(a, b) {
-               return fs.statSync(path_hw + a).mtime.getTime() -
-                      fs.statSync(path_hw + b).mtime.getTime();
-              });
-              return res.send(files);
+              var dataJson = req.allParams();
+              var hits;
+              client.search({
+                  index: 'upload_log',
+                  type : dataJson.path,
+                  body: {
+                    size : "100",
+                    query: {
+                      bool: {
+                        must :[
+                          {match_phrase : {Subject_Name : dataJson.subject_default}},
+                          {match_phrase : {Term : dataJson.term}},
+                          {match_phrase : {Year : dataJson.year}}
+                        ]
+                      }
+                    }
+                  }
+              })
+              .then(function (response) {
+                  hits = response.hits.hits;
+
+                  res.send(hits);
+              })
+
+
+
             },
 
             get_files_documents: function (req,res){
-              var files = fs.readdirSync(path_doc);
-              files.sort(function(a, b) {
-               return fs.statSync(path_doc + a).mtime.getTime() -
-                      fs.statSync(path_doc + b).mtime.getTime();
-              });
-              return res.send(files);
+              var dataJson = req.allParams();
+              var hits;
+              client.search({
+                  index: 'upload_log',
+                  type : dataJson.path,
+                  body: {
+                    size : "100",
+                    query: {
+                      bool: {
+                        must :[
+                          {match_phrase : {Subject_Name : dataJson.subject_default}},
+                          {match_phrase : {Term : dataJson.term}},
+                          {match_phrase : {Year : dataJson.year}}
+                        ]
+                      }
+                    }
+                  }
+              })
+              .then(function (response) {
+                  hits = response.hits.hits;
+
+                  res.send(hits);
+              })
             },
 
             ///// NEWS
@@ -48,12 +73,19 @@ module.exports = {
                   client.bulk({
                     body :[
                         { index : { _index: dataJson.header.index , _type:dataJson.header.type } },
-                        { Type: dataJson.data.Type , Subject_Term :dataJson.data.Subject_Term , Lec_Name :  dataJson.data.Lec_Name ,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description  },
+                        { Type: dataJson.data.Type , Subject_Term :dataJson.data.Subject_Term , Lec_Name :  dataJson.data.Lec_Name ,Message : dataJson.data.Message,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description , path_file_pic_icon : dataJson.data.path_file_pic_icon },
                     ]
                   }, function (error, response){
                       console.log(error);
                   });
-
+                  client.bulk({
+                    body :[
+                        { index : { _index: 'upload_log' , _type:dataJson.data.path } },
+                        { Type: dataJson.data.Type , Subject_Name : dataJson.data.Subject_Name_Default,Subject_Term :dataJson.data.Subject_Term , Lec_Name :  dataJson.data.Lec_Name ,Message : dataJson.data.Message,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description , path_file_pic_icon : dataJson.data.path_file_pic_icon },
+                    ]
+                  }, function (error, response){
+                      console.log(error);
+                  });
               res.ok();
 
 
@@ -63,7 +95,15 @@ module.exports = {
               var hits;
               client.search({
                   index: dataJson.header.index,
-                  type : dataJson.header.type
+                  type : dataJson.header.type,
+                  body: {
+                    size : "100",
+                    query: {
+                      match_phrase: {
+                        Subject_Term : dataJson.data.Subject_Term
+                      }
+                    }
+                  }
               })
               .then(function (response) {
                   hits = response.hits.hits;
@@ -72,14 +112,71 @@ module.exports = {
 
             },
 
-            get_files_score: function (req,res){
-              var files = fs.readdirSync(path_score);
+            delete_files_news : function (req,res){
 
-              files.sort(function(a, b) {
-               return fs.statSync(path_score + a).mtime.getTime() -
-                      fs.statSync(path_score + b).mtime.getTime();
-              });
-              return res.send(files);
+              var dataJson = req.allParams();
+
+
+                    client.delete({
+                            index: dataJson.header.index,
+                            type: dataJson.header.type,
+                            id: dataJson.header.id
+                    },
+                    function (error, response) {
+                      return res.ok();
+                    });
+            },
+
+
+            get_files_score: function (req,res){
+              var dataJson = req.allParams();
+              var hits;
+              client.search({
+                  index: 'upload_log',
+                  type : dataJson.path,
+                  body: {
+                    size : "100",
+                    query: {
+                      bool: {
+                        must :[
+                          {match_phrase : {Subject_Name : dataJson.subject_default}},
+                          {match_phrase : {Term : dataJson.term}},
+                          {match_phrase : {Year : dataJson.year}}
+                        ]
+                      }
+                    }
+                  }
+              })
+              .then(function (response) {
+                  hits = response.hits.hits;
+                  res.send(hits);
+              })
+            },
+
+            get_lecturer_name_of_subject: function (req,res){
+              var dataJson = req.allParams();
+              var hits;
+              client.search({
+                  index: 'subject',
+                  type : dataJson.subject_year,
+                  body: {
+                    size : "100",
+                    query: {
+                      bool : {
+                        must : [
+                          {match_phrase : {Subject_Name : dataJson.subject_name}},
+                          {match_phrase : {Term : dataJson.subject_term}}
+                        ]
+                      }
+                    }
+
+                  }
+              })
+              .then(function (response) {
+                  hits = response.hits.hits;
+                  res.send(hits);
+              })
+
             }
 
 
