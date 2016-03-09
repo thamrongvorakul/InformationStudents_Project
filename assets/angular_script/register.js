@@ -28,7 +28,7 @@ app.controller('registerController', ['$scope','$window', '$http', function($sco
    $http.post('/insert_user_data', jsonData).success(function(data, status, headers, config)
             {
               $window.alert('Register Complete');
-              console.log(data.id);
+              location.href = "/";
             })
             .error(function(data, status, headers, config)
             {

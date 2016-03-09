@@ -1,8 +1,9 @@
-var app = angular.module('student_subject', ['ngFileUpload'  ,'ngSanitize','LocalStorageModule' ]);
+var app = angular.module('student_subject', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize','LocalStorageModule' ]);
 
-app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'localStorageService' ,'$sce' ,
-  function ( $scope, $rootScope, $http   ,localStorageService , $sce)
+app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'localStorageService' ,'$sce' , 'Upload' , 'FileUploader',
+  function ( $scope, $rootScope, $http   ,localStorageService , $sce , Upload ,FileUploader)
   {
+
     $scope.select_sub_name = localStorageService.get('select_sub_name');
     $scope.select_term = localStorageService.get('select_term');
     $scope.select_year = localStorageService.get('select_year');
@@ -30,7 +31,10 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
       }
 
     });
-
+    $http.get('/getdata_homework_times').success(function(data){
+      $scope.times_homework_arr = [];
+      for (var i=0 ; i< data.length ; i++){$scope.times_homework_arr.push({time: data[i]['Times']})};
+    });
     var data_send2 = {subject :  subject,subject_default : localStorageService.get('select_sub_name'),term : localStorageService.get('select_term'),
       year : localStorageService.get('select_year'),Lec_Name : Lec_Name ,path : 'homework'
     };
@@ -63,8 +67,8 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
     $scope.type = '';
     for (var i =0 ; i< $scope.type_split_arr.length ; i++){$scope.type =  $scope.type + $scope.type_split_arr[i]+ '_' ;}
     var data_for_search = {
-      "header" : {"index" : "news" , "type" :   $scope.type },
-      "data" : {"Subject_Term" : $scope.select_term + '/' + $scope.select_year}
+      "header" : {"index" : "upload_log" , "path" : 'news' },
+      "data" : {Subject_Term : $scope.select_term + '/' + $scope.select_year , Subject_Name : localStorageService.get('select_sub_name') , Lec_Name_Upload : localStorageService.get('select_lecturer_name') }
     };
     $http.post('/get_files_news' ,data_for_search)
     .success (function (data){
@@ -144,8 +148,8 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
         }
         else if ($scope.event_click === 'click'){
           var data_follow2 = {
-            std_FName : 'Wichittra',
-            std_LName : 'Iam-itsara',
+            std_FName : localStorageService.get('FName_User'),
+            std_LName : localStorageService.get('LName_User'),
             std_email : localStorageService.get('email_student'),
             subject_name : sub_name,
             subject_name_default : localStorageService.get('select_sub_name'),
@@ -163,8 +167,8 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
       }
       else if ($scope.status_like_unlike === 'UNFOLLOW'){
         var data_follow2 = {
-          std_FName : 'Wichittra',
-          std_LName : 'Iam-itsara',
+          std_FName : localStorageService.get('FName_User'),
+          std_LName : localStorageService.get('LName_User'),
           std_email : localStorageService.get('email_student'),
           subject_name : sub_name,
           subject_name_default : localStorageService.get('select_sub_name'),
@@ -181,5 +185,90 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
       }
     };
 
+  // อัพโหลดไฟล์ส่งการบ้านให้อาจารย์
+
+    $scope.name_file_upload = 'No File Chosen';
+    $scope.subject_for_send_homework = '';
+    $scope.description_homework = '';
+    $scope.times_homework_select = '';
+        $scope.lec_name_upload = localStorageService.get('select_lecturer_name');
+        var lec_name_cut_split = $scope.lec_name_upload.split(" ");
+        var lec_name_cut = '';
+        for (var i=0;i<lec_name_cut_split.length ; i++){lec_name_cut = lec_name_cut + lec_name_cut_split[i]}
+        var sub_name_split = $scope.select_sub_name.split(" ");
+        var sub_name_cut = '';
+        for (var i=0 ; i<sub_name_split.length ; i++){sub_name_cut = sub_name_cut + sub_name_split[i]}
+
+
+
+      var uploader = $scope.uploader = new FileUploader({
+          url: '/postsendhomework'
+
+      });
+        // FILTERS
+        uploader.filters.push({
+            name: 'customFilter',
+            fn: function(item /*{File|FileLikeObject}*/, options) {
+                return this.queue.length < 10;
+            }
+        });
+
+        // CALLBACKS
+
+        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+
+          //  console.info('onWhenAddingFileFailed', item, filter, options);
+        };
+        uploader.onAfterAddingFile = function(fileItem) {
+          //  console.info('onAfterAddingFile', fileItem);
+        };
+        uploader.onAfterAddingAll = function(addedFileItems) {
+            //console.log(addedFileItems.length);
+          //  console.info('onAfterAddingAll', addedFileItems);
+        };
+        uploader.onBeforeUploadItem = function(item) {
+
+          if ($scope.description_homework === ''){
+            $scope.description_homework = 'ไม่มีคำอธิบายเพิ่มเติม';
+          }
+
+          var data = {
+            path : 'send_homework',
+            subject :  sub_name_cut,
+            subject_default : localStorageService.get('select_sub_name'),
+            Std_Name : localStorageService.get('Fullname_User'),
+            ID_NO : localStorageService.get("ID_NO_Std"),
+            term : localStorageService.get('select_term'),
+            year : localStorageService.get('select_year'),
+            Lec_Name_Default :localStorageService.get('select_lecturer_name'),
+            Lec_Name : lec_name_cut,
+            Description_Homework_Send : $scope.description_homework,
+            Subject_Send_Homework :  $scope.subject_for_send_homework,
+            Times_Homework_Select : $scope.times_homework_select,
+            Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
+          }
+          item.formData.push(data);
+        };
+        uploader.onProgressItem = function(fileItem, progress) {
+
+        };
+        uploader.onProgressAll = function(progress) {
+          //  console.info('onProgressAll', progress);
+        };
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+          //  console.info('onSuccessItem', fileItem, response, status, headers);
+        };
+        uploader.onErrorItem = function(fileItem, response, status, headers) {
+          ///  console.info('onErrorItem', fileItem, response, status, headers);
+        };
+        uploader.onCancelItem = function(fileItem, response, status, headers) {
+          //  console.info('onCancelItem', fileItem, response, status, headers);
+        };
+        uploader.onCompleteItem = function(fileItem, response, status, headers) {
+          //  console.info('onCompleteItem', fileItem, response, status, headers);
+        };
+        uploader.onCompleteAll = function() {
+          //  console.info('onCompleteAll');
+        };
 
   }]);

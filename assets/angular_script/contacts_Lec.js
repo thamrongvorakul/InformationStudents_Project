@@ -9,9 +9,9 @@ angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorag
       $scope.message_for_mail = '';
       $scope.subject_for_mail = '';
       $scope.lecname_for_mail = '';
-
-
-
+      $scope.Fname_User = localStorageService.get('FName_User');
+      $scope.LName_User = localStorageService.get('LName_User');
+      $scope.Title_User = localStorageService.get('title_user');
       $http.post('/search_mailbox_subject' , {
         "header" : {
           "index" : "mailbox",
@@ -35,6 +35,9 @@ angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorag
 
       });
 
+      $scope.init_lecname = function (lecname){
+        $scope.lecname_for_mail = lecname;
+      };
 
       $scope.send_mail_click = function (){
         var data = {
@@ -43,42 +46,30 @@ angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorag
             "type" : "send"
           },
           "data" : {
-            "Lec_Name" : "Archarn.Anek Thamrongvorakul",
-            "Std_Name" : "Wichittra Iam-Itsara",
+            "Lec_Name" :  $scope.lecname_for_mail,
+            "Std_Name" : localStorageService.get('Fullname_User'),
             "Subject" : $scope.subject_for_mail,
             "Message" : $scope.message_for_mail,
             "Date" : moment().format('MMMM Do YYYY, h:mm:ss a'),
             "Status" : "0"
           }
         };
-
         $http.post('/put_mailbox_to_elasticsearch' , data)
         .success(function(data){
           alert('Send Mail Success !!');
         });
 
       };
-      $scope.init_lecname = function (lecname){
-        $scope.lecname_for_mail = lecname;
-      };
-
-
       $http.post('/search_data_teacher_to_show_contacts')
       .success(function(data){
         for ( var i = 0 ; i< data.length ; i++){
           $scope.data_teacher_show_contacts.push({data : data[i]});
         }
       });
-
-
-
-
-
       $scope.test_click = function (){
         console.log($scope.lecname_for_mail);
         console.log($scope.message_for_mail );
       };
-
       $scope.wisan_click = function (name_lec){
         $scope.education = [];
         $scope.research = [];

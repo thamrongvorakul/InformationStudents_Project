@@ -40,21 +40,7 @@
 
     <div id="wrapper" ng-controller = 'contactslecController'>
 
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
-                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Guest</strong></a>
-                </li>
 
-            </ul>
-
-        </div>
-    </nav>
 
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
@@ -119,14 +105,14 @@
 
                   <div class="contact-box-footer">
                       <div class="m-t-xs btn-group">
-                          <a class="btn btn-xs btn-white"><i class="fa fa-toggle-on" ></i> Status</a>
+                        <span class="btn btn-xs label-danger" ng-if="item.data._source.Status_Room === '0'">ไม่อยู่ที่ห้องพัก</span>
+                        <span class="btn btn-xs label-primary" ng-if="item.data._source.Status_Room === '1'">อยู่ห้องพัก</span>
                           <a class="btn btn-xs btn-white" ng-click="init_lecname(item.data._source.Name)"data-toggle="modal" data-target="#myModal5"><i class="fa fa-envelope"></i> Email</a>
-
                       </div>
                   </div></a>
                         <div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
 
-                            <div class="modal-dialog">
+                            <div class="modal-dialog" style = "width:700px;">
                                 <div class="modal-content animated fadeIn">
 
                                   <div class="ibox-content profile-content">
@@ -214,7 +200,7 @@
 
             </div>
             <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-lg" style = "width:1000px;">
                     <div class="modal-content">
                         <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -233,7 +219,7 @@
                         </div>
                         <div class="modal-body">
                           <div class="mail-text h-200">
-                            <summernote height="500" ng-model="message_for_mail"> </summernote>
+                            <summernote height="500"  ng-model="message_for_mail"> </summernote>
                           <div class="clearfix"></div>
 
                           </div>

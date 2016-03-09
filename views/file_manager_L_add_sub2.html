@@ -10,6 +10,10 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
+
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
@@ -19,11 +23,15 @@
     <script src="/dist/text/angular-file-upload.min.js"></script>
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
     <script src="/dist/angular-momentjs.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
+    <script src="/dist/angular-sweetalert.min.js"></script>
+    <script src="/dist/sweet-alert.min.js"></script>
+    <script src="/dist/SweetAlert.min.js"></script>
+
     <script type="text/javascript" src="/angular_script/lec_add_sub2.js"></script>
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+
 
 </head>
 
@@ -267,7 +275,7 @@
 
                                             <br>
 
-                                            <h4 align="center">ข้อมูลรายวิชา</h4><br>
+                                            <h4 align="center">ข้อมูลรายวิชา</h4>
                                           <p align="center">
                                             <div class = "col-md-2"></div>
                                             <div class="col-md-3">
@@ -319,7 +327,7 @@
                                       </div>
                                       <div class="ibox-content">
                                           <div class="team-members">
-                                              <a href="#"><img alt="member" class="img-circle" src="img/Lecturer_Pic/1.1_profile.jpg"></a>
+                                              <a href="#"><img alt="member" class="img-circle" src="{{path_file_pic_icon}}"></a>
                                           </div>
                                           <h4>รายละเอียดของวิชา :<strong>{{item.data._source.Subject_Name}}</strong></h4>
                                           <p>
@@ -330,13 +338,11 @@
                                               <div class="progress progress-mini">
                                                   <div style="width: 100%;" class="progress-bar"></div>
                                               </div><br>
-                                              <div class="col-lg-8">
+                                              <div class="col-lg-9">
                                               <h4>โดย : {{item.data._source.Lec_Name}}</h4>
+                                              <h4>สร้างเมื่อ : {{item.data._source.Date_Upload}}
                                             </div>
-
-                                              <p align="right"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> Edit</button>
-                                              <button class="btn btn-warning " type="button" ng-click = "remove_click(item.data._id , item.data._type , item.data._source.Subject_Name , item.data._source.Term)"><i class="fa fa-warning"></i> <span class="bold">Remove</span></button></p>
-
+                                              <button class="btn btn-warning" type="button" ng-click = "demo4(item.data._id , item.data._type , item.data._source.Subject_Name , item.data._source.Term)"><i class="fa fa-warning"></i> <span class="bold">Remove</span></button></p>
                                           </div>
 
 
@@ -350,6 +356,7 @@
 
                   </div>
               </div>
+
 
             </div>
 

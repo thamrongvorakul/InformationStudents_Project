@@ -1,53 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html ng-app = 'lecturerdashboard'>
 
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Projects detail</title>
+    <title>InformationStudents | Lecturer Dashboard</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/summernote-bs3.css" rel="stylesheet">
     <link href="css/plugins/slick/slick.css" rel="stylesheet">
     <link href="css/plugins/slick/slick-theme.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="https://cdn.rawgit.com/summernote/summernote/v0.7.3/dist/summernote.css" rel="stylesheet">
 
 
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="https://cdn.rawgit.com/summernote/summernote/v0.7.2/dist/summernote.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="/dist/angular-summernote.min.js"></script>
     <script src="/dist/ng-file-upload-shim.min.js"></script>
     <script src="/dist/ng-file-upload.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
     <script src="/dist/angular-cookies.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
     <script src="/dist/angular-cookies.min.js"></script>
+    <script src= "dist/angular-slick.js"></script>
     <script src="/dist/text/angular-file-upload.min.js"></script>
-    <script type="text/javascript" src="/angular_script/contacts_Lec.js"></script>
+    <script type="text/javascript" src="/angular_script/lecturer_dashboard.js"></script>
 
 </head>
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller = 'lecturerdashboardController'>
 
       <nav class="navbar-default navbar-static-side" role="navigation">
           <div class="sidebar-collapse">
               <ul class="nav metismenu" id="side-menu"><!แถบเมนูข้าง>
                   <li class="nav-header">
                       <div class="dropdown profile-element"> <span>
-                              <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                              <img alt="image" class="img-circle" src="{{path_file_pic_icon}}" style="width:48px; heigth:48px" />
                                </span>
-                              <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Archarn.Anek Thamrongvorakul</strong>
+                              <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Title_User}}{{FName_User}} {{LName_User}}</strong>
 
                       </div>
                       <div class="logo-element">
@@ -55,10 +54,10 @@
                       </div>
                   </li>
                   <li>
-                      <a href="/project_detail"><i class="fa fa-th-large"></i> <span class="nav-label">ข้อมูลเบื้องต้น</span></a>
+                      <a href="/lecturer_detail"><i class="fa fa-th-large"></i> <span class="nav-label ">ข้อมูลเบื้องต้น</span></a>
                   </li>
                   <li>
-                      <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลส่วนตัว</span></a>
+                      <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">เปลี่ยนรหัสผ่าน</span></a>
                   </li>
                   <li>
                       <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลการสอน</span> <span class="fa arrow"></span></a>
@@ -67,6 +66,16 @@
                         <li><a href="/lecturer_mng_sub">จัดการรายวิชาที่สอน</a></li>
                       </ul>
                   </li>
+                  <li>
+                      <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">ตรวจการบ้านนักศึกษา</span></a>
+                  </li>
+                  <li>
+                      <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">หน้าแรก</span></a>
+                  </li>
+                  <li>
+                      <a href="file_manager_L_mng_privateInfo.html"><i class="fa fa-th-large"></i> <span class="nav-label">ออกจากระบบ</span></a>
+                  </li>
+
               </ul>
 
           </div>
@@ -75,133 +84,17 @@
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
         <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <small class="pull-right">46h ago</small>
-                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5h ago</small>
-                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/profile.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">23h ago</small>
-                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="mailbox.html">
-                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="mailbox.html">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="profile.html">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="grid_options.html">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="notifications.html">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="login.html">
-                        <i class="fa fa-sign-out"></i> Log out
-                    </a>
-                </li>
-            </ul>
-
         </nav>
         </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
-                    <h2>Project detail</h2>
+                    <h2>Lecturer Dashboard</h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="/">Home</a>
                         </li>
                         <li class="active">
-                            <strong>Project detail</strong>
+                            <strong>ข้อมูลเบื้องต้น</strong>
                         </li>
                     </ol>
                 </div>
@@ -227,28 +120,27 @@
                                 <div class="col-lg-12">
                                     <div class="m-b-md">
                                         <div class="profile-image">
-                                            <img src="img/Lecturer_Pic/2.1_profile.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                                            <img src="{{path_file_pic_icon}}" class="img-circle circle-border m-b-md" alt="profile">
                                         </div>
-                                        <h2>Contract with : Archarn.Anek Thamrongvorakul</h2>
+                                        <h2>Contract with : {{Lec_Name_from_search}}</h2>
                                     </div>
                                     <dl class="dl-horizontal">
-                                        อัพเดทสถานะอยู่ห้องพัก หรือไม่ : &nbsp; <button class="btn btn-primary">อยู่</button>
-                                        <button class="btn btn-danger">ไม่อยู่</button>
-
+                                        อัพเดทสถานะอยู่ห้องพัก หรือไม่ : &nbsp; <button ng-click = "status_room_click_active()"class="btn btn-primary">อยู่</button>
+                                        <button ng-click = "status_room_click_not_active()" class="btn btn-danger">ไม่อยู่ </button>
                                     </dl>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-5">
+                                <div class="col-lg-7">
                                     <dl class="dl-horizontal">
-                                        <dt>สถานะอยู่ห้องพัก : </dt>  <dd class="text-danger"> ไม่อยู่</dd>
-                                        <dt>ตำแหน่ง : </dt> <dd>อาจารย์ประจำภาควิชา</dd>
-                                        <dt>วิชาที่ดูแล :</dt> <dd> 7 วิชา</dd>
-                                        <dt>ห้องพัก :</dt> <dd><a href="#" class="text-navy"> วท. 304</a> </dd>
-                                        <dt>ติดต่อ :</dt> <dd> 	test@kmitl.ac.th </dd>
+                                        <dt>สถานะอยู่ห้องพัก : </dt>  <dd class="text-{{class_status}}"> {{status_room_active}}</dd>
+                                        <dt>ตำแหน่ง : </dt> <dd>{{Lec_position_from_search}}</dd>
+                                        <dt>วิชาที่ดูแล :</dt> <dd> {{Lec_subject_holding}} วิชา</dd>
+                                        <dt>ห้องพัก :</dt> <dd><a href="#" class="text-navy">{{Lec_room_from_search}}</a> </dd>
+                                        <dt>ติดต่อ :</dt> <dd> 	E-mail : {{Lec_email_contact_from_search}} , Tel-No : {{Lec_tel_no_contact_from_search}} </dd>
                                     </dl>
                                 </div>
-                                <div class="col-lg-7" id="cluster_info">
+                                <div class="col-lg-5" id="cluster_info">
                                     <dl class="dl-horizontal" >
 
                                         <dt>Last Updated :</dt> <dd>16.08.2014 12:15:57</dd>
@@ -266,73 +158,33 @@
                           รายวิชาที่ดูแล
                       </h3><br>
 
+                  <slick init-onload="false" slick-apply='slickApply' data="dataLoaded" slides-to-show="3" dots="true">
 
-
-                      <div class="slick_demo_2" >
-
-                          <div>
-                              <div class="ibox-content">
-                                  <h2>Analysis And Design Of Algorithm</h2>
-                                  <p>
-                                      <strong>เทอม : </strong> 2/2557
-                                  </p>
-                                  <p>
-                                    <strong> สร้างเมื่อ : </strong> 1/12/2016
-                                  </p>
-                                  <p>
-                                    <strong> คำอธิบาย : </strong> สอนเกี่ยวกับการหาวิธีการทางอัลกอริทึม
-                                  </p>
-                                  <p>
-                                    <strong> โดย : </strong> Archarn.Anek Thamrongvorakul
-                                  </p>
-                              </div>
-                          </div>
-                          <div>
-                              <div class="ibox-content">
-                                  <h2>Slide 2</h2>
-                                  <p>
-                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                      Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                      unknown printer took a galley of type and scrambled it to make a type specimen
-                                      book. It has survived not only five centuries, but also the leap.
-                                  </p>
-                              </div>
-                          </div>
-                          <div>
-                              <div class="ibox-content">
-                                  <h2>Slide 3</h2>
-                                  <p>
-                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                      Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                      unknown printer took a galley of type and scrambled it to make a type specimen
-                                      book. It has survived not only five centuries, but also the leap.
-                                  </p>
-                              </div>
-                          </div>
-                          <div>
-                              <div class="ibox-content">
-                                  <h2>Slide 4</h2>
-                                  <p>
-                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                      Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                      unknown printer took a galley of type and scrambled it to make a type specimen
-                                      book. It has survived not only five centuries, but also the leap.
-                                  </p>
-                              </div>
-                          </div>
-                      </div>
+                   <div ng-repeat="item in subject_arr">
+                     <div class="ibox-content"   >
+                       <h2>{{item.data._source.Subject_Name}}</h2>
+                       <p> <strong>รหัสวิชา : </strong> {{item.data._source.Subject_Id}} </p>
+                       <p><strong>เทอม : </strong> {{item.data._source.Term}}/{{item.data._type}}</p>
+                       <p><strong> สร้างเมื่อ : </strong> {{item.data._source.Date_Upload}}</p>
+                       <p><strong> คำอธิบาย : </strong> {{item.data._source.Description}} </p>
+                       <p><strong> โดย : </strong> {{item.data._source.Lec_Name}}</p>
+                     </div>
+                   </div>
+                 </slick>
 
                   </div>
-                  </div>
-
+                </div><br><br>
+                  <h3 class=" text-center m widget style1 lazur-bg">
+                      ข้อความจากนักศึกษา
+                  </h3><br>
                             <div class="row m-t-sm">
                                 <div class="col-lg-12">
                                 <div class="panel blank-panel">
                                 <div class="panel-heading">
                                     <div class="panel-options">
                                         <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#tab-1" data-toggle="tab">Mails (ยังไม่ได้อ่าน)</a></li>
-                                            <li class=""><a href="#tab-2" data-toggle="tab">Mails (อ่านแล้ว)</a></li>
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Mails (ยังไม่ได้อ่าน) <span class="badge badge-danger">{{count_no_read}}</span></a></li>
+                                            <li class=""><a href="#tab-2" data-toggle="tab">Mails (อ่านแล้ว) <span class="badge badge-success">{{count_read}}</span></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -355,17 +207,12 @@
                   </div>
               </form>
               <h2>
-                  Inbox (16)
+                  Inbox ({{count_no_read}})
               </h2>
               <div class="mail-tools tooltip-demo m-t-md">
-                  <div class="btn-group pull-right">
-                      <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                      <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
 
-                  </div>
                   <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Refresh</button>
-                  <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
-                  <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as important"><i class="fa fa-exclamation"></i> </button>
+
 
               </div>
           </div>
@@ -381,15 +228,16 @@
                     <th></th>
                   </tr>
                 </thead>
-              <tbody>
+              <tbody >
 
-              <tr class="unread">
+              <a><tr class="unread"  ng-repeat = "item in mailbox_arr_no_read | orderBy : 'data._source.Date':true"></a>
+
                   <td >
-                    1
+                    {{$index + 1}}
                   </td>
-                  <td class="mail-ontact"><a href="mail_detail.html">Jack Nowak</a></td>
-                  <td class="mail-subject"><a href="mail_detail.html">Aldus PageMaker including versions of Lorem Ipsum.</a></td>
-                  <td >8.22 PM</td>
+                  <td class="mail-ontact"><a ng-click="show_mailbox_click(item.data._id)">{{item.data._source.Std_Name}}</a></td>
+                  <td class="mail-subject"><a  ng-click="show_mailbox_click(item.data._id)">{{item.data._source.Subject}}</a></td>
+                  <td >{{item.data._source.Date}}</td>
                   <td><button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button></td>
 
               </tr>
@@ -403,196 +251,35 @@
 
                                 </div>
                                 <div class="tab-pane" id="tab-2">
-
+                                  <h2>
+                                      Inbox ({{count_read}})
+                                  </h2>
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th>Status</th>
-                                            <th>Title</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
-                                            <th>Comments</th>
+                                            <th>#</th>
+                                            <th> ผู้ส่ง </th>
+                                            <th> หัวข้อ </th>
+                                            <th> เวลา </th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr  class = "unread" ng-repeat = "item in mailbox_arr_read | orderBy : 'data._source.Date':true">
                                             <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
+                                                <span class="label label-primary"><i class="fa fa-check"></i> {{$index+1}}</span>
+                                            </td>
+                                            <td class="mail-subject">
+                                               <a  ng-click = "go_to_show_mailbox_view(item.data._source.Subject , item.data._id)">{{item.data._source.Std_Name}}</a>
                                             </td>
                                             <td>
-                                               Create project in webapp
+                                               <a ng-click = "go_to_show_mailbox_view(item.data._source.Subject, item.data._id)">{{item.data._source.Subject}}</a>
                                             </td>
                                             <td>
-                                               12.07.2014 10:10:1
+                                                <a ng-click = "go_to_show_mailbox_view(item.data._source.Subject, item.data._id)">{{item.data._source.Date}}</a>
                                             </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                            <p class="small">
-                                                Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                            </p>
-                                            </td>
+                                            <td><button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button></td>
 
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                            </td>
-                                            <td>
-                                                Various versions
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                            </td>
-                                            <td>
-                                                There are many variations
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                            </td>
-                                            <td>
-                                                Latin words
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    Latin words, combined with a handful of model sentence structures
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                            </td>
-                                            <td>
-                                                The generated Lorem
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                            </td>
-                                            <td>
-                                                The first line
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                            </td>
-                                            <td>
-                                                The standard chunk
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                            </td>
-                                            <td>
-                                                Lorem Ipsum is that
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                                </p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                            </td>
-                                            <td>
-                                                Contrary to popular
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p class="small">
-                                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                                                </p>
-                                            </td>
 
                                         </tr>
 
@@ -613,14 +300,7 @@
             </div>
           </div>
         </div>
-        <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
-        </div>
+
 
         </div>
         </div>
@@ -639,56 +319,57 @@
               margin: 0 10px;
           }
       </style>
-    <script>
-      $(document).ready(function(){
+      <script>
+              $(document).ready(function(){
 
 
-          $('.slick_demo_1').slick({
-              dots: true
-          });
+                  $('.slick_demo_1').slick({
+                      dots: true
+                  });
 
-          $('.slick_demo_2').slick({
-              infinite: true,
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              centerMode: true,
-              responsive: [
-                  {
-                      breakpoint: 1024,
-                      settings: {
-                          slidesToShow: 3,
-                          slidesToScroll: 3,
-                          infinite: true,
-                          dots: true
-                      }
-                  },
-                  {
-                      breakpoint: 600,
-                      settings: {
-                          slidesToShow: 2,
-                          slidesToScroll: 2
-                      }
-                  },
-                  {
-                      breakpoint: 480,
-                      settings: {
-                          slidesToShow: 1,
-                          slidesToScroll: 1
-                      }
-                  }
-              ]
-          });
+                  $('.slick_demo_2').slick({
+                      infinite: true,
+                      slidesToShow: 3,
+                      slidesToScroll: 1,
+                      centerMode: true,
+                      responsive: [
+                          {
+                              breakpoint: 1024,
+                              settings: {
+                                  slidesToShow: 3,
+                                  slidesToScroll: 3,
+                                  infinite: true,
+                                  dots: true
+                              }
+                          },
+                          {
+                              breakpoint: 600,
+                              settings: {
+                                  slidesToShow: 2,
+                                  slidesToScroll: 2
+                              }
+                          },
+                          {
+                              breakpoint: 480,
+                              settings: {
+                                  slidesToShow: 1,
+                                  slidesToScroll: 1
+                              }
+                          }
+                      ]
+                  });
 
-          $('.slick_demo_3').slick({
-              infinite: true,
-              speed: 500,
-              fade: true,
-              cssEase: 'linear',
-              adaptiveHeight: true
-          });
-      });
+                  $('.slick_demo_3').slick({
+                      infinite: true,
+                      speed: 500,
+                      fade: true,
+                      cssEase: 'linear',
+                      adaptiveHeight: true
+                  });
+              });
 
-  </script>
+          </script>
+
 
 </body>
 

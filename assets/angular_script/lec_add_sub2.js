@@ -1,7 +1,7 @@
-var app = angular.module('lectureraddsub', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize' ]);
+var app = angular.module('lectureraddsub', [ 'oitozero.ngSweetAlert' ,'ngFileUpload' , 'angularFileUpload' ,'ngSanitize' ,'LocalStorageModule' ]);
 
-app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'$window',
-  function ( $scope, $rootScope,Upload, $http , FileUploader  ,$window )
+app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'$window', 'localStorageService'  , 'SweetAlert' ,
+  function ( $scope, $rootScope,Upload, $http , FileUploader  ,$window , localStorageService ,SweetAlert)
   {
     $scope.term_arr = [];
     $scope.year_arr = [];
@@ -10,8 +10,85 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     $scope.subject_id = '';
     $scope.subject_name = '';
     $scope.Description = '';
+    $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
+    console.log($scope.path_file_pic_icon);
+      $scope.demo1 = function () {
+          SweetAlert.swal({
+              title: "Welcome in Alerts",
+              text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+          });
+      }
 
-    $http.post('/get_data_on_elasticsearch' , {Lec_Name : 'Archarn.Anek Thamrongvorakul'})
+      $scope.demo2 = function () {
+          SweetAlert.swal({
+              title: "Good job!",
+              text: "You clicked the button!",
+              type: "success"
+          });
+      }
+
+      $scope.demo3 = function () {
+          SweetAlert.swal({
+                  title: "Are you sure?",
+                  text: "Your will not be able to recover this imaginary file!",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "Yes, delete it!",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+              },
+              function () {
+                  SweetAlert.swal("Ok!");
+              });
+      }
+
+      var lec_name = localStorageService.get('Fullname_User');
+      var lec_name_split = lec_name.split(" ");
+      var lec_name_after_split = '';
+      for (var i=0 ; i< lec_name_split.length ; i++){lec_name_after_split = lec_name_after_split + lec_name_split[i]};
+
+      $scope.demo4 = function (id,type,sub_name,term) {
+          SweetAlert.swal({
+                  title: "ยืนยันที่จะลบวิชา?",
+                  text: sub_name,
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "ตกลง",
+                  cancelButtonText: "ยกเลิก",
+                  closeOnConfirm: false,
+                  closeOnCancel: false },
+              function (isConfirm) {
+                  if (isConfirm) {
+                      var data = {
+                          "header" : {"type":type , "id" : id},
+                          "data" : {
+                            Subject_Name : sub_name,
+                            Term : term,
+                            Lec_Name : lec_name_after_split
+                          }
+                      };
+                      $http.post('/delete_subject_on_elasticsearch' , data )
+                      .success(function(data){
+                        SweetAlert.swal("ลบวิชาที่เลือกเรียบร้อย!", "วิชา" + sub_name + "ได้ทำการลบเรียบร้อยแล้ว", "success");
+                        setTimeout(function(){
+                            location.reload();
+                        }, 3000);
+                      });
+
+
+                  } else {
+                      SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
+                  }
+
+              });
+
+      };
+
+    
+
+    $http.post('/get_data_on_elasticsearch' , {Lec_Name : localStorageService.get('Fullname_User')})
     .success (function (data){
         $scope.subject_arr = [];
         for (var i=0 ; i<data.length ; i++){
@@ -43,30 +120,7 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     }).error(function(data, status, headers, config)
     {
     });
-    var lec_name = 'Archarn.Anek Thamrongvorakul';
-    var lec_name_split = lec_name.split(" ");
-    var lec_name_after_split = '';
-    for (var i=0 ; i< lec_name_split.length ; i++){lec_name_after_split = lec_name_after_split + lec_name_split[i]};
 
-    $scope.remove_click = function (id,type,sub_name,term){
-      console.log(id + "  " + type);
-      console.log(sub_name , term);
-      var data = {
-          "header" : {"type":type , "id" : id},
-          "data" : {
-            Subject_Name : sub_name,
-            Term : term,
-            Lec_Name : lec_name_after_split
-          }
-      };
-
-      $http.post('/delete_subject_on_elasticsearch' , data )
-      .success(function(data){
-        alert('ลบวิชาที่เลือกเรียบร้อย !!');
-        location.reload();
-      });
-
-    };
 
     $scope.subject_add_save_click = function (){
 
@@ -80,8 +134,8 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
           "Subject_Name" : $scope.subject_name,
           "Term" : $scope.term_Select,
           "Description" : $scope.Description,
-          "Lec_Name" : "Archarn.Anek Thamrongvorakul",
-          "Created_By" : "Archarn.Anek Thamrongvorakul",
+          "Lec_Name" : localStorageService.get('Fullname_User'),
+          "Created_By" : localStorageService.get('Fullname_User'),
           "Date_Upload" : moment().format('MMMM Do YYYY, h:mm:ss a'),
           "View_Count" : "0"
         }

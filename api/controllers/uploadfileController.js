@@ -66,6 +66,7 @@ module.exports = {
                   var path_doc = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/documents/';
                   var path_news = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
                   var path_score = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
+                  var path_send_homework = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/send_homework/';
                   var path_keep ;
 
                   if (data.path === "homework"){
@@ -74,8 +75,11 @@ module.exports = {
                   else if (data.path === "documents"){
                     path_keep = path_doc;
                   }
-                  else {
+                  else if (data.path === "score"){
                     path_keep = path_score;
+                  }
+                  else {
+                    path_keep = path_send_homework;
                   }
 
 
@@ -107,7 +111,57 @@ module.exports = {
               return res.send('Response OK');
             },
 
+            postsendhomework : function (req,res){
+              var data = req.allParams();
 
+              var path_hw = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/homework/';
+              var path_doc = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/documents/';
+              var path_news = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
+              var path_score = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
+              var path_send_homework = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/send_homework/' + data.Times_Homework_Select +'/';
+              var path_keep ;
+              if (data.path === "homework"){
+                path_keep = path_hw;
+              }
+              else if (data.path === "documents"){
+                path_keep = path_doc;
+              }
+              else if (data.path === "score"){
+                path_keep = path_score;
+              }
+              else {
+                path_keep = path_send_homework;
+              }
+
+
+              req.file('file').upload({
+
+                dirname : path_keep,
+                saveAs: function(__newFile, cb) {
+                   cb(null, __newFile.filename);
+                 },
+              },
+              function (err, files)
+                {
+                  client.bulk({
+                    body :[
+                        { index : { _index: 'send_homework' , _type: data.path } },
+                        { Lec_Name_Upload : data.Lec_Name_Default ,Lec_Name : data.Lec_Name,Subject: data.subject,Subject_Name : data.subject_default, Std_Name : data.Std_Name,ID_NO : data.ID_NO,Term : data.term , Year : data.year , Path_Upload : path_keep ,
+                          Date_Upload : data.Date_Upload ,Description_Homework_Send : data.Description_Homework_Send ,Times_Homework_Select : data.Times_Homework_Select,Subject_Send_Homework : data.Subject_Send_Homework, File_Name : files},
+                    ]
+                  }, function (error, response){
+                      console.log(error);
+                  });
+
+                    if (err)
+                    {
+                        return res.negotiate(err);
+                        return res.serverError(err);
+                    }
+                });
+
+                return res.send('Response OK');
+            },
 
             get_files: function (req,res){
               var dataJson = req.allParams();

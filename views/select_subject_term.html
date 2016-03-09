@@ -73,7 +73,7 @@
                                 <option    ng-repeat = "item in term_year_arr | unique : 'data2'" value="{{item.data2}}" >{{item.data2}}</option>
                              </select>
                         </div>
-                        <button type="submit" < class="btn btn-primary block full-width m-b" ng-click="submit_click()">ตกลง</button>
+                        <button type="submit" < class="btn btn-primary block full-width m-b" ng-disabled = "lec_name_search === ''" ng-click="submit_click()" >ตกลง</button>
                     </form>
 
                 </div>

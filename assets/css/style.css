@@ -1426,7 +1426,7 @@ a.list-group-item.active:focus {
 .list-group-item-text {
   margin: 0 0 10px;
   color: inherit;
-  font-size: 12px;
+  font-size: 14px;
   line-height: inherit;
 }
 .no-padding .list-group-item {
@@ -6428,7 +6428,7 @@ body.body-small .vote-icon {
 body.landing-page {
   color: #676a6c;
   font-family: 'Open Sans', helvetica, arial, sans-serif;
-  background-color: #fff;
+  background-color: #f5f5f5;
 }
 .landing-page {
   /* CUSTOMIZE THE NAVBAR

@@ -48,6 +48,10 @@ module.exports = {
           function (error, stdout, stderr)
           {
           });
+          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\send_homework',
+          function (error, stdout, stderr)
+          {
+          });
     return res.ok();
   },
 
@@ -122,5 +126,7 @@ module.exports = {
       });
       res.ok();
     }
+
+
 
 };

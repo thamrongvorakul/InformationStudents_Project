@@ -7,8 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Special Project</title>
-    
+    <title>Special Project </title>
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -20,11 +20,11 @@
     <script type="text/javascript" src="/angular_script/homepage.js"></script>
 
 </head>
-<body id="page-top" class="landing-page" >
-<div class="navbar-wrapper" ng-controller = 'homepageController' >
+<body id="page-top" class="landing-page" ng-controller = 'homepageController' >
+<div class="navbar-wrapper"  >
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container" ng-init = "init( <%= JSON.stringify(me.email) %> , <%= JSON.stringify(me.management) %> ,
-              <%= JSON.stringify(me.title_user) %>  , <%= JSON.stringify(me.name) %>,<%= JSON.stringify(me.lname) %>) ">
+              <%= JSON.stringify(me.title_user) %>  , <%= JSON.stringify(me.name) %>,<%= JSON.stringify(me.lname) %> , <%= JSON.stringify(me.ID_NO) %>) ">
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -59,7 +59,7 @@
                     <h1>เว็บแอปพลิเคชัน<br/>
                         สำหรับแชร์ข้อมูลรายวิชา<br/>
                         ในภาควิชา วิทยาการคอมพิวเตอร์<br/>
-                        </h1>
+                      </h1>
                     <p>Information for Students.</p>
                     <p>
                     </p>
@@ -98,107 +98,51 @@
 </div>
 
 <br><br><br>
+                      <div class = "col-lg-2"></div>
+                              <div class="col-lg-8 input-group">
+                                        <input type="text" placeholder="ค้นหาข้อมูลที่ต้องการ (ชื่ออาจารย์ ชื่อวิชา เป็นต้น)" ng-model="keyword_search" class="form-control input-lg">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-lg btn-primary" style="height:46px;" type="submit" ng-click = "search_click()">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                      <div class = "col-lg-2"></div><br><br>
+
 <div class="sk-spinner sk-spinner-double-bounce" >
           <div class="sk-double-bounce1"></div>
           <div class="sk-double-bounce2"></div>
       </div>
+
 <section id="features" class="container services" ><!Lastest Update>
 
     <div class="row">
         <div class="col-lg-12 wow fadeInRight">
+          <div class="ibox-content widget style1 lazur-bg">
+            <h2 align= "center"> <strong>Latest Topic (วิชาที่มีการอัพเดทล่าสุด) </strong></h2>
+          </div>
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-
-
-                        <h5><!i class="fa fa-slack">Lastest Update (อัพเดทล่าสุด) </i></h5>
                           <div class="ibox-tools">
                               <a class="collapse-link">
                                   <i class="fa fa-chevron-up"></i>
                               </a>
                             </div>
-
-
-
                     </div>
-
                     <div class="ibox-content" >
-                        <div class="list-group">
-                            <a class="list-group-item active" href="/students_sub_doc">
-                                <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                                <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
-                                <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 0 - Preface</b> </p>
-                                <p> อัพเดทเมื่อ : 03-1-2559 17:54:02  โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-
-                            </a>
-
-                            <a class="list-group-item" href="/students_sub_doc">
-                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
-                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 1 - Introduction </b> </p>
-                              <p> อัพเดทเมื่อ : 03-1-2559 17:50:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-                            </a>
-
-                            <a class="list-group-item" href="/students_sub_doc">
-                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
-                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 2 - Devide and Conquer </b> </p>
-                              <p> อัพเดทเมื่อ : 03-1-2559 17:47:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-                            </a>
-                            <a class="list-group-item" href="/students_sub_doc">
-                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
-                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 3 - Dynamic Programming </b> </p>
-                              <p> อัพเดทเมื่อ : 03-1-2559 17:40:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-                            </a>
-
-                            <a class="list-group-item" href="/students_sub_doc">
-                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                              <strong class="list-group-item-text">หัวข้อ : เอกสารประกอบการเรียน  </strong>
-                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน หัวข้อ Chapter 4 - Greedy </b> </p>
-                              <p> อัพเดทเมื่อ : 03-1-2559 17:35:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-                            </a>
-                            <a class="list-group-item" href="/students_sub_score">
-                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                              <strong class="list-group-item-text">หัวข้อ : คะแนน </strong>
-                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์คะแนนสอบกลางภาค </b> </p>
-                              <p> อัพเดทเมื่อ : 03-1-2559 16:20:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-                            </a>
-
-                            <a class="list-group-item" href="/students_sub_score">
-                              <h3 class="list-group-item-heading">Analysis and Design of Algorithm</h3>
-
-                              <strong class="list-group-item-text">หัวข้อ : คะแนน  </strong>
-                              <p class="list-group-item-text"><b>รายละเอียด : อัพโหลดไฟล์คะแนนสอบกลางภาค </b> </p>
-                              <p> อัพเดทเมื่อ : 03-1-2559 16:00:02 โดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p>
-
-                            </a>
-                            <a class="list-group-item" href="#">
-                                <h3 class="list-group-item-heading">Updating . . .</h3>
-
-                                <p class="list-group-item-text">Detail... </p>
-                            </a>
-
-                            <a class="list-group-item" href="#">
-                                <h3 class="list-group-item-heading">Updating . . .</h3>
-
-                                <p class="list-group-item-text">Detail... </p>
-                            </a>
-                            <a class="list-group-item" href="#">
-                                <h3 class="list-group-item-heading">Updating . . .</h3>
-
-                                <p class="list-group-item-text">Detail... </p>
+                        <div class="list-group" >
+                            <a class="list-group-item "  ng-repeat = "item in latest_topic_arr | orderBy : 'data._source.Date_Upload':true | limitTo : 10">
+                                <h3 class="list-group-item-heading">{{item.data._source.Subject_Name}}</h3>
+                                <strong class="list-group-item-text" ng-if = "item.data._type === 'news'">หัวข้อ : อัพเดทข่าวสาร  </strong>
+                                <strong class="list-group-item-text" ng-if = "item.data._type === 'homework'">หัวข้อ : การบ้าน  </strong>
+                                <strong class="list-group-item-text" ng-if = "item.data._type === 'documents'">หัวข้อ : เอกสารประกอบการเรียน  </strong>
+                                <strong class="list-group-item-text" ng-if = "item.data._type === 'score'">หัวข้อ : คะแนนสอบ  </strong>
+                                <p class="list-group-item-text" ng-if = "item.data._type === 'homework'"><b>รายละเอียด : อัพโหลดไฟล์การบ้าน ชื่อไฟล์ : {{item.data._source.File_Name[0].filename}}</b> </p>
+                                <p class="list-group-item-text" ng-if = "item.data._type === 'documents'"><b>รายละเอียด : อัพโหลดไฟล์เอกสารประกอบการเรียนการสอน ชื่อไฟล์ : {{item.data._source.File_Name[0].filename}}</b> </p>
+                                <p class="list-group-item-text" ng-if = "item.data._type === 'score'"><b>รายละเอียด : อัพโหลดไฟล์คะแนนสอบ ชื่อไฟล์ : {{item.data._source.File_Name[0].filename}}</b> </p>
+                                <p class="list-group-item-text" ng-if = "item.data._source.Type === 'clip'"><b>รายละเอียด : อัพโหลดวีดีโอ หัวข้ออัพเดทข่าวสาร ชื่อคลิป : {{item.data._source.Video_Name}}</b> </p>
+                                <p class="list-group-item-text" ng-if = "item.data._source.Type === 'text'"><b>รายละเอียด : อัพโหลดสเตตัส หัวข้ออัพเดทข่าวสาร </b> </p>
+                                <p> อัพเดทเมื่อ : {{item.data._source.Date_Upload}} โดย :  {{item.data._source.Lec_Name_Upload}}</p>
                             </a>
                         </div>
                     </div>
@@ -225,9 +169,12 @@
     </div>
     <div class="row" >
         <div class="col-lg-12 wow fadeInRight">
+          <div class="ibox-content widget style1 lazur-bg">
+            <h2 align= "center"> <strong>Hottest Topic (วิชาที่มีผู้เข้าชมมากที่สุด) </strong></h2>
+          </div>
                 <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Hottest Topic</h5>
+                    <div class="ibox-title ">
+
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -235,55 +182,23 @@
 
                         </div>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content" >
                       <div class="forum-item active">
 
                             </div>
-                            <div class="well">
 
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="forum-icon">
-                                            <i class="fa fa-shield"></i>
-                                        </div>
-                                        <h3  class="forum-item-title">05506009 Analysis and Design of Algorithm (2/2557) <p>สอนโดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p></h3>
-                                        <div class="forum-sub-title">การแก้ปัญหา การวิเคราะห์ และการออกแบบ อัลกอริทึม สำหรับใช้แก้ปัญหาในกรณีต่างๆ </div>
-                                    </div>
-                                    <div class="col-md-1 forum-info">
-                                        <span class="views-number">
-                                            45
-                                        </span>
-                                        <div>
-                                            <small>Views</small>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-1 forum-info">
-                                        <span class="views-number">
-                                            35
-                                        </span>
-                                        <div>
-                                            <small>Score</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1 forum-info">
-                                        <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 3-1-2559 เวลา 18:05:25</p></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="well well-lg">
+                            <div class="well well-lg" ng-repeat = "item in hottest_topic_arr | orderBy : 'data._source.View_Count' : true | limitTo : 10">
                               <div class="row">
                                   <div class="col-md-9">
                                       <div class="forum-icon">
                                           <i class="fa fa-shield"></i>
                                       </div>
-                                      <h3  class="forum-item-title">05506009 Analysis and Design of Algorithm (2/2556)  <p>สอนโดย : ผศ.ดร.นันทิกา เบญจเทพานันท์ </p></h3>
-                                      <div class="forum-sub-title">การวิเคราะห์ และการออกแบบอัลกอริทึม สำหรับใช้แก้ปัญหาในกรณีต่างๆ </div>
+                                      <h3  class="forum-item-title">{{item.data._source.Subject_Id}} {{item.data._source.Subject_Name}} ({{item.data._source.Term}}/{{item.data._type}})  <p>สอนโดย : {{item.data._source.Lec_Name}} </p></h3>
+                                      <div class="forum-sub-title">รายละเอียดวิชา : {{item.data._source.Description}}</div>
                                   </div>
                                   <div class="col-md-1 forum-info">
                                       <span class="views-number">
-                                          32
+                                          {{item.data._source.View_Count}}
                                       </span>
                                       <div>
                                           <small>Views</small>
@@ -293,104 +208,16 @@
 
                                   <div class="col-md-1 forum-info">
                                       <span class="views-number">
-                                          27
+                                          {{item.data._source.Score}}
                                       </span>
                                       <div>
                                           <small>Score</small>
                                       </div>
                                   </div>
                                   <div class="col-md-1 forum-info">
-                                      <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 1-1-2559 เวลา 16:05:25</p></div>
+                                      <div class="forum-sub-title"><p>สร้างเมื่อ : {{item.data._source.Date_Upload}}</p></div>
                                   </div>
                               </div>
-                            </div>
-                            <div class="well well-lg">
-                              <div class="row">
-                                  <div class="col-md-9">
-                                      <div class="forum-icon">
-                                          <i class="fa fa-bomb"></i>
-                                      </div>
-                                      <h3  class="forum-item-title">05506003  PROGRAMMING FUNDAMENTALS (1/2557) <p>สอนโดย : ผศ.สิริลักษณ์ อนันต์สถิตย์สิน</p></h3>
-                                      <div class="forum-sub-title">การเขียนโปรแกรมขั้นพื้นฐาน ด้วยภาษา Java</div>
-                                  </div>
-                                  <div class="col-md-1 forum-info">
-                                      <span class="views-number">
-                                          28
-                                      </span>
-                                      <div>
-                                          <small>Views</small>
-                                      </div>
-                                  </div>
-
-
-                                  <div class="col-md-1 forum-info">
-                                      <span class="views-number">
-                                          25
-                                      </span>
-                                      <div>
-                                          <small>Score</small>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-1 forum-info">
-                                      <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 15-12-2558 เวลา 11:05:25</p></div>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="well well-lg">
-                              <div class="row">
-                                  <div class="col-md-9">
-                                      <div class="forum-icon">
-                                        <i class="fa fa-bookmark"></i>
-                                      </div>
-                                      <h3  class="forum-item-title">05506004  OBJECT-ORIENTED PROGRAMMING (2/2557)<p>สอนโดย : ผศ.สิริลักษณ์ อนันต์สถิตย์สิน</p></h3>
-                                      <div class="forum-sub-title">การเขียนโปรแกรมเชิงออบเจกต์ </div>
-                                  </div>
-                                  <div class="col-md-1 forum-info">
-                                      <span class="views-number">
-                                          19
-                                      </span>
-                                      <div>
-                                          <small>Views</small>
-                                      </div>
-                                  </div>
-
-
-                                  <div class="col-md-1 forum-info">
-                                      <span class="views-number">
-                                          11
-                                      </span>
-                                      <div>
-                                          <small>Score</small>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-1 forum-info">
-                                      <div class="forum-sub-title"><p>อัพเดทล่าสุดเมื่อ : 18-12-2558 เวลา 13:05:25</p></div>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="well well-lg">
-                                <h3>Updating . . .</h3>
-                                Detail...
-                            </div>
-                            <div class="well well-lg">
-                              <h3>Updating . . .</h3>
-                                Detail...
-                            </div>
-                            <div class="well well-lg">
-                              <h3>Updating . . .</h3>
-                                Detail...
-                            </div>
-                            <div class="well well-lg">
-                              <h3>Updating . . .</h3>
-                                Detail...
-                            </div>
-                            <div class="well well-lg">
-                              <h3>Updating . . .</h3>
-                                Detail...
-                            </div>
-                            <div class="well well-lg">
-                              <h3>Updating . . .</h3>
-                                Detail...
                             </div>
                     </div>
                 </div>

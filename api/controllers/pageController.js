@@ -37,8 +37,8 @@ module.exports = {
 						name : user.FName,
 						lname : user.LName,
 						id: user.id,
-						name: user.name,
 						email: user.email,
+						ID_NO : user.ID_NO
 					}
 				});
 			}
@@ -52,14 +52,15 @@ module.exports = {
 						name : user.FName,
 						lname : user.LName,
 						id: user.id,
-						name: user.name,
 						email: user.email,
+						ID_NO : user.ID_NO
+
 					}
 				});
 			}
 		});
 	},
-	
+
 	showContact_Lec: function (req, res) {
 
     if (!req.session.me) {

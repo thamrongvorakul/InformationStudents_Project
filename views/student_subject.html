@@ -14,13 +14,14 @@
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">
-
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
     <script src="/dist/ng-file-upload-shim.min.js"></script>
     <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
     <script src="/dist/text/angular-file-upload.min.js"></script>
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-momentjs.js"></script>
@@ -41,36 +42,30 @@
                 <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                     <i class="fa fa-reorder"></i>
                 </button>
-                <a href="#" class="navbar-brand">{{select_sub_name}}</a>
+                <a href="#" class="navbar-brand">{{select_sub_name}} ( {{select_term}}/{{select_year}}  )</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a aria-expanded="false" role="button" href="layouts.html"> {{select_sub_name}} ( {{select_term}}/{{select_year}}  )</a>
+                        <a aria-expanded="false" role="button" href="layouts.html"> Lecturer : {{lec_name_upload}}</a>
                     </li>
                     <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                        <a aria-expanded="false" role="button" href="/" > หน้าแรก </a>
 
                     </li>
                     <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                        <a aria-expanded="false" role="button" href="select_subject_term" > เลือกวิชา </a>
 
                     </li>
                     <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                        <a aria-expanded="false" role="button" href="/contacts_Lec" > ติดต่ออาจารย์ผู้สอน </a>
 
                     </li>
                     <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                        <a aria-expanded="false" role="button" href="/" > ออกจากระบบ </a>
                     </li>
                 </ul>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <a href="login.html">
-                            <i class="fa fa-sign-out"></i> Log out
-                        </a>
-                    </li>
-                </ul>
+
             </div>
         </nav>
         </div>
@@ -86,7 +81,7 @@
                             <h5>Views</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{views_count_all}}</h1>
+                            <h1 class="no-margins">{{views_count_all}}</h1><br>
                             <div class="stat-percent font-bold text-success"> <i class="fa fa-bolt"></i></div>
                             <small>จำนวนผู้เข้าชม</small>
                         </div>
@@ -99,7 +94,7 @@
                             <h5>Followers</h5>
                         </div>
                         <div class="ibox-content">
-                                    <h1 class="no-margins">{{followers_count_all}}</h1>
+                                    <h1 class="no-margins">{{followers_count_all}}</h1><br>
                                     <div class="stat-percent font-bold text-info"> <i class="fa fa-level-up"></i></div>
                                     <small>จำนวนคนติดตาม</small>
                         </div>
@@ -117,7 +112,7 @@
                             <div class="row">
                               <div class="col-md-3"></div>
                                 <div class="col-md-6">
-                                    <h1 class="no-margins" ><a  ng-click="like_click()">{{status_like_unlike}}</a></h1>
+                                    <h1 class="no-margins" ><a  ng-click="like_click()">{{status_like_unlike}}</a></h1><br>
                                     <div class="font-bold text-navy"> <small align="center">{{text_show}}</small></div>
                                 </div>
                             </div>
@@ -135,7 +130,7 @@
                             </div>
                         </div>
                         <div class="ibox-content ">
-                          <h1 align = "center"><a> SCORE </a><h1>
+                          <h1 align = "center"> <button class="btn btn-danger  dim" type="button"><i class="fa fa-heart"></i></button>SCORE <h1>
                         </div>
 
                     </div>
@@ -287,7 +282,7 @@
                                                             </a>
                                                             <div class="media-body">
                                                                 <a href="#">
-                                                                    {{item.name._source.Lec_Name}}
+                                                                    {{item.name._source.Lec_Name_Upload}}
                                                                 </a>
                                                                 <small class="text-muted">{{item.name._source.Date_Upload}}</small>
                                                             </div>
@@ -446,33 +441,15 @@
                     <div class="col-lg-4">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <span class="label label-warning pull-right">Data has changed</span>
+                                <span class="label label-warning pull-right">ส่งการบ้าน</span>
                                 <h5>User activity</h5>
                             </div>
                             <div class="ibox float-e-margins">
                   <div class="ibox-title">
-                      <h5>Striped Table </h5>
-                      <div class="ibox-tools">
-                          <a class="collapse-link">
-                              <i class="fa fa-chevron-up"></i>
-                          </a>
-                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                              <i class="fa fa-wrench"></i>
-                          </a>
-                          <ul class="dropdown-menu dropdown-user">
-                              <li><a href="#">Config option 1</a>
-                              </li>
-                              <li><a href="#">Config option 2</a>
-                              </li>
-                          </ul>
-                          <a class="close-link">
-                              <i class="fa fa-times"></i>
-                          </a>
-                      </div>
+                      <br>
+                      <h2 align = "center"><button class="btn btn-outline btn-success  dim" type="button" data-toggle="modal" data-target="#myModal5"><i class="fa fa-upload"></i></button>ส่งการบ้านวิชานี้</h2><br>
                   </div>
-                  <div class="ibox-content">
-                      <div id="calendar"></div>
-                  </div>
+
               </div>
                         </div>
                     </div>
@@ -480,16 +457,108 @@
                 </div>
 
             </div>
+            <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-lg" style = "width:1000px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <h4 class="modal-title ibox-content widget style1 lazur-bg">Send Your Homework</h4><br>
+                              <div class="mail-body"><br>
+                                <form class="form-horizontal">
+                                    <div class="form-group"><label class="col-sm-1 control-label">Subject: </label>
+                                        <div class="col-sm-10"><input type="text" class="form-control" value = "{{subject_for_send_homework}}" ng-model="subject_for_send_homework"></input></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                          <form class="form-horizontal">
+                              <div class="form-group">
+                                <div class = "col-sm-1"></div>
+                                <label class="col-sm-2 control-label">รายละเอียดเพิ่มเติม: </label>
+                                  <div class="col-sm-6"><textarea type="text" class="form-control" style = "height:150px;" value = "{{description_homework}}" ng-model="description_homework"></textarea></div>
+                              </div>
+                              <div class = "form-group">
 
-        </div>
-        <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
+                                <p align="center"><strong>ครั้งที่ : </strong><select  data-toggle="dropdown" class="btn btn-white dropdown-toggle" ng-model = "times_homework_select" >
+                                  <option   ng-repeat = "item in times_homework_arr " value="{{item.time}}" >{{item.time}}</option>
+                               </select></p>
+                              </div>
+                          </form>
+                          <div class="file-manager">
+                              <h5>Upload:</h5>
+                              <p>Description</p><br>
+
+                              <div class="hr-line-dashed"></div>
+
+
+
+                                <input type="file" nv-file-select="" uploader="uploader"  multiple /><br/>
+
+                                <div class="hr-line-dashed"></div><br>
+
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th width="50%">ชื่อไฟล์</th>
+                                            <th ng-show="uploader.isHTML5">ขนาด</th>
+                                            <th ng-show="uploader.isHTML5">ดำเนินการ</th>
+                                            <th>สถานะ</th>
+                                            <th>ตัวเลือก</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in uploader.queue">
+                                            <td><strong>{{ item.file.name }}</strong></td>
+                                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                            <td ng-show="uploader.isHTML5">
+                                                <div class="progress" style="margin-bottom: 0;">
+                                                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                            </td>
+                                            <td nowrap>
+                                                <!--<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                                </button>-->
+                                                <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                  <div class="hr-line-dashed"></div><br>
+                            <!--  <button class="btn btn-primary btn-block" ngf-select ngf-change="upload($files)" onclick="this.value = null" >Upload Files</button>-->
+                              <button  type="file" class="btn btn-primary btn-block"   ng-click="uploader.uploadAll()"  ng-disabled="!uploader.getNotUploadedItems().length" >Upload All Files</button>
+
+                                <div class="hr-line-dashed"></div><br>
+
+
+
+                              <!--<div class="progress progress-striped active">
+                                <div class="progress-bar progress-bar-danger" style="width:{{todoList.progress}};" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{todoList.progress}}" role="progressbar" >
+                                </div>
+                              <span class="sr-only">{{todoList.progress}}</span>-->
+
+                              <div class="clearfix"></div>
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
         </div>
+
 
         </div>
         </div>
@@ -497,8 +566,7 @@
 
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='contactsLec'>
+<html ng-app='mailbox_view'>
 
 <head>
 
@@ -26,20 +26,21 @@
     <script src="/dist/ng-file-upload.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
     <script src="/dist/angular-cookies.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
-
-
     <script src="/dist/angular-cookies.min.js"></script>
     <script src="/dist/text/angular-file-upload.min.js"></script>
-    <script type="text/javascript" src="/angular_script/contacts_Lec.js"></script>
+    <script type="text/javascript" src="/angular_script/mailbox_view.js"></script>
+
 
 
 </head>
 
 <body>
 
-    <div id="wrapper" ng-controller='contactslecController'>
+    <div id="wrapper" ng-controller='mailboxviewController'>
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -87,54 +88,7 @@
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <small class="pull-right">46h ago</small>
-                                    <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5h ago</small>
-                                    <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                    <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="dropdown-messages-box">
-                                <a href="profile.html" class="pull-left">
-                                    <img alt="image" class="img-circle" src="img/profile.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">23h ago</small>
-                                    <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                    <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="mailbox.html">
-                                    <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
+
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -192,16 +146,18 @@
 
         <div class="wrapper wrapper-content">
         <div class="row">
-
-            <div class="col-lg-9 animated fadeInRight">
+            <div class="col-lg-8 ibox">
+                <div class="ibox-content widget style1 lazur-bg">
+                  <h2 align= "center">Mail Box </h2>
+                </div>
+              </div>
+            <div class="col-lg-8 animated fadeInRight">
             <div class="mail-box-header">
                 <div class="pull-right tooltip-demo">
-                    <a href="mail_compose.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Reply"><i class="fa fa-reply"></i> Reply</a>
-                    <a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>
                     <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>
                 </div>
-                <h2>
-                    View Message
+                <h2 >
+                    Detail
                 </h2>
                 <div class="mail-tools tooltip-demo m-t-md">
 
@@ -222,12 +178,7 @@
                   {{message}}
                 </div>
 
-                        <div class="mail-body text-left tooltip-demo">
-                          <summernote height = "400"></summernote>
-                          <div class="mail-body text-right tooltip-demo">
-                                  <a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Reply</a>
-                          </div>
-                        </div>
+
                         <div class="clearfix"></div>
 
 

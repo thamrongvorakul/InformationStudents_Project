@@ -21,7 +21,7 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
     var subject_split = localStorageService.get('subject_name').split(" ");
     var subject = '' ;
     for (var i=0 ;i<subject_split.length ; i++){subject = subject + subject_split[i]}
-    var Lec_Name_default = 'Archarn.Anek Thamrongvorakul';
+    var Lec_Name_default = localStorageService.get('Fullname_User');
     var Lec_Name_split = Lec_Name_default.split(" ");
     var Lec_Name = '';
     for (var i=0 ;i<Lec_Name_split.length ; i++){Lec_Name = Lec_Name + Lec_Name_split[i]}
@@ -55,7 +55,7 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
         subject :  localStorageService.get('subject_name'),
         term : localStorageService.get('term'),
         year : localStorageService.get('year'),
-        Lec_Name : 'Archarn.Anek Thamrongvorakul',
+        Lec_Name : localStorageService.get('Fullname_User'),
         path : 'homework',
         id : id
       }
@@ -122,7 +122,7 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
           subject_default : localStorageService.get('subject_name'),
           term : localStorageService.get('term'),
           year : localStorageService.get('year'),
-          Lec_Name_Default : 'Archarn.Anek Thamrongvorakul',
+          Lec_Name_Default : localStorageService.get('Fullname_User'),
           Lec_Name : Lec_Name,
           Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
         };
@@ -194,7 +194,7 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
       var subject_split = localStorageService.get('subject_name').split(" ");
       var subject = '' ;
       for (var i=0 ;i<subject_split.length ; i++){subject = subject + subject_split[i]}
-      var Lec_Name_default = 'Archarn.Anek Thamrongvorakul';
+      var Lec_Name_default = localStorageService.get('Fullname_User');
       var Lec_Name_split = Lec_Name_default.split(" ");
       var Lec_Name = '';
       for (var i=0 ;i<Lec_Name_split.length ; i++){Lec_Name = Lec_Name + Lec_Name_split[i]}
@@ -223,7 +223,7 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
           subject :  localStorageService.get('subject_name'),
           term : localStorageService.get('term'),
           year : localStorageService.get('year'),
-          Lec_Name : 'Archarn.Anek Thamrongvorakul',
+          Lec_Name : localStorageService.get('Fullname_User'),
           path : 'documents',
           id : id
         }
@@ -268,12 +268,12 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
             subject_default : localStorageService.get('subject_name'),
             term : localStorageService.get('term'),
             year : localStorageService.get('year'),
-            Lec_Name_Default : 'Archarn.Anek Thamrongvorakul',
+            Lec_Name_Default : localStorageService.get('Fullname_User'),
             Lec_Name : Lec_Name,
             Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
           }
           item.formData.push(data);
-        
+
         };
         uploader.onProgressItem = function(fileItem, progress) {
         };
@@ -314,8 +314,8 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
         $scope.term =localStorageService.get('term');
         $scope.year = localStorageService.get('year');
         var data_for_search = {
-          "header" : {"index" : "news" , "type" : $scope.type },
-          "data" : {"Subject_Term" : $scope.term + '/' + $scope.year}
+          "header" : {"index" : "upload_log" , "type" : 'news' },
+          "data" : {Subject_Term : $scope.term + '/' + $scope.year , Subject_Name : localStorageService.get('subject_name') , Lec_Name_Upload : localStorageService.get('Fullname_User')}
         };
 
         $scope.files = [];
@@ -346,7 +346,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
         $scope.submit_news_message = function (){
           if ($scope.news_message !== "")
           {
-            $scope.Lec_Name = 'Archarn.ANEK THAMRONGVORAKUL';
+            $scope.Lec_Name = localStorageService.get('Fullname_User');
             $scope.type_split_arr = localStorageService.get('subject_name').split(" ");
             $scope.type = '';
             for (var i =0 ; i< $scope.type_split_arr.length ; i++){$scope.type =  $scope.type + $scope.type_split_arr[i]+ '_' ;}
@@ -355,7 +355,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
             $scope.Message_Date_Upload = moment().format('MMMM Do YYYY, h:mm:ss a');
 
             var Json_data = {
-              "header" : {"index" : "news" , "type" : $scope.type},
+              "header" : {"index" : "upload_log" , "type" : 'news'},
               "data" : {
                 "Type" : "text",
                 "Subject_Term" : $scope.term + '/' + $scope.year,
@@ -363,7 +363,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
                 "Lec_Name" : $scope.Lec_Name,
                 "Message" : $scope.news_message,
                 "Date_Upload" : $scope.Message_Date_Upload,
-                "path_file_pic_icon": "img/Lecturer_Pic/2.1_profile.jpg",
+                "path_file_pic_icon": localStorageService.get('path_file_pic_icon'),
                 "path" : 'news'
 
               }
@@ -387,7 +387,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
 
           if ($scope.VDO_Name !== "")
           {
-            $scope.Lec_Name = 'Archarn.ANEK THAMRONGVORAKUL';
+            $scope.Lec_Name = localStorageService.get('Fullname_User');
             $scope.type_split_arr = localStorageService.get('subject_name').split(" ");
             $scope.type = '';
             for (var i =0 ; i< $scope.type_split_arr.length ; i++){$scope.type = $scope.type + $scope.type_split_arr[i]+ '_' ;}
@@ -399,7 +399,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
 
 
             var Json_data = {
-              "header" : {"index" : "news" , "type" : $scope.type},
+              "header" : {"index" : "upload_log" , "type" : 'news'},
               "data" : {
                 "Type" : "clip",
                 "Subject_Term" : $scope.term + '/' + $scope.year,
@@ -409,7 +409,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
                 "Video_Name" : $scope.VDO_Name,
                 "Description" : $scope.VDO_Description,
                 "Date_Upload" : $scope.VDO_Date_Upload,
-                "path_file_pic_icon": "img/Lecturer_Pic/2.1_profile.jpg",
+                "path_file_pic_icon": localStorageService.get('path_file_pic_icon'),
                 "path" : 'news'
               }
             };
@@ -477,7 +477,7 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
           var subject_split = localStorageService.get('subject_name').split(" ");
           var subject = '' ;
           for (var i=0 ;i<subject_split.length ; i++){subject = subject + subject_split[i]}
-          var Lec_Name_default = 'Archarn.Anek Thamrongvorakul';
+          var Lec_Name_default = localStorageService.get('Fullname_User');
           var Lec_Name_split = Lec_Name_default.split(" ");
           var Lec_Name = '';
           for (var i=0 ;i<Lec_Name_split.length ; i++){Lec_Name = Lec_Name + Lec_Name_split[i]}
@@ -510,7 +510,7 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
               subject :  localStorageService.get('subject_name'),
               term : localStorageService.get('term'),
               year : localStorageService.get('year'),
-              Lec_Name : 'Archarn.Anek Thamrongvorakul',
+              Lec_Name : localStorageService.get('Fullname_User'),
               path : 'score',
               id : id
             }
@@ -570,7 +570,7 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
                 subject_default : localStorageService.get('subject_name'),
                 term : localStorageService.get('term'),
                 year : localStorageService.get('year'),
-                Lec_Name_Default : 'Archarn.Anek Thamrongvorakul',
+                Lec_Name_Default :localStorageService.get('Fullname_User'),
                 Lec_Name : Lec_Name,
                 Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
               }

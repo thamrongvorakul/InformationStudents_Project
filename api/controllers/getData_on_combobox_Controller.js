@@ -16,7 +16,8 @@ module.exports = {
 		{ "Feed_Name": "การบ้าน"},
 		{ "Feed_Name": "เอกสารประกอบการเรียน"},
     { "Feed_Name": "อัพเดทข่าวสาร"},
-    { "Feed_Name": "คะแนนสอบ"}
+    { "Feed_Name": "คะแนนสอบ"},
+    { "Feed_Name": "กล่องการบ้าน"}
 		]
 		return res.send(data);
 	},
@@ -39,6 +40,33 @@ module.exports = {
 		return res.send(data);
 
 	},
+
+  getdata_homework_times : function (req,res){
+    var data = [
+      {"Times" : "1"},
+      {"Times" : "2"},
+      {"Times" : "3"},
+      {"Times" : "4"},
+      {"Times" : "5"},
+      {"Times" : "6"},
+      {"Times" : "7"},
+      {"Times" : "8"},
+      {"Times" : "9"},
+      {"Times" : "10"},
+      {"Times" : "11"},
+      {"Times" : "12"},
+      {"Times" : "13"},
+      {"Times" : "14"},
+      {"Times" : "15"},
+      {"Times" : "16"},
+      {"Times" : "17"},
+      {"Times" : "18"},
+      {"Times" : "19"},
+      {"Times" : "20"},
+
+    ]
+    return res.send(data);
+  },
 
 	getdata_on_subject_search : function (req,res){
 

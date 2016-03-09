@@ -58,7 +58,7 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
 
       var data = {
         "index" : "subject",
-        "Lec_Name" : "Archarn.Anek Thamrongvorakul"
+        "Lec_Name" : localStorageService.get("Fullname_User")
       };
 
       $scope.subject_search = [];
@@ -93,6 +93,12 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
           localStorageService.set("term", $scope.term);
           localStorageService.set("year", $scope.year);
           location.href = 'subject_score_dload2'
+        }
+        else if (todoList.fname === "กล่องการบ้าน"){
+          localStorageService.set("subject_name", $scope.subject_name_select);
+          localStorageService.set("term", $scope.term);
+          localStorageService.set("year", $scope.year);
+          location.href = 'homework_check'
         }
       };
 

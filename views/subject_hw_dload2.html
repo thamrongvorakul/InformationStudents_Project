@@ -303,7 +303,7 @@
                         <div class="ibox-content" id="ibox-content" >
 
                           <div id="vertical-timeline" class="vertical-container dark-timeline left-orientation">
-                              <div class="vertical-timeline-block" ng-repeat = "item in files_name" id ="mySelect" >
+                              <div class="vertical-timeline-block" ng-repeat = "item in files_name | orderBy : 'name._source.Date_Upload' : true" id ="mySelect" >
                                   <div class="vertical-timeline-icon navy-bg">
                                       <i class="fa fa-file-text"></i>
                                   </div>
@@ -331,7 +331,7 @@
                 </div>
             </div>
         </div>
-      
+
 
         </div>
             </div>

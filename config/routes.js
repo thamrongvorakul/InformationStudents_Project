@@ -22,6 +22,9 @@ module.exports.routes = {
   'GET /select_subject_term' : {view : 'select_subject_term'},
   'GET /student_subject' : {view : 'student_subject'},
   'GET /register_for_teacher_by_admin' : {view : 'register_for_teacher'},
+  'GET /search_results' : {view : 'search_results'},
+  'GET /homework_check' : {view : 'homework_send'},
+  'GET /change_profile' : {view : 'change_profile'},
   // api เรียกข้อมูลมาใส่ combobox
   //'GET /contacts_Lec' : 'PageController.showContact_Lec',
   //'Get /students_sub' : {view : 'homepage'},
@@ -34,6 +37,7 @@ module.exports.routes = {
   'GET /getdata_on_combobox' : 'getData_on_combobox_Controller.getdata_on_combobox',
   'GET /getdata_on_term_subject' : 'getData_on_combobox_Controller.getdata_on_term_subject',
   'GET /getdata_on_year_subject' : 'getData_on_combobox_Controller.getdata_on_year_subject',
+  'GET /getdata_homework_times' : 'getData_on_combobox_Controller.getdata_homework_times',
 
 
   'GET /logout' : 'logoutController.logout',
@@ -43,6 +47,7 @@ module.exports.routes = {
   'POST /search_data' : 'loginController.search_data',
   'POST /search_data_password' : 'forgotpasswordController.search_data_password',
   'POST /postupload' : 'uploadfileController.upload',
+  'POST /postsendhomework' : 'uploadfileController.postsendhomework',
   'POST /get_files' : 'uploadfileController.get_files',
   'POST /search_data_teacher' : 'profilelecController.search_data_teacher',
   'POST /search_data_teacher_to_show_contacts' : 'profilelecController.search_data_teacher_to_show_contacts',
@@ -69,7 +74,15 @@ module.exports.routes = {
   'POST /search_data_for_the_followers' : 'student_subjectController.search_data_for_the_followers',
   'POST /search_data_for_the_views' : 'student_subjectController.search_data_for_the_views',
   'POST /search_indi_data_in_student_subject' : 'student_subjectController.search_indi_data_in_student_subject',
-  'POST /update_data_follower' : 'student_subjectController.update_data_follower'
+  'POST /update_data_follower' : 'student_subjectController.update_data_follower',
+  'POST /search_data_lecturer_for_dashboard' : 'lecturer_dashboardController.search_data_lecturer_for_dashboard',
+  'POST /search_all_mailbox_subject' : 'mailboxController.search_all_mailbox_subject',
+  'POST /update_status_read_mailbox' : 'mailboxController.update_status_read_mailbox',
+  'POST /update_status_room_lecturer' : 'lecturer_dashboardController.update_status_room_lecturer',
+  'POST /search_data_for_latest_topic' : 'homepageController.search_data_for_latest_topic',
+  'POST /search_data_for_hottest_topic' : 'homepageController.search_data_for_hottest_topic',
+  'POST /search_data_by_keyword_subject' : 'homepageController.search_data_by_keyword_subject',
+  'POST /search_data_homework_send' : 'lecturer_dashboardController.search_data_homework_send'
 
 
 
