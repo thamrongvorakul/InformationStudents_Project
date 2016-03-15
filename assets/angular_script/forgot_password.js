@@ -11,7 +11,8 @@ angular.module('forgot_password',[])
 
           var jsonData = {
             "header" :{
-              "index" : "students"
+              "index" : "user",
+              "type" : "login"
             },
             "data" : {
               "email_id" : $scope.email_forgot

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html ng-app = "create_profile_lecturer">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Login 2</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+
+    <script type="text/javascript" src="/angular_script/create_profile_lecturer.js"></script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center animated fadeInDown" ng-controller = "create_profile_lecturerController">
+        <div class="row">
+
+            <h2 class="font-bold">Create Lecturer Profile</h2>
+
+                <p>
+                    <small>สำหรับเพิ่มข้อมูลของอาจารย์ในสาขา</small>
+                </p>
+                <p>
+                    <small>โดยจะต้องเพิ่มรูป ทั้งหมด 2 รูป คือรูปสำหรับแสดงหน้าเล็ก และรูปสำหรับแสดงหน้าข้อมูลส่วนตัว</small>
+                </p>
+
+                <div class="ibox-content" >
+                    <form class="m-t" role="form">
+                        <div class="form-group" >
+                            <div class="col-sm-5 control-label text-left">คำนำหน้านาม : </div>
+                            <div class="col-sm-7"><select  data-toggle="dropdown" class="btn btn-white dropdown-toggle" ng-model = "Title">
+                                  <option   ng-repeat = "item in title_arr " value="{{item.data}}" >{{item.data}}</option>
+                               </select></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">ชื่อ : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="ชื่อ" ng-model = "FName" ></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">สกุล : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="นามสกุล" ng-model = "LName" ></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">ตำแหน่ง : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="ตำแหน่ง"ng-model = "position" ></div><br><br><br>
+                            <div class="col-sm-5 control-label text-left">เพิ่มการศึกษา : </div>
+                            <a  class = "col-sm-6" ng-click = "education_arr_push()">+ เพิ่มรายละเอียดการศึกษา</a>
+                            <div class="col-sm-5 control-label text-left"></div>
+                            <a  class = "col-sm-6" ng-click = "education_arr_remove($index)">- ลบกล่องข้อความการศึกษา</a>
+                            <br><br><br>
+                            <div ng-repeat = "item in education_arr">
+                            <div class="col-sm-5 control-label text-left">การศึกษา :{{$index + 1}} </div>
+                            <div class="col-sm-7" ><input class="form-control" ng-model = "item.value" placeholder="ระบุการศึกษา">
+                              </div><br><br><br>
+                            </div>
+
+                            <div class="col-sm-5 control-label text-left">เพิ่มงานวิจัย : </div>
+                            <a  class = "col-sm-6" ng-click = "research_arr_push()">+ เพิ่มรายละเอียดงานวิจัย</a>
+                            <div class="col-sm-5 control-label text-left"></div>
+                            <a  class = "col-sm-6" ng-click = "reasearch_arr_remove($index)">- ลบกล่องข้อความงานวิจัย</a>
+                            <br><br><br>
+
+                            <div ng-repeat = "item in research_arr">
+                            <div class="col-sm-5 control-label text-left">งานวิจัย :{{$index + 1}} </div>
+                            <div class="col-sm-7" ><input class="form-control" ng-model = "item.value" placeholder="ระบุงานวิจัย">
+
+                              </div><br><br><br>
+                            </div>
+
+                            <div class="col-sm-5 control-label text-left">เพิ่มรายวิชาที่ดูแล : </div>
+                            <a  class = "col-sm-6" ng-click = "subject_arr_push()">+ เพิ่มรายวิชาที่ดูแล</a>
+                            <div class="col-sm-5 control-label text-left"></div>
+                            <a  class = "col-sm-6" ng-click = "subject_arr_remove($index)">- ลบกล่องรายวิชาที่ดูแล</a>
+                            <br><br><br>
+                            <div ng-repeat = "item in subject_arr">
+                            <div class="col-sm-5 control-label text-left">วิชาที่ดูแล :{{$index + 1}} </div>
+                            <div class="col-sm-7" ><input class="form-control" ng-model = "item.value" placeholder="ระบุรายวิชาที่ดูแล">
+                                </div><br><br><br>
+                            </div>
+
+                            <div class="col-sm-5 control-label text-left">ห้องพัก : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="ห้องพัก" ng-model = "room" ></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">Homepage : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="เว็บไซต์" ng-model = "homepage" ></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">E-mail : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="E-mail" ng-model = "email" ></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">เบอร์โทร : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="เบอร์โทร" ng-model = "tel" ></div><br><br><br>
+
+
+                            <div class="col-sm-5 control-label text-left">อัพโหลดรูปเล็ก : </div>
+                            <div class="col-sm-7"><input type="file" nv-file-select="" uploader="uploader"></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">อัพโหลดรูปใหญ่ : </div>
+                            <div class="col-sm-7"><input type="file" nv-file-select="" uploader="uploader"></div><br><br><br>
+
+                          </div>
+                            <button class="btn btn-primary block full-width m-b" ng-click="uploader.uploadAll()">Submit</button>
+                        </div><br>
+
+
+                    </form>
+                </div>
+              </div>
+        </div>
+        <hr/>
+    </div>
+
+</body>
+
+</html>

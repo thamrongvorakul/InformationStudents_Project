@@ -1,7 +1,7 @@
-var app = angular.module('getfiles', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize','LocalStorageModule' ]);
+var app = angular.module('getfiles', ['ngFileUpload', 'oitozero.ngSweetAlert', 'angularFileUpload' ,'ngSanitize','LocalStorageModule' ]);
 
-app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'localStorageService' ,
-  function ( $scope, $rootScope,Upload, $http , FileUploader  ,localStorageService )
+app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'localStorageService' ,'SweetAlert' ,
+  function ( $scope, $rootScope,Upload, $http , FileUploader  ,localStorageService,SweetAlert )
   {
     $scope.description = 'ไฟล์การบ้าน';
     $scope.date = '11-11-2559';
@@ -17,7 +17,8 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
     $scope.date_log = moment().format('MMMM Do YYYY, h:mm:ss a');
     $scope.date_hw = "11-11-1111";
     $scope.button_file_name = '';
-
+    $scope.Fullname_User = localStorageService.get('Fullname_User');
+    $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
     var subject_split = localStorageService.get('subject_name').split(" ");
     var subject = '' ;
     for (var i=0 ;i<subject_split.length ; i++){subject = subject + subject_split[i]}
@@ -47,37 +48,54 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
     .error(function(data,status,headers,config){
     });
 
+    $scope.remove_files = function (files_name , id) {
+        SweetAlert.swal({
+                title: "ยืนยันที่จะลบวิชา?",
+                text: files_name,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "ตกลง",
+                cancelButtonText: "ยกเลิก",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                  var data2 = {
+                    files_name : files_name,
+                    subject_default : localStorageService.get('subject_name'),
+                    subject :  localStorageService.get('subject_name'),
+                    term : localStorageService.get('term'),
+                    year : localStorageService.get('year'),
+                    Lec_Name : localStorageService.get('Fullname_User'),
+                    path : 'homework',
+                    id : id
+                  }
 
-    $scope.remove_files = function (files_name , id){
-      var data2 = {
-        files_name : files_name,
-        subject_default : localStorageService.get('subject_name'),
-        subject :  localStorageService.get('subject_name'),
-        term : localStorageService.get('term'),
-        year : localStorageService.get('year'),
-        Lec_Name : localStorageService.get('Fullname_User'),
-        path : 'homework',
-        id : id
-      }
+                  $http.post ('/get_files' ,data2)
+                  .success(function(data){
+                    var x = document.getElementById("mySelect");
+                    var index = data.indexOf(files_name);
+                    x.remove(index);
+                      $http.post('/remove_files' , data2)
+                      .success(function(data ,status,headers,config)
+                      {
+                        SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้ว", "success");
 
-      $http.post ('/get_files' ,data2)
-      .success(function(data){
-        var x = document.getElementById("mySelect");
-        var index = data.indexOf(files_name);
-        x.remove(index);
+                      })
+                      .error(function(data,status,headers,config){
 
-          $http.post('/remove_files' , data2)
-          .success(function(data ,status,headers,config)
-          {
+                      });
 
-          })
-          .error(function(data,status,headers,config){
+                  })
+                } else {
+                    SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
+                }
 
-          });
-
-      })
+            });
 
     };
+
 
 
           $http.get('/getdata_on_combobox')
@@ -105,17 +123,13 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
       // CALLBACKS
 
       uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-
-        //  console.info('onWhenAddingFileFailed', item, filter, options);
       };
       uploader.onAfterAddingFile = function(fileItem) {
-        //  console.info('onAfterAddingFile', fileItem);
       };
       uploader.onAfterAddingAll = function(addedFileItems) {
-          //console.log(addedFileItems.length);
-        //  console.info('onAfterAddingAll', addedFileItems);
       };
       uploader.onBeforeUploadItem = function(item) {
+        var type_for_send_email_followers = localStorageService.get('subject_name') + '_'+ localStorageService.get('term')+'_'+localStorageService.get('year');
         var data = {
           path : 'homework',
           subject :  subject,
@@ -124,6 +138,7 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
           year : localStorageService.get('year'),
           Lec_Name_Default : localStorageService.get('Fullname_User'),
           Lec_Name : Lec_Name,
+          type_for_followers : type_for_send_email_followers,
           Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
         };
         item.formData.push(data);
@@ -134,50 +149,26 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
             {
               $scope.files_name.push({name : data[i]});
             }
+
         })
         .error(function(data,status,headers,config){
 
         });
-
-
-
-
-        //  console.log (item.file.name);
-        //  console.info('onBeforeUploadItem', item);
       };
       uploader.onProgressItem = function(fileItem, progress) {
-         $scope.text_complete = '';
-         if (progress  === 100)
-         {
-           $scope.text_complete = 'Uploaded';
-         }
-          //console.info('onProgressItem', fileItem, progress);
       };
       uploader.onProgressAll = function(progress) {
-        //  console.info('onProgressAll', progress);
       };
       uploader.onSuccessItem = function(fileItem, response, status, headers) {
-        //  console.info('onSuccessItem', fileItem, response, status, headers);
       };
       uploader.onErrorItem = function(fileItem, response, status, headers) {
-        ///  console.info('onErrorItem', fileItem, response, status, headers);
       };
       uploader.onCancelItem = function(fileItem, response, status, headers) {
-        //  console.info('onCancelItem', fileItem, response, status, headers);
       };
       uploader.onCompleteItem = function(fileItem, response, status, headers) {
-
-        //  console.info('onCompleteItem', fileItem, response, status, headers);
       };
       uploader.onCompleteAll = function() {
-        //  console.info('onCompleteAll');
       };
-
-    //  console.info('uploader', uploader);
-
-
-
-
   }]);
 
 app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' ,'localStorageService' ,
@@ -191,6 +182,8 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
       $scope.date_log = moment().format('MMMM Do YYYY, h:mm:ss a');
       $scope.date_hw = "11-11-1111";
       $scope.button_file_name = '';
+      $scope.Fullname_User = localStorageService.get('Fullname_User');
+      $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
       var subject_split = localStorageService.get('subject_name').split(" ");
       var subject = '' ;
       for (var i=0 ;i<subject_split.length ; i++){subject = subject + subject_split[i]}
@@ -262,6 +255,8 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
 
         };
         uploader.onBeforeUploadItem = function(item) {
+          var type_for_send_email_followers = localStorageService.get('subject_name') + '_'+ localStorageService.get('term')+'_'+localStorageService.get('year');
+
           var data = {
             path : 'documents',
             subject :  subject,
@@ -270,6 +265,7 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
             year : localStorageService.get('year'),
             Lec_Name_Default : localStorageService.get('Fullname_User'),
             Lec_Name : Lec_Name,
+            type_for_followers : type_for_send_email_followers,
             Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
           }
           item.formData.push(data);
@@ -302,7 +298,8 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
         $scope.VDO_Name = '';
         $scope.VDO_Link = '';
         $scope.VDO_Description = '';
-
+        $scope.Fullname_User = localStorageService.get('Fullname_User');
+        $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
         $scope.trustSrc = function(src) {
           return $sce.trustAsResourceUrl(src);
         }
@@ -344,6 +341,8 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
         };
 
         $scope.submit_news_message = function (){
+          var type_for_send_email_followers = localStorageService.get('subject_name') + '_'+ localStorageService.get('term')+'_'+localStorageService.get('year');
+
           if ($scope.news_message !== "")
           {
             $scope.Lec_Name = localStorageService.get('Fullname_User');
@@ -358,6 +357,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
               "header" : {"index" : "upload_log" , "type" : 'news'},
               "data" : {
                 "Type" : "text",
+                "type_for_followers" : type_for_send_email_followers,
                 "Subject_Term" : $scope.term + '/' + $scope.year,
                 "Subject_Name_Default" : localStorageService.get('subject_name'),
                 "Lec_Name" : $scope.Lec_Name,
@@ -384,6 +384,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
         };
 
         $scope.submit_news_click = function (){
+          var type_for_send_email_followers = localStorageService.get('subject_name') + '_'+ localStorageService.get('term')+'_'+localStorageService.get('year');
 
           if ($scope.VDO_Name !== "")
           {
@@ -402,6 +403,7 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
               "header" : {"index" : "upload_log" , "type" : 'news'},
               "data" : {
                 "Type" : "clip",
+                "type_for_followers" : type_for_send_email_followers,
                 "Subject_Term" : $scope.term + '/' + $scope.year,
                 "Subject_Name_Default" : localStorageService.get('subject_name'),
                 "Lec_Name" : $scope.Lec_Name,
@@ -473,7 +475,8 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
           $scope.date_log = moment().format('MMMM Do YYYY, h:mm:ss a');
           $scope.date_hw = "11-11-1111";
           $scope.button_file_name = '';
-
+          $scope.Fullname_User = localStorageService.get('Fullname_User');
+          $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
           var subject_split = localStorageService.get('subject_name').split(" ");
           var subject = '' ;
           for (var i=0 ;i<subject_split.length ; i++){subject = subject + subject_split[i]}

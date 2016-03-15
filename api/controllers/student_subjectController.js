@@ -1,8 +1,7 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
       });
 
 module.exports = {
@@ -45,7 +44,21 @@ module.exports = {
             client.bulk({
               body :[
                   { index : { _index: 'log_follow' , _type:data.subject_name + data.subject_term + "_" +data.subject_year} },
-                  { Std_FName : data.std_FName , Std_LName : data.std_LName , Std_Email : data.std_email , Subject_Name : data.subject_name_default , Subject_Term : data.subject_term , Subject_Year : data.subject_year , Status_Follow : data.status_follow , Event_Click : data.event_click},
+                  { Std_FName : data.std_FName , Std_LName : data.std_LName , Std_Email : data.std_email , Subject_Name : data.subject_name_default , Subject_Term : data.subject_term , Subject_Year : data.subject_year , Status_Follow : data.status_follow ,Event_Click : data.event_click},
+              ]
+            }, function (error, response){
+                console.log(error);
+            });
+            res.ok();
+
+          },
+          insert_data_score : function (req,res){
+            var data = req.allParams();
+            console.log(data.Reason);
+            client.bulk({
+              body :[
+                  { index : { _index: 'log_score' , _type:data.subject_name + data.subject_term + "_" +data.subject_year} },
+                  { Std_FName : data.std_FName , Std_LName : data.std_LName , Std_Email : data.std_email , Subject_Name : data.subject_name_default , Subject_Term : data.subject_term , Subject_Year : data.subject_year , Status_Score : data.Status_Score , Reason : data.Reason},
               ]
             }, function (error, response){
                 console.log(error);
@@ -68,7 +81,6 @@ module.exports = {
           search_data_for_the_followers : function (req,res){
             var data = req.allParams();
             var hits;
-            console.log(data.subject_name + data.subject_term + "_" + data.subject_year);
             client.search({
               index: 'log_follow',
               type : data.subject_name + data.subject_term + "_" + data.subject_year,
@@ -85,7 +97,25 @@ module.exports = {
                 return res.send(hits);
             })
           },
-
+          search_data_for_log_score : function (req,res){
+            var data = req.allParams();
+            var hits;
+            client.search({
+              index: 'log_score',
+              type : data.subject_name + data.subject_term + "_" + data.subject_year,
+              body: {
+                size : 1000,
+                query: {
+                    match_all : {
+                    }
+                }
+              }
+            })
+            .then(function (response) {
+                hits = response.hits.hits;
+                return res.send(hits);
+            })
+          },
           search_data_for_the_views : function (req,res){
             var data = req.allParams();
             var hits;
@@ -117,6 +147,32 @@ module.exports = {
             var hits ;
             client.search({
               index: 'log_follow',
+              type : data.subject_name + data.subject_term + "_" + data.subject_year,
+              body: {
+                query: {
+                  match_phrase : {
+                    Std_Email : data.std_email
+                  }
+                }
+              }
+            })
+            .then(function (response) {
+                hits = response.hits.hits;
+                if (hits.length === 0 ){
+                  return res.send('User never use this function');
+                }
+                else {
+                  return res.send(hits);
+
+                }
+            })
+          },
+
+          search_indi_data_in_student_subject_score : function (req,res){
+            var data = req.allParams();
+            var hits ;
+            client.search({
+              index: 'log_score',
               type : data.subject_name + data.subject_term + "_" + data.subject_year,
               body: {
                 query: {

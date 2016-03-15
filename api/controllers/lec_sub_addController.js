@@ -1,10 +1,14 @@
 'use strict';
 
 var    elasticsearch = require('elasticsearch');
+var    deleteByQuery = require('elasticsearch-deletebyquery');
 var    client = new elasticsearch.Client({
           host: '161.246.60.104:9200',
-          log : 'trace'
+          plugins: [ deleteByQuery ]
       });
+
+
+
 
 var pathforCreateDir = 'D:\\InformationStudents\\assets\\FileUpload\\';
 
@@ -16,7 +20,7 @@ module.exports = {
     client.bulk({
       body : [
           { index:  { _index: dataJson.header.index , _type:dataJson.header.Year } },
-          { Subject_Id : dataJson.data.Subject_Id , Subject_Name : dataJson.data.Subject_Name , Term : dataJson.data.Term , Lec_Name : dataJson.data.Lec_Name, Created_By : dataJson.data.Created_By , Description : dataJson.data.Description,Date_Upload : dataJson.data.Date_Upload , View_Count : dataJson.data.View_Count}
+          { Subject_Id : dataJson.data.Subject_Id , Subject_Name : dataJson.data.Subject_Name , Term : dataJson.data.Term, Year : dataJson.header.Year , Lec_Name : dataJson.data.Lec_Name, Created_By : dataJson.data.Created_By , Description : dataJson.data.Description,Date_Upload : dataJson.data.Date_Upload , View_Count : dataJson.data.View_Count}
       ]
     }, function (error, response){
         if (error !== 'undefined'){
@@ -124,7 +128,69 @@ module.exports = {
       }, function (error, response){
           console.log(error);
       });
+      client.bulk({
+        body :[
+            { index : { _index: 'log_score' , _type: data.Subject_Name + data.Subject_Term + '_' +data.Subject_Year } },
+            { },
+        ]
+      }, function (error, response){
+          console.log(error);
+      });
       res.ok();
+    },
+
+    delete_value_in_upload_log : function (req,res){
+      var data = req.allParams();
+      client.deleteByQuery({
+              index: 'upload_log',
+              body : {
+                query : {
+                  bool : {
+                    must : [
+                      {match_phrase : {Subject_Name : data.data.Subject_Name}},
+                      {match_phrase : {Term : data.data.Term}},
+                      {match_phrase : {Year : data.header.type}}
+                    ]
+                  }
+                }
+              }
+      },
+      function (error, response) {
+      });
+      client.deleteByQuery({
+              index: 'upload_log',
+              body : {
+                query : {
+                  bool : {
+                    must : [
+                      {match_phrase : {Subject_Name : data.data.Subject_Name}},
+                      {match_phrase : {Subject_Term : data.data.Term}},
+                      {match_phrase : {Subject_Year : data.header.type}}
+                    ]
+                  }
+                }
+              }
+      },
+      function (error, response) {
+      });
+      client.deleteByQuery({
+              index: 'upload_log',
+              body : {
+                query : {
+                  bool : {
+                    must : [
+                      {match_phrase : {Subject_Name : data.data.Subject_Name}},
+                      {match_phrase : {Subject_Term : data.data.Term}},
+                      {match_phrase : {Subject_Year : data.header.type}}
+                    ]
+                  }
+                }
+              }
+      },
+      function (error, response) {
+      });
+
+      return res.ok();
     }
 
 

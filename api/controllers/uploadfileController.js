@@ -1,8 +1,9 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
+var    nodemailer    = require  ('nodemailer');
+
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
       });
       var path = require('path');
       var fs = require('fs');
@@ -13,7 +14,13 @@ var    client = new elasticsearch.Client({
       var typefile;
 
 
-
+      var transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'webinformationstudents@gmail.com',
+                    pass: 'informationstudents'
+                }
+            });
 
 
 module.exports = {
@@ -101,7 +108,38 @@ module.exports = {
                       }, function (error, response){
                           console.log(error);
                       });
+                      client.search({
+                          index: 'log_follow',
+                          type : data.type_for_followers,
+                          body: {
+                            size : "100",
+                            query: {
+                              match_all : {}
+                            }
+                          }
+                      })
+                      .then(function (response) {
+                          var hits = response.hits.hits;
+                          for (var i=0 ;i <hits.length ; i++){
+                            var mailOptions = {
+                                from: 'webinformationstudents',
+                                to: hits[i]["_source"]["Std_Email"] ,
+                                subject: 'มีการอัพเดทข้อมูลของวิชา ' + data.subject_default + '(' + data.term + '/' + data.year + ')',
+                                text: 'ถึง คุณ ' + hits[i]["_source"]["Std_FName"] +' ' + hits[i]["_source"]["Std_LName"] + '\n'
+                                + 'รายวิชา ' + data.subject_default + '(' + data.term + '/' + data.year + ') ' +'ได้มีการอัพเดทข้อมูลในหัวข้อ' + '\n'
+                                + data.path + 'โดย อาจารย์' + data.Lec_Name_Default
+                            };
+                            console.log(mailOptions.text);
+                            transporter.sendMail(mailOptions, function(error, info){
 
+                                    if(error){
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: ' + info.response);
+
+                            });
+                          }
+                      })
                         if (err)
                         {
                             return res.negotiate(err);

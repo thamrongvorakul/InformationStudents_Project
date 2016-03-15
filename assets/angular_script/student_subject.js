@@ -8,6 +8,7 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
     $scope.select_term = localStorageService.get('select_term');
     $scope.select_year = localStorageService.get('select_year');
     $scope.lec_name_upload = localStorageService.get('select_lecturer_name');
+
     var count_followers;
     $scope.id = '';
     var subject_split = localStorageService.get('select_sub_name').split(" ");
@@ -85,9 +86,9 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
     for (var i=0 ; i<sub_name_split.length ; i++){sub_name = sub_name + sub_name_split[i] + "_"}
 
     var data = {
-      std_FName : 'Wichittra',
-      std_LName : 'Iam-itsara',
-      std_email : localStorageService.get('email_student'),
+      std_FName : localStorageService.get('FName_User'),
+      std_LName : localStorageService.get('LName_User'),
+      std_email : localStorageService.get('Email_User'),
       subject_name : sub_name,
       subject_name_default : localStorageService.get('select_sub_name'),
       subject_term : localStorageService.get('select_term'),
@@ -99,15 +100,28 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
       for (var i =0 ; i<data.length ; i++){
         if (data[i]["_source"]["Status_Follow"] === 1){
           count_followers = count_followers + 1;
-
         }
         $scope.followers_count_all = count_followers;
       }
+    });
+    $http.post('/search_data_for_log_score' , data).success(function(data){
+      var count_score = 0;
+      console.log(data);
+      for (var i =0 ; i<data.length ; i++){
+        if (data[i]["_source"]["Status_Score"] === '1'){
+          count_score = count_score + 1;
+        }
+
+        $scope.score_count_all = count_score;
+      }
+      console.log(count_score);
+      console.log(data[1]["_source"]["Status_Score"]);
 
     });
     $http.post('/search_data_for_the_views' , data).success(function(data){
       $scope.views_count_all = data[0]["_source"]["View_Count"];
     });
+
     $http.post('/search_indi_data_in_student_subject' ,data).success(function(data_res){
 
       $scope.status_like_unlike = "FOLLOW";
@@ -126,14 +140,61 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
         }
       }
     });
+    $http.get('/get_data_reason').success(function(data){
+      $scope.reason_arr = [];
+      for (var i =0 ; i<data.length ; i++){
+        $scope.reason_arr.push({reason : data[i]["reason"]})
+      }
+    });
 
+    $scope.reason_score = '';
+    var data_score = {
+      std_FName : localStorageService.get('FName_User'),
+      std_LName : localStorageService.get('LName_User'),
+      std_email : localStorageService.get('Email_User'),
+      Reason :  $scope.reason_score,
+      subject_name_default : localStorageService.get('select_sub_name'),
+      subject_name : sub_name,
+      subject_term : localStorageService.get('select_term'),
+      subject_year : localStorageService.get('select_year'),
+      Status_Score : '1'
+    };
+
+    $scope.score_click = function (){
+        var data_score2 = {
+        std_FName : localStorageService.get('FName_User'),
+        std_LName : localStorageService.get('LName_User'),
+        std_email : localStorageService.get('Email_User'),
+        Reason :  $scope.reason_score,
+        subject_name_default : localStorageService.get('select_sub_name'),
+        subject_name : sub_name,
+        subject_term : localStorageService.get('select_term'),
+        subject_year : localStorageService.get('select_year'),
+        Status_Score : '1'
+        };
+        $http.post('/insert_data_score' , data_score2).success(function(data){
+          window.alert('ลงคะแนนเรียบร้อย');
+        })
+    }
+    $http.post('/search_indi_data_in_student_subject_score' ,data_score).success(function(data_res){
+
+      if (data_res === 'User never use this function'){
+          $scope.status_score = 4;
+      }
+      else {
+        if (data_res[0]["_source"]["Status_Score"] === '1'){
+          $scope.status_score = 6;
+        }
+      }
+
+    });
     $scope.like_click = function (){
       if ($scope.status_like_unlike === 'FOLLOW'){
         if ($scope.event_click !== 'click'){
           var data_follow1 = {
-            std_FName : 'Wichittra',
-            std_LName : 'Iam-itsara',
-            std_email : localStorageService.get('email_student'),
+            std_FName : localStorageService.get('FName_User'),
+            std_LName : localStorageService.get('LName_User'),
+            std_email : localStorageService.get('Email_User'),
             subject_name : sub_name,
             subject_name_default : localStorageService.get('select_sub_name'),
             subject_term : localStorageService.get('select_term'),
@@ -150,7 +211,7 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
           var data_follow2 = {
             std_FName : localStorageService.get('FName_User'),
             std_LName : localStorageService.get('LName_User'),
-            std_email : localStorageService.get('email_student'),
+            std_email : localStorageService.get('Email_User'),
             subject_name : sub_name,
             subject_name_default : localStorageService.get('select_sub_name'),
             subject_term : localStorageService.get('select_term'),
@@ -169,7 +230,7 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
         var data_follow2 = {
           std_FName : localStorageService.get('FName_User'),
           std_LName : localStorageService.get('LName_User'),
-          std_email : localStorageService.get('email_student'),
+          std_email : localStorageService.get('Email_User'),
           subject_name : sub_name,
           subject_name_default : localStorageService.get('select_sub_name'),
           subject_term : localStorageService.get('select_term'),

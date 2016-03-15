@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html ng-app = "create_subject_for_admin">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>INSPINIA | Login 2</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="/dist/ng-file-upload-shim.min.js"></script>
+    <script src="/dist/ng-file-upload.min.js"></script>
+    <script src="/dist/text/angular-file-upload.min.js"></script>
+    <script src="/dist/text/moment.min.js"></script>
+    <script src="/dist/angular-momentjs.js"></script>
+    <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-local-storage.min.js"></script>
+    <script src="/dist/angular-sanitize.js"></script>
+
+    <script type="text/javascript" src="/angular_script/create_subject_for_admin.js"></script>
+</head>
+
+<body class="gray-bg" ng-controller = "create_subject_for_adminController">
+
+    <div class="middle-box text-center animated fadeInDown" >
+        <div class="row">
+
+            <h2 class="font-bold">Create Subject</h2>
+
+                <p>
+                    <small>สำหรับเพิ่มข้อมูลของวิชาในสาขา</small>
+                </p>
+                <p>
+                    <small>โดยจะต้องกรอกรหัสวิชา และชื่อวิชา </small>
+                </p>
+                <p><small style = "color:red;">หมายเหตุ* สำหรับการแก้ไขให้ทำการลบวิชาเดิม และเพิ่มเข้าไปใหม่</small></p>
+                <div class="ibox-content" >
+                    <form class="m-t" role="form">
+                        <div class="form-group" >
+
+
+                            <div class="col-sm-5 control-label text-left">รหัสวิชา : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="รหัสวิชา" ng-model = "Subject_Id" ></div><br><br><br>
+
+                            <div class="col-sm-5 control-label text-left">ชื่อวิชา : </div>
+                            <div class="col-sm-7"><input class="form-control" placeholder="ชื่อวิชา" ng-model = "Subject_Name" ></div><br><br><br>
+
+
+                          </div>
+                            <button class="btn btn-primary block full-width m-b" ng-click="submit_click()">Submit</button>
+                        </div><br>
+
+
+                    </form>
+                    <p>
+                        <a data-toggle="modal" data-target= "#myModal5">ดูรายวิชาทั้งหมด</a>
+                    </p>
+                </div>
+              </div>
+              <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+                  <div class="modal-dialog modal-lg" style = "width:1000px;">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">รายวิชาทั้งหมด</h4>
+                          </div>
+                          <div class="modal-body">
+                            <div class="mail-box-header">
+                                <form method="get"  class="pull-right mail-search">
+                                    <div class="input-group">
+                                        <input type="search" ng-model="search" class="form-control input-sm" name="search" placeholder="Search email">
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <h2>
+                                    Inbox ({{count_no_read}})
+                                </h2>
+                                <div class="mail-tools tooltip-demo m-t-md">
+
+                                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Refresh</button>
+
+
+                                </div>
+                            </div>
+                                <div class="mail-box">
+
+                                <table class="table table-hover table-mail">
+                                  <thead>
+                                    <tr>
+                                      <th> # </th>
+                                      <th> รหัสวิชา </th>
+                                      <th> ชื่อวิชา </th>
+                                      <th></th>
+                                    </tr>
+                                  </thead>
+                                <tbody >
+
+                                <a><tr class="unread"  ng-repeat = "item in subject_arr | filter:search "></a>
+
+                                    <td >
+                                      {{$index + 1}}
+                                    </td>
+                                    <td class="mail-ontact">{{item.data._source.Subject_Id}}</td>
+                                    <td class="mail-subject">{{item.data._source.Subject_Name}}</td>
+                                    <td><button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "remove_subject_click(item.data._id)"><i class="fa fa-trash-o"></i> </button></td>
+
+                                </tr>
+
+                                </tbody>
+                                </table>
+
+
+                                </div>
+                          </div>
+
+                      </div>
+
+                  </div>
+              </div>
+        </div>
+        <hr/>
+    </div>
+
+</body>
+
+</html>

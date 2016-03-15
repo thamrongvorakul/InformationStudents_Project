@@ -4,16 +4,15 @@ var    nodemailer    = require  ('nodemailer');
 
 // ต่อ elasticsearch
 var    client = new elasticsearch.Client({
-          host: 'localhost:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200',
       });
 
 // ต่อ gmail smtp
 var transporter = nodemailer.createTransport({
           service: 'Gmail',
           auth: {
-              user: 'thamrongvorakul@gmail.com',
-              pass: '029121964'
+              user: 'webinformationstudents@gmail.com',
+              pass: 'informationstudents'
           }
       });
 
@@ -26,6 +25,7 @@ module.exports = {
 
             client.search({
                 index: data.header.index,
+                type : data.header.type,
                 body: {
                   query: {
                     match_phrase: {
@@ -36,13 +36,11 @@ module.exports = {
             })
             .then(function (res) {
                 hits = res.hits.hits;
-
                 var mailOptions = {
-                    from: 'thamrongvorakul',
+                    from: 'webinformationstudents',
                     to: data.data.email_id ,
                     subject: 'รหัสผ่านสำหรับเข้าใช้งานระบบของคุณ คือ',
                     text: 'ถึง คุณ ' + hits[0]._source.FName + hits[0]._source.LName + '\n'
-                    + 'รหัสนักศึกษา ' + hits[0]._source.ID_NO + '\n'
                     + 'รหัสผ่านสำหรับเข้าใช้งานระบบของคุณคือ ' + hits[0]._source.password + '\n'
                 };
                 console.log(mailOptions.text);

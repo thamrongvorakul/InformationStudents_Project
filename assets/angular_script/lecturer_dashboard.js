@@ -3,17 +3,30 @@ var app = angular.module('lecturerdashboard', [ 'angular-momentjs','LocalStorage
 app.controller('lecturerdashboardController', ['$scope', '$http' , '$moment','localStorageService' ,'$timeout',
   function ( $scope, $http  , $moment ,  localStorageService ,  $timeout)
   {
+
       $scope.Title_User = localStorageService.get('title_user');
       $scope.FName_User = localStorageService.get('FName_User');
       $scope.LName_User = localStorageService.get('LName_User');
       $scope.Lec_id_from_search = '';
       $scope.status_room_active = 'ไม่อยู่';
       $scope.class_status = 'danger';
-
+      $scope.Fullname_User = localStorageService.get('Fullname_User');
+      $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
+      $scope.search = '';
       $timeout(function(){
         $scope.dataLoaded = true;
       }, 2000);
 
+      $scope.remove_mail_click = function(id ){
+        var data = {
+          header : {
+            id : id
+          }
+        };
+        $http.post('/remove_mailbox_from_lecturer_dashboard' , data).success(function(data){
+          localtion.reload();
+        })
+      }
       $scope.status_room_click_active = function (){
           $http.post('/update_status_room_lecturer' , {Lec_Id : $scope.Lec_id_from_search , Status_Room : '1'})
           .success(function(data){
@@ -77,7 +90,7 @@ app.controller('lecturerdashboardController', ['$scope', '$http' , '$moment','lo
             $scope.subject_arr.push({data : data[i]})
              count = count + 1;
           }
-      
+
           $scope.Lec_subject_holding = count;
 
       });

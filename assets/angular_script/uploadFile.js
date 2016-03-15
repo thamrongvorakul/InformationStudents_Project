@@ -10,7 +10,8 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       var radiovalue = '';
       todoList.nameupload = 'No File Chosen.';
       $scope.name_of_file = '';
-
+      $scope.Fullname_User = localStorageService.get('Fullname_User');
+      $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
       $scope.detail = '5555';
       $scope.date_log = moment().format('MMMM Do YYYY, h:mm:ss a');
       $scope.date_hw = "11-11-1111";

@@ -1,7 +1,8 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200'
+          host: '161.246.60.104:9200',
+          log : 'trace'
 
       });
 
@@ -62,6 +63,16 @@ module.exports = {
             var hits = response.hits.hits;
             res.send(hits);
         });
+      },
+
+      remove_mailbox_from_lecturer_dashboard : function (req,res){
+        var data = req.allParams();
+        client.delete({
+                index: 'mailbox',
+                type: 'send',
+                id: data.header.id
+        },function(){});
+        return res.ok();
       }
 
 

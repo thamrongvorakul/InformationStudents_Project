@@ -1,11 +1,18 @@
 var    elasticsearch = require('elasticsearch');
+var    nodemailer    = require  ('nodemailer');
+
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
       });
       var path = require('path');
       var fs = require('fs');
-
+      var transporter = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'webinformationstudents@gmail.com',
+                    pass: 'informationstudents'
+                }
+            });
 
 module.exports = {
 
@@ -79,6 +86,39 @@ module.exports = {
                 }, function (error, response){
                     console.log(error);
                 });
+                client.search({
+                    index: 'log_follow',
+                    type : dataJson.data.type_for_followers,
+                    body: {
+                      size : "100",
+                      query: {
+                        match_all : {}
+                      }
+                    }
+                })
+                .then(function (response) {
+                    var hits = response.hits.hits;
+                    for (var i=0 ;i <hits.length ; i++){
+                      var mailOptions = {
+                          from: 'webinformationstudents',
+                          to: hits[i]["_source"]["Std_Email"] ,
+                          subject: 'มีการอัพเดทข้อมูลของวิชา ' + dataJson.data.Subject_Name_Default + '(' + dataJson.data.Subject_Term + ')',
+                          text: 'ถึง คุณ ' + hits[i]["_source"]["Std_FName"] +' ' + hits[i]["_source"]["Std_LName"] + '\n'
+                          + 'รายวิชา ' + dataJson.data.Subject_Name_Default + '(' + dataJson.data.Subject_Term + ') ' +'ได้มีการอัพเดทข้อมูลในหัวข้อ' + '\n'
+                          + 'อัพเดทข่าวสาร ' + 'โดย อาจารย์' + dataJson.data.Lec_Name
+                      };
+                      console.log(mailOptions.text);
+                      transporter.sendMail(mailOptions, function(error, info){
+
+                              if(error){
+                                  return console.log(error);
+                              }
+                              console.log('Message sent: ' + info.response);
+
+                      });
+                    }
+                })
+
               }
               else if (dataJson.data.Type === 'text'){
                 client.bulk({
@@ -89,6 +129,39 @@ module.exports = {
                 }, function (error, response){
                     console.log(error);
                 });
+                client.search({
+                    index: 'log_follow',
+                    type : dataJson.data.type_for_followers,
+                    body: {
+                      size : "100",
+                      query: {
+                        match_all : {}
+                      }
+                    }
+                })
+                .then(function (response) {
+                    var hits = response.hits.hits;
+                    for (var i=0 ;i <hits.length ; i++){
+                      var mailOptions = {
+                          from: 'webinformationstudents',
+                          to: hits[i]["_source"]["Std_Email"] ,
+                          subject: 'มีการอัพเดทข้อมูลของวิชา ' + dataJson.data.Subject_Name_Default + '(' + dataJson.data.Subject_Term + ')',
+                          text: 'ถึง คุณ ' + hits[i]["_source"]["Std_FName"] +' ' + hits[i]["_source"]["Std_LName"] + '\n'
+                          + 'รายวิชา ' + dataJson.data.Subject_Name_Default + '(' + dataJson.data.Subject_Term + ') ' +'ได้มีการอัพเดทข้อมูลในหัวข้อ' + '\n'
+                          + 'อัพเดทข่าวสาร ' + 'โดย อาจารย์' + dataJson.data.Lec_Name
+                      };
+                      console.log(mailOptions.text);
+                      transporter.sendMail(mailOptions, function(error, info){
+
+                              if(error){
+                                  return console.log(error);
+                              }
+                              console.log('Message sent: ' + info.response);
+
+                      });
+                    }
+                })
+
               }
               res.ok();
             },

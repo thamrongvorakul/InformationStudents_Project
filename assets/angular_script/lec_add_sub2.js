@@ -11,38 +11,7 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     $scope.subject_name = '';
     $scope.Description = '';
     $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
-    console.log($scope.path_file_pic_icon);
-      $scope.demo1 = function () {
-          SweetAlert.swal({
-              title: "Welcome in Alerts",
-              text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-          });
-      }
-
-      $scope.demo2 = function () {
-          SweetAlert.swal({
-              title: "Good job!",
-              text: "You clicked the button!",
-              type: "success"
-          });
-      }
-
-      $scope.demo3 = function () {
-          SweetAlert.swal({
-                  title: "Are you sure?",
-                  text: "Your will not be able to recover this imaginary file!",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#DD6B55",
-                  confirmButtonText: "Yes, delete it!",
-                  closeOnConfirm: false,
-                  closeOnCancel: false
-              },
-              function () {
-                  SweetAlert.swal("Ok!");
-              });
-      }
-
+    $scope.Fullname_User = localStorageService.get('Fullname_User');
       var lec_name = localStorageService.get('Fullname_User');
       var lec_name_split = lec_name.split(" ");
       var lec_name_after_split = '';
@@ -69,12 +38,13 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
                             Lec_Name : lec_name_after_split
                           }
                       };
+                      $http.post('/delete_value_in_upload_log' , data).success(function(data){})
                       $http.post('/delete_subject_on_elasticsearch' , data )
                       .success(function(data){
                         SweetAlert.swal("ลบวิชาที่เลือกเรียบร้อย!", "วิชา" + sub_name + "ได้ทำการลบเรียบร้อยแล้ว", "success");
                         setTimeout(function(){
                             location.reload();
-                        }, 3000);
+                        }, 2000);
                       });
 
 
@@ -86,8 +56,19 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
 
       };
 
-    
 
+    $http.post('/search_data_subject_all').success(function(data){
+      $scope.subject_all_arr = [];
+      for (var i=0 ; i< data.length ; i++){
+        $scope.subject_all_arr.push({data : data[i]})
+      }
+    })
+    $scope.subject_change = function(){
+      $http.post('/search_data_for_subject_id_select' , {Subject_Id : $scope.subject_id})
+      .success(function(data){
+        $scope.subject_name = data[0]["_source"]["Subject_Name"];
+      })
+    }
     $http.post('/get_data_on_elasticsearch' , {Lec_Name : localStorageService.get('Fullname_User')})
     .success (function (data){
         $scope.subject_arr = [];

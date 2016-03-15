@@ -6,8 +6,7 @@
  */
  var    elasticsearch = require('elasticsearch');
  var    client = new elasticsearch.Client({
-           host: '161.246.60.104:9200',
-           log : 'trace'
+           host: '161.246.60.104:9200'
        });
 
 module.exports = {
@@ -68,6 +67,40 @@ module.exports = {
     return res.send(data);
   },
 
+  get_data_title_name : function (req,res){
+    var data = [
+      {"value" : "อาจารย์"},
+      {"value" :"นาย"} ,
+      {"value" :"นาง"},
+      {"value":"น.ส."},
+      {"value":"ม.จ."} ,
+      {"value":"ม.ร.ว."},
+      {"value":"ม.ล."},
+      {"value":"ดร."},
+      {"value":"ศ.ดร."},
+      {"value":"ศ."},
+      {"value":"ผศ.ดร."},
+      {"value":"ผศ."},
+      {"value":"รศ.ดร."},
+      {"value":"รศ."},
+      {"value":"Mr."},
+      {"value":"Mrs."},
+      {"value":"Ms."},
+      {"value":"Miss"},
+      {"value":"Dr."}
+    ];
+    return res.send(data);
+  },
+  get_data_reason : function(req,res){
+    var data = [
+      {"reason" : "เกรดง่าย"},
+      {"reason" : "เนื้อหาเข้าใจง่าย"},
+      {"reason" : "อาจารย์สอนดี"},
+      {"reason" : "เป็นวิชาที่อยากเรียน"}
+    ];
+
+    return res.send(data);
+  },
 	getdata_on_subject_search : function (req,res){
 
 		var dataJson = req.allParams();

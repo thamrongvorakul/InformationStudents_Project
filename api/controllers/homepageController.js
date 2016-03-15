@@ -3,6 +3,7 @@ var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
           host: '161.246.60.104:9200',
           log : 'trace'
+
       });
 
 module.exports = {
@@ -52,7 +53,21 @@ module.exports = {
     } ,
     search_data_by_keyword_subject : function (req,res){
       var data = req.allParams();
-
+      client.search({
+        index : 'subject',
+        body : {
+          query : {
+            query_string : {
+              query : data.keyword + '*',
+              fields : ["Subject_Id" , "Subject_Name" , "Lec_Name" , "Description" , "Term" , "Year"]
+            }
+          }
+        }
+      })
+      .then(function (response) {
+          var hits = response.hits.hits;
+          return res.send(hits);
+    });
     },
 
 };
