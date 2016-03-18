@@ -1,8 +1,7 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
 
       });
 
@@ -58,7 +57,7 @@ module.exports = {
         body : {
           query : {
             query_string : {
-              query : data.keyword + '*',
+              query : '*' + data.keyword + '*',
               fields : ["Subject_Id" , "Subject_Name" , "Lec_Name" , "Description" , "Term" , "Year"]
             }
           }

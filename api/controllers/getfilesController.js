@@ -81,7 +81,7 @@ module.exports = {
                 client.bulk({
                   body :[
                       { index : { _index: 'upload_log' , _type:dataJson.data.path } },
-                      { Type: dataJson.data.Type , Subject_Name : dataJson.data.Subject_Name_Default,Subject_Term :dataJson.data.Subject_Term , Lec_Name_Upload :  dataJson.data.Lec_Name ,Message : dataJson.data.Message,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description , path_file_pic_icon : dataJson.data.path_file_pic_icon },
+                      { Type: dataJson.data.Type , Subject_Name : dataJson.data.Subject_Name_Default,Subject_Term :dataJson.data.Subject_Term ,Term : dataJson.data.Term,Year : dataJson.data.Year, Lec_Name_Upload :  dataJson.data.Lec_Name ,Message : dataJson.data.Message,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description , path_file_pic_icon : dataJson.data.path_file_pic_icon },
                   ]
                 }, function (error, response){
                     console.log(error);
@@ -124,7 +124,7 @@ module.exports = {
                 client.bulk({
                   body :[
                       { index : { _index: 'upload_log' , _type:dataJson.data.path } },
-                      { Type: dataJson.data.Type , Subject_Name : dataJson.data.Subject_Name_Default,Subject_Term :dataJson.data.Subject_Term , Lec_Name_Upload :  dataJson.data.Lec_Name ,Message : dataJson.data.Message,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description , path_file_pic_icon : dataJson.data.path_file_pic_icon },
+                      { Type: dataJson.data.Type , Subject_Name : dataJson.data.Subject_Name_Default,Subject_Term :dataJson.data.Subject_Term,Term : dataJson.data.Term,Year : dataJson.data.Year , Lec_Name_Upload :  dataJson.data.Lec_Name ,Message : dataJson.data.Message,Embed_Code :dataJson.data.Embed_Code ,Video_Name: dataJson.data.Video_Name , Date_Upload: dataJson.data.Date_Upload , Description : dataJson.data.Description , path_file_pic_icon : dataJson.data.path_file_pic_icon },
                   ]
                 }, function (error, response){
                     console.log(error);

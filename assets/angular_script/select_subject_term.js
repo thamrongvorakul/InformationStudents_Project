@@ -44,8 +44,7 @@ angular.module('select_subject_term', [ 'angular-momentjs','LocalStorageModule',
         localStorageService.set("select_term", $scope.subject_term);
         localStorageService.set("select_year", $scope.subject_year);
         localStorageService.set("select_lecturer_name" , $scope.lec_name_search);
-        var x =  "thamrongvorakul@gmail.com";
-        localStorageService.set("email_student" , x);
+        
         var data = {
           year : $scope.subject_year,
           term : $scope.subject_term,

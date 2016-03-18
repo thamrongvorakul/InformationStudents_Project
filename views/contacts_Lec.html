@@ -36,50 +36,47 @@
 
 </head>
 
-<body>
+<body class="top-navigation">
 
     <div id="wrapper" ng-controller = 'contactslecController'>
 
 
 
         <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div>
-            <ul class="nav navbar-top-links navbar-right">
 
+          <div class="row border-bottom white-bg">
+          <nav class="navbar navbar-static-top" role="navigation">
+              <div class="navbar-header">
+                  <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                      <i class="fa fa-reorder"></i>
+                  </button>
+                  <a href="#" class="navbar-brand">แสดงรายชื่ออาจารย์ทั้งหมด</a>
+              </div>
+              <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a aria-expanded="false" role="button" href="layouts.html"> ยินดีต้อนรับ คุณ : {{fullname_user}}</a>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/" > หน้าแรก </a>
 
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/select_subject_term" > เลือกวิชา </a>
 
-                <li>
-                    <a href="#">
-                        <i class="fa fa-sign-out"></i> Coming Soon . . .
-                    </a>
-                </li>
-            </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/contacts_Lec" > ติดต่ออาจารย์ผู้สอน </a>
 
-        </nav>
-        </div>
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-9">
-                    <h2>Lecturer</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="/">Home</a>
-                        </li>
+                    </li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="/logout" > ออกจากระบบ </a>
+                    </li>
+                </ul>
 
-                        <li class="active">
-                            <strong>Lecturer</strong>
-                        </li>
-                    </ol>
-                </div>
-            </div>
+              </div>
+          </nav>
+          </div>
         <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-4 " ng-repeat = "item in data_teacher_show_contacts"><!อ.วิสันต์>
@@ -236,14 +233,7 @@
 
         </div>
         </div>
-        <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
-        </div>
+
 
         </div>
         </div>

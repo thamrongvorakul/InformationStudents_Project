@@ -6,6 +6,8 @@ angular.module('homepage', ['LocalStorageModule'])
     $scope.user_email = '';
     $scope.management_2 = '';
     $scope.keyword_search = '';
+    localStorageService.remove('times_homework_select');
+
     $scope.search_click = function (){
       localStorageService.set('keyword_search' , $scope.keyword_search);
       location.href = "search_results";
@@ -18,7 +20,13 @@ angular.module('homepage', ['LocalStorageModule'])
 
       }
     });
-
+    $scope.latest_click = function(lec_name , term , year , sub_name){
+      localStorageService.set("select_sub_name", sub_name);
+      localStorageService.set("select_term", term);
+      localStorageService.set("select_year", year);
+      localStorageService.set("select_lecturer_name" , lec_name);
+      location.href = "/student_subject";
+    };
     $http.post('/search_data_for_hottest_topic')
     .success(function(data){
       $scope.hottest_topic_arr = [];
@@ -26,9 +34,9 @@ angular.module('homepage', ['LocalStorageModule'])
         $scope.hottest_topic_arr.push({data : data[i]});
       }
     });
-    $scope.init = function (email ,management ,title_user , FName , LName , ID_NO){
+    $scope.init = function (email ,management ,title_user , FName , LName , ID_NO , create_sub , create_lec){
       $scope.user_email = email;
-      console.log(title_user);
+      
       localStorageService.set('title_user' , title_user);
       localStorageService.set('FName_User' , FName);
       localStorageService.set('LName_User' , LName);
@@ -38,6 +46,8 @@ angular.module('homepage', ['LocalStorageModule'])
       localStorageService.set('Fullname_User', Fullname );
       localStorageService.set('ID_NO_Std' ,ID_NO )
       $scope.management_2 = management;
+      $scope.create_sub = create_sub;
+      $scope.create_lec = create_lec;
     };
     if ($scope.user_email !== 'undefined'){
       $scope.status_log = 'Log Out';

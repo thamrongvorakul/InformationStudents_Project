@@ -13,7 +13,9 @@ module.exports = {
 			return res.view('homepage' ,{
 				me : {
 					title : 'Log In',
-					management : '1'
+					management : '1',
+					create_sub : '1',
+					create_lecturer : '1'
 				}
 			});
 		}
@@ -33,6 +35,8 @@ module.exports = {
 					me: {
 						title : 'Log Out',
 						management : '1',
+						create_sub : '1',
+						create_lecturer : '1',
 						title_user : user.Title,
 						name : user.FName,
 						lname : user.LName,
@@ -48,6 +52,26 @@ module.exports = {
 					me: {
 						title : 'Log Out',
 						management : 'Management',
+						create_sub : '1',
+						create_lecturer : '1',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
+			}
+			else if (user.Type_User === 'admin')
+			{
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
 						title_user : user.Title,
 						name : user.FName,
 						lname : user.LName,
@@ -167,7 +191,21 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -191,7 +229,21 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -215,11 +267,39 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'admin'){
 				return res.view('create_lecturer_profile')
@@ -242,11 +322,39 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'admin'){
 				return res.view('create_subject_for_admin')
@@ -269,14 +377,42 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'admin'){
-				return res.view('register_for_teacher_by_admin')
+				return res.view('register_for_teacher')
 			}
 
     });
@@ -296,7 +432,21 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -320,7 +470,21 @@ module.exports = {
 				return res.view('homepage');
 			}
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -344,7 +508,21 @@ module.exports = {
 				return res.view('homepage');
 			}
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -368,7 +546,21 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -392,7 +584,21 @@ module.exports = {
 				return res.view('homepage');
 			}
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -416,7 +622,21 @@ module.exports = {
 				return res.view('homepage');
 			}
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -440,7 +660,21 @@ module.exports = {
         return res.view('homepage');
       }
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -464,7 +698,21 @@ module.exports = {
 				return res.view('homepage');
 			}
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{
@@ -488,7 +736,21 @@ module.exports = {
 				return res.view('homepage');
 			}
 			if (user.Type_User === 'student'){
-				return res.view('homepage');
+				return res.view('homepage', {
+					me: {
+						title : 'Log Out',
+						management : '1',
+						create_sub : 'Create_Subject',
+						create_lecturer : 'Create_Lecturer',
+						title_user : user.Title,
+						name : user.FName,
+						lname : user.LName,
+						id: user.id,
+						email: user.email,
+						ID_NO : user.ID_NO
+
+					}
+				});
 			}
 			else if (user.Type_User === 'teacher')
 			{

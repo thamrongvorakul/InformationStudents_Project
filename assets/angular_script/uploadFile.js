@@ -16,6 +16,7 @@ angular.module('uploadFile', ['ngFileUpload' , 'angularFileUpload' ,  'angular-m
       $scope.date_log = moment().format('MMMM Do YYYY, h:mm:ss a');
       $scope.date_hw = "11-11-1111";
       $scope.button_file_name = '';
+      localStorageService.remove('times_homework_select');
 
       $scope.subject_name_select = '';
       $scope.term = '';

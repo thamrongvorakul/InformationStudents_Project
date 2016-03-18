@@ -19,11 +19,10 @@ module.exports.routes = {
   'GET /create_lecturer_profile'                      : 'PageController.show_create_lecturer_profile',
   'GET /change_profile_lecturer'                      : 'PageController.show_change_profile_lecturer',
   'GET /create_subject_for_admin'                     : 'PageController.show_create_subject_for_admin',
-
-
   'GET /'                                             : 'PageController.showHomepage',
   'GET /contacts_Lec'                                 : 'PageController.showContact_Lec',
   'GET /login'                                        : 'PageController.showLogin',
+
 
   'GET /getdata_on_combobox'                          : 'getData_on_combobox_Controller.getdata_on_combobox',
   'GET /getdata_on_term_subject'                      : 'getData_on_combobox_Controller.getdata_on_term_subject',
@@ -53,7 +52,7 @@ module.exports.routes = {
   'POST /insert_news_data'                            : 'getfilesController.insert_news_data',
   'POST /insert_data_to_db_teacher'                   : 'lec_sub_addController.insert_data_to_db_teacher',
   'POST /getdata_on_subject_search'                   : 'getData_on_combobox_Controller.getdata_on_subject_search',
-  'POST /get_data_on_elasticsearch'                   :'lec_sub_addController.get_data_on_elasticsearch',
+  'POST /get_data_on_elasticsearch'                   : 'lec_sub_addController.get_data_on_elasticsearch',
   'POST /delete_subject_on_elasticsearch'             : 'lec_sub_addController.delete_subject_on_elasticsearch',
   'POST /get_term_year'                               : 'uploadfileController.get_term_year',
   'POST /put_mailbox_to_elasticsearch'                : 'mailboxController.put_mailbox_to_elasticsearch',
@@ -62,6 +61,7 @@ module.exports.routes = {
   'POST /remove_news'                                 : 'getfilesController.delete_files_news',
   'POST /register_for_teacher_by_admin'               : 'register_for_teacher_by_adminController.register_for_teacher_by_admin',
   'POST /update_view_subject'                         : 'student_subjectController.update_view_subject',
+  'POST /update_score_subject'                        : 'student_subjectController.update_score_subject',
   'POST /insert_data_follower'                        : 'student_subjectController.insert_data_follower',
   'POST /insert_data_score'                           : 'student_subjectController.insert_data_score',
   'POST /insert_type_for_log_follow'                  : 'lec_sub_addController.insert_type_for_log_follow',
@@ -87,7 +87,9 @@ module.exports.routes = {
   'POST /delete_data_in_subject_all'                  : 'create_subject_for_adminController.delete_data_in_subject_all',
   'POST /delete_value_in_upload_log'                  : 'lec_sub_addController.delete_value_in_upload_log',
   'POST /search_data_for_log_score'                   : 'student_subjectController.search_data_for_log_score',
-  'POST /put_data_score_to_excel'                     : 'homework_sendController.put_data_score_to_excel'
+  'POST /remove_file_homework_send'                   : 'lecturer_dashboardController.remove_file_homework_send',
+  'POST /update_data_add_score_for_homework_send'     : 'lecturer_dashboardController.update_data_add_score_for_homework_send',
+  'POST /remove_field_score'                          : 'lecturer_dashboardController.remove_field_score'
 
 
 

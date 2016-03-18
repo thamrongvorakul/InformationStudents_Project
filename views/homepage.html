@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" ng-app = 'homepage'>
 <head>
@@ -24,7 +25,8 @@
 <div class="navbar-wrapper"  >
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container" ng-init = "init( <%= JSON.stringify(me.email) %> , <%= JSON.stringify(me.management) %> ,
-              <%= JSON.stringify(me.title_user) %>  , <%= JSON.stringify(me.name) %>,<%= JSON.stringify(me.lname) %> , <%= JSON.stringify(me.ID_NO) %>) ">
+              <%= JSON.stringify(me.title_user) %>  , <%= JSON.stringify(me.name) %>,<%= JSON.stringify(me.lname) %> , <%= JSON.stringify(me.ID_NO) %>,<%= JSON.stringify(me.create_sub) %> ,
+              <%= JSON.stringify(me.create_lecturer) %>) ">
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -41,6 +43,9 @@
                         <li><a class="page-scroll" href = '/select_subject_term'>Subject</a></li>
                         <li><a class="page-scroll" href="#contact">Contact</a></li>
                         <li><a class="page-scroll" ng-if = "management_2 !== '1' " href = "/lecturer_detail">Management</a></li> <!-- ng-click = 'management_click()' -->
+                        <li><a class="page-scroll" ng-if = "create_sub !== '1' " href = "/create_subject_for_admin">Create_Subject</a></li> <!-- ng-click = 'management_click()' -->
+                        <li><a class="page-scroll" ng-if = "create_lec !== '1' " href = "/create_lecturer_profile">Create_Lecturer</a></li> <!-- ng-click = 'management_click()' -->
+
                         <li><a class="page-scroll" ng-click = 'login_click(<%= JSON.stringify(me.title) %>)' ><%= me.title %></a></li> <!--  ng-click = 'login_click()' -->
                     </ul>
                 </div>
@@ -74,13 +79,7 @@
             <div class="col-lg-12 header-back one"></div>
           </div>
           <div class="item">
-              <div class="container">
-                  <div class="carousel-caption blank">
-                      <h1>We create meaningful <br/> interfaces that inspire.</h1>
-                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                      <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-                  </div>
-              </div>
+
               <!-- Set background for slide in css -->
               <div class="header-back two"></div>
           </div>
@@ -131,8 +130,8 @@
                     </div>
                     <div class="ibox-content" >
                         <div class="list-group" >
-                            <a class="list-group-item "  ng-repeat = "item in latest_topic_arr | orderBy : '-data._source.Date_Upload' | limitTo : 10">
-                                <h3 class="list-group-item-heading">{{item.data._source.Subject_Name}}</h3>
+                            <a class="list-group-item "  ng-click = "latest_click(item.data._source.Lec_Name_Upload , item.data._source.Term , item.data._source.Year,item.data._source.Subject_Name)" ng-repeat = "item in latest_topic_arr | orderBy : '-data._source.Date_Upload' | limitTo : 10">
+                                <h3 class="list-group-item-heading">{{item.data._source.Subject_Name}} ({{item.data._source.Term}}/{{item.data._source.Year}})</h3>
                                 <strong class="list-group-item-text" ng-if = "item.data._type === 'news'">หัวข้อ : อัพเดทข่าวสาร  </strong>
                                 <strong class="list-group-item-text" ng-if = "item.data._type === 'homework'">หัวข้อ : การบ้าน  </strong>
                                 <strong class="list-group-item-text" ng-if = "item.data._type === 'documents'">หัวข้อ : เอกสารประกอบการเรียน  </strong>
@@ -208,7 +207,7 @@
 
                                   <div class="col-md-1 forum-info">
                                       <span class="views-number">
-                                          {{item.data._source.Score}}
+                                          {{item.data._source.Score_Count}}
                                       </span>
                                       <div>
                                           <small>Score</small>
@@ -265,46 +264,45 @@
             </div>
 
     <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Logo</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+          <h5>Logo</h5>
+          <div class="ibox-tools">
+              <a class="collapse-link">
+                  <i class="fa fa-chevron-up"></i>
+              </a>
 
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="col-lg-4">
-                <img alt="image" class="img-circle" src="img/html_logo.png">
-                    <h3 class="m-b-xs"><strong>HTML 5</strong></h3>
-                </div>
-                <div class="col-lg-4">
-                <img alt="image" class="img-circle" src="img/Logo/angular1.jpg">
-                    <h3 class="m-b-xs"><strong>AngularJS</strong></h3>
-                </div>
-                <div class="col-lg-4">
-                <img alt="image" class="img-circle" src="img/Logo/nodejs1.png">
-                    <h3 class="m-b-xs"><strong>NodeJs</strong></h3>
-                </div>
-                <div class="col-lg-4">
-                <img alt="image" class="img-circle" src="img/Logo/sails.png">
-                    <h3 class="m-b-xs"><strong>SailsJS</strong></h3>
-                </div>
-                <div class="col-lg-4">
-                <img alt="image" class="img-circle" src="img/Logo/elasticsearch.png">
-                    <h3 class="m-b-xs"><strong>Elasticsearch</strong></h3>
-                </div>
-                <div class="col-lg-4">
-                <img alt="image" class="img-circle" src="img/Logo/css.png">
-                    <h3 class="m-b-xs"><strong>CSS</strong></h3>
-                </div>
-            </div>
-
-            </div>
-        </div>
-        </div>
+          </div>
+      </div>
+      <div class="ibox-content col-lg-12"><br>
+          <div class="col-lg-4">
+          <a href ="http://www.w3schools.com/html/html5_intro.asp" target="_blank"><img alt="image" class="img-circle" src="img/html_logo.png"></a>
+              <h3 class="m-b-xs"><strong>HTML 5</strong></h3>
+          </div>
+          <div class="col-lg-4">
+          <a href="https://angularjs.org/" target="_blank"><img alt="image" class="img-circle" src="img/Logo/angular1.jpg"></a>
+              <h3 class="m-b-xs"><strong>AngularJS</strong></h3>
+          </div>
+          <div class="col-lg-4">
+          <a href="https://nodejs.org/en/" target="_blank"><img alt="image" class="img-circle" src="img/Logo/nodejs1.png"></a>
+              <h3 class="m-b-xs"><strong>NodeJs</strong></h3>
+          </div>
+          <div class="col-lg-4">
+          <a href="http://sailsjs.org/" target="_blank"><img alt="image" class="img-circle" src="img/Logo/sails.png"></a>
+              <h3 class="m-b-xs"><strong>SailsJS</strong></h3>
+          </div>
+          <div class="col-lg-4">
+          <a href="https://www.elastic.co/products/elasticsearch" target="_blank"><img alt="image" class="img-circle" src="img/Logo/elasticsearch.png"></a>
+              <h3 class="m-b-xs"><strong>Elasticsearch</strong></h3>
+          </div>
+          <div class="col-lg-4">
+          <a href="http://www.w3schools.com/css/css3_intro.asp" target="_blank"><img alt="image" class="img-circle" src="img/Logo/css.png"></a>
+              <h3 class="m-b-xs"><strong>CSS</strong></h3>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </section>
 

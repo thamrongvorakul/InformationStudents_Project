@@ -12,6 +12,7 @@
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery-2.1.1.js"></script>
@@ -27,6 +28,9 @@
     <script src="/dist/angular-momentjs.js"></script>
     <script src="/dist/angular-momentjs.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
+    <script src="/dist/angular-sweetalert.min.js"></script>
+    <script src="/dist/sweet-alert.min.js"></script>
+    <script src="/dist/SweetAlert.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
     <script type="text/javascript" src="/angular_script/student_subject.js"></script>
 
@@ -62,7 +66,7 @@
 
                     </li>
                     <li class="dropdown">
-                        <a aria-expanded="false" role="button" href="/" > ออกจากระบบ </a>
+                        <a aria-expanded="false" role="button" href="/logout" > ออกจากระบบ </a>
                     </li>
                 </ul>
 
@@ -195,12 +199,8 @@
 
                     <form method="get" action="index.html" class="pull-right mail-search">
                         <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="search" placeholder="Search File">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-sm btn-primary">
-                                    Search
-                                </button>
-                            </div>
+                            <input type="text" class="form-control input-sm" name="search" placeholder="Search File" ng-model ="search">
+
                         </div>
                     </form>
                     <h2>
@@ -224,9 +224,9 @@
                       </thead>
                     <tbody>
 
-                    <tr class="unread" ng-repeat = "item in files_documents">
+                    <tr class="unread" ng-repeat = "item in files_documents | orderBy : 'data._source.Date_Upload' | filter : search">
                         <td >
-                          1
+                          {{$index + 1}}
                         </td>
                         <td class="mail-ontact"><a href="mail_detail.html">{{item.data._source.File_Name[0].filename}}</a></td>
                         <td class="mail-subject"><a href="mail_detail.html">{{item.data._source.Lec_Name_Upload}}</a></td>
@@ -250,12 +250,8 @@
 
                       <form method="get" action="index.html" class="pull-right mail-search">
                           <div class="input-group">
-                              <input type="text" class="form-control input-sm" name="search" placeholder="Search File">
-                              <div class="input-group-btn">
-                                  <button type="submit" class="btn btn-sm btn-primary">
-                                      Search
-                                  </button>
-                              </div>
+                              <input type="text" class="form-control input-sm" name="search" placeholder="Search File" ng-model="search2">
+
                           </div>
                       </form>
                       <h2>
@@ -279,9 +275,9 @@
                         </thead>
                       <tbody>
 
-                      <tr class="unread" ng-repeat = "item in files_homework">
+                      <tr class="unread" ng-repeat = "item in files_homework | orderBy : 'data._source.Date._Upload' | filter : search2">
                           <td >
-                            1
+                            {{$index + 1}}
                           </td>
                           <td class="mail-ontact"><a href="mail_detail.html">{{item.data._source.File_Name[0].filename}}</a></td>
                           <td class="mail-subject"><a href="mail_detail.html">{{item.data._source.Lec_Name_Upload}}</a></td>
@@ -352,12 +348,8 @@
 
                                         <form method="get" action="index.html" class="pull-right mail-search">
                                             <div class="input-group">
-                                                <input type="text" class="form-control input-sm" name="search" placeholder="Search File">
-                                                <div class="input-group-btn">
-                                                    <button type="submit" class="btn btn-sm btn-primary">
-                                                        Search
-                                                    </button>
-                                                </div>
+                                                <input type="text" class="form-control input-sm" name="search" placeholder="Search File" ng-model="search3">
+                                                
                                             </div>
                                         </form>
                                         <h2>
@@ -381,9 +373,9 @@
                                           </thead>
                                         <tbody>
 
-                                        <tr class="unread" ng-repeat = "item in files_score">
+                                        <tr class="unread" ng-repeat = "item in files_score | orderBy : 'data._source.Date_Upload' | filter :search3">
                                             <td >
-                                              1
+                                              {{$index + 1}}
                                             </td>
                                             <td class="mail-ontact"><a href="mail_detail.html">{{item.data._source.File_Name[0].filename}}</a></td>
                                             <td class="mail-subject"><a href="mail_detail.html">{{item.data._source.Lec_Name_Upload}}</a></td>
@@ -489,7 +481,7 @@
 
 
 
-                                <input type="file" nv-file-select="" uploader="uploader"  multiple /><br/>
+                                <input type="file" nv-file-select="" uploader="uploader"   /><br/>
 
                                 <div class="hr-line-dashed"></div><br>
 
@@ -535,7 +527,7 @@
 
                                   <div class="hr-line-dashed"></div><br>
                             <!--  <button class="btn btn-primary btn-block" ngf-select ngf-change="upload($files)" onclick="this.value = null" >Upload Files</button>-->
-                              <button  type="file" class="btn btn-primary btn-block"   ng-click="uploader.uploadAll()"  ng-disabled="!uploader.getNotUploadedItems().length" >Upload All Files</button>
+                              <button  type="file" class="btn btn-primary btn-block"   ng-click="uploader.uploadAll()"  ng-disabled="!uploader.getNotUploadedItems().length" >Upload</button>
 
                                 <div class="hr-line-dashed"></div><br>
 

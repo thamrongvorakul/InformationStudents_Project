@@ -1,10 +1,10 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
 
       });
+
 
 module.exports = {
 
@@ -73,6 +73,56 @@ module.exports = {
                 id: data.header.id
         },function(){});
         return res.ok();
+      },
+
+      remove_file_homework_send : function(req,res){
+        var data = req.allParams();
+        client.delete({
+                index: 'send_homework',
+                type: 'send_homework',
+                id: data.id
+        },function(){});
+        return res.ok();
+      },
+      update_data_add_score_for_homework_send: function(req,res){
+        var data  = req.allParams();
+        client.bulk({
+          body :[
+              { update: { _index: 'send_homework' , _type:'send_homework', _id: data.id } },
+              { doc: {Score : parseInt(data.Score) , Status_Score_Add : parseInt(data.Status_Score_Add) } },
+          ]
+        }, function (error, response){
+            console.log(error);
+        });
+        res.ok();
+      } ,
+      remove_field_score : function(req,res){
+        var data = req.allParams();
+        var id_arr_parse = JSON.parse(data.id_arr);
+        for (var i =0 ;i<id_arr_parse.length ; i++){
+          if (id_arr_parse[i].status_remove === 'active'){
+            client.bulk({
+              body :[
+                  { update: { _index: 'send_homework' , _type:'send_homework', _id: id_arr_parse[i].id } },
+                  { doc: {Status_Remove : 'removed' } },
+              ]
+            }, function (error, response){
+                console.log(error);
+            });
+            client.update({
+                index: 'send_homework',
+                type: 'send_homework',
+                id: id_arr_parse[i].id,
+                body: {
+                  script: 'ctx._source.remove(\"Score"\)'
+                }
+            }, function (error, response) {
+            });
+          }
+
+
+        }
+        res.ok();
       }
 
 

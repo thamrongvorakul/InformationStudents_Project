@@ -35,17 +35,17 @@ module.exports.http = {
        'cookieParser',
        'session',
        'myRequestLogger',
-      'bodyParser',
+       'bodyParser',
        'handleBodyParserError',
        'compress',
        'methodOverride',
-      'poweredBy',
-      '$custom',
+       'poweredBy',
+       '$custom',
        'router',
        'www',
        'favicon',
        '404',
-      '500'
+       '500'
      ],
      myRequestLogger: function (req, res, next) {
             console.log("Requested :: ", req.method, req.url);

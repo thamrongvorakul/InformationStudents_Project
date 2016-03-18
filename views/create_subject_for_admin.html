@@ -109,7 +109,7 @@
                                   </thead>
                                 <tbody >
 
-                                <a><tr class="unread"  ng-repeat = "item in subject_arr | filter:search "></a>
+                                <a><tr class="unread"  ng-repeat = "item in subject_arr | filter:search | orderBy : 'data._source.Subject_Id'"></a>
 
                                     <td >
                                       {{$index + 1}}

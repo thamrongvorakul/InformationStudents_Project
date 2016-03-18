@@ -113,19 +113,9 @@
 
                             <div class="file-manager">
                                 <h5>Upload:</h5>
-
-
-
-
                                 <div class="hr-line-dashed"></div>
-
-
-
                                   <input type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
-
                                   <div class="hr-line-dashed"></div><br>
-
-
                                   <table class="table table-bordered">
                                       <thead>
                                           <tr>
@@ -210,7 +200,7 @@
                                   </div>
 
                                   <div class="vertical-timeline-content" >
-                                    <button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name._source.File_Name[0].filename , item.name._id)">
+                                    <button type="button" class="btn btn-danger btn-xs"  ng-click="remove_files(item.name._source.File_Name[0].filename , item.name._id,$index)">
                                         <span class="glyphicon glyphicon-trash"></span> Remove
                                     </button>
 

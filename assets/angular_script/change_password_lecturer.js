@@ -9,6 +9,8 @@ app.controller('changepasswordController', ['$scope', '$http' , '$moment','local
       $scope.new_password2 = '';
       $scope.Fullname_User = localStorageService.get('Fullname_User');
       $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
+      localStorageService.remove('times_homework_select');
+
         $scope.change_password_click = function (){
           $scope.message = '';
           $scope.wrong_password = '';

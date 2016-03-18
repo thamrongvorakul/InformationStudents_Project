@@ -1,7 +1,7 @@
-var app = angular.module('student_subject', ['ngFileUpload' , 'angularFileUpload' ,'ngSanitize','LocalStorageModule' ]);
+var app = angular.module('student_subject', ['oitozero.ngSweetAlert','ngFileUpload' , 'angularFileUpload' ,'ngSanitize','LocalStorageModule' ]);
 
-app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'localStorageService' ,'$sce' , 'Upload' , 'FileUploader',
-  function ( $scope, $rootScope, $http   ,localStorageService , $sce , Upload ,FileUploader)
+app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'localStorageService' ,'$sce' , 'Upload' , 'FileUploader', 'SweetAlert',
+  function ( $scope, $rootScope, $http   ,localStorageService , $sce , Upload ,FileUploader , SweetAlert)
   {
 
     $scope.select_sub_name = localStorageService.get('select_sub_name');
@@ -114,8 +114,7 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
 
         $scope.score_count_all = count_score;
       }
-      console.log(count_score);
-      console.log(data[1]["_source"]["Status_Score"]);
+
 
     });
     $http.post('/search_data_for_the_views' , data).success(function(data){
@@ -173,7 +172,20 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
         Status_Score : '1'
         };
         $http.post('/insert_data_score' , data_score2).success(function(data){
-          window.alert('ลงคะแนนเรียบร้อย');
+
+          var data = {
+            year : localStorageService.get("select_year"),
+            term : localStorageService.get("select_term"),
+            subject_name : localStorageService.get("select_sub_name")
+          };
+          $http.post('/update_score_subject' , data).success(function(data){
+
+          })
+          SweetAlert.swal("ให้คะแนนเรียบร้อยแล้ว!", "success", "success");
+
+          setTimeout(function(){
+              location.reload();
+          }, 1000);
         })
     }
     $http.post('/search_indi_data_in_student_subject_score' ,data_score).success(function(data_res){
@@ -205,6 +217,7 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
           $http.post('/insert_data_follower' , data_follow1).success(function(data){
             $scope.status_like_unlike = 'UNFOLLOW';
             $scope.text_show = 'ยกเลิกการรับข้อมูล'
+            location.reload();
           })
         }
         else if ($scope.event_click === 'click'){
@@ -223,6 +236,8 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
             $http.post('/update_data_follower' , data_follow2).success(function(data){
               $scope.status_like_unlike = 'UNFOLLOW';
               $scope.text_show = 'ยกเลิกการรับข้อมูล'
+              location.reload();
+
             })
         }
       }
@@ -242,6 +257,8 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
           $http.post('/update_data_follower' , data_follow2).success(function(data){
             $scope.status_like_unlike = "FOLLOW";
             $scope.text_show = 'กดเพื่อรับข้อมูลอัพเดท'
+            location.reload();
+
           })
       }
     };
@@ -303,6 +320,8 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
             year : localStorageService.get('select_year'),
             Lec_Name_Default :localStorageService.get('select_lecturer_name'),
             Lec_Name : lec_name_cut,
+            Score :'0',
+            Status_Score_Add : '0',
             Description_Homework_Send : $scope.description_homework,
             Subject_Send_Homework :  $scope.subject_for_send_homework,
             Times_Homework_Select : $scope.times_homework_select,
@@ -329,6 +348,10 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
           //  console.info('onCompleteItem', fileItem, response, status, headers);
         };
         uploader.onCompleteAll = function() {
+          SweetAlert.swal("ส่งการบ้านเรียบร้อยแล้ว!", "success", "success");
+          setTimeout(function(){
+              location.reload();
+          }, 2000);
           //  console.info('onCompleteAll');
         };
 

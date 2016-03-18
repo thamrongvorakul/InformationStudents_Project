@@ -35,7 +35,7 @@
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper" ng-controller = 'getfilesDocumentsController' nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -80,7 +80,7 @@
         </div>
     </nav>
 
-        <div id="page-wrapper" class="gray-bg" ng-controller = 'getfilesDocumentsController' nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+        <div id="page-wrapper" class="gray-bg" >
         <div class="row border-bottom">
         <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
 
@@ -114,7 +114,7 @@
 
                           <div class="file-manager">
                               <h5>Upload:</h5>
-                              <p>Description</p><br>
+                            <br>
 
                               <div class="hr-line-dashed"></div>
 
@@ -209,6 +209,7 @@
                                         </div>
                                         <a href="#" class="forum-item-title"> {{item.name._source.File_Name[0].filename}} </a>
                                         <div class="forum-sub-title">อัพโหลดเมื่อ : {{item.name._source.Date_Upload}}</div>
+                                        <a href='/FileUpload/{{item.name._source.Lec_Name}}/{{item.name._source.Subject}}/{{item.name._source.Term}}.{{item.name._source.Year}}/{{item.name._type}}/{{item.name._source.File_Name[0].filename}}' download ="" >Download</a>
 
                                     </div>
                                     <div class="col-md-2">

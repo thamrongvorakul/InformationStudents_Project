@@ -16,6 +16,7 @@ angular.module('changeprofile', ['ngFileUpload' ,'angularFileUpload','LocalStora
         $scope.tel = '';
         $scope.Fullname_User = localStorageService.get('Fullname_User');
         $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
+        localStorageService.remove('times_homework_select');
 
     $http.post('/search_data_lecturer_for_dashboard' ,
       {Lec_Name_id :localStorageService.get('title_user') + localStorageService.get('FName_User')+ ' ' + localStorageService.get('LName_User')}

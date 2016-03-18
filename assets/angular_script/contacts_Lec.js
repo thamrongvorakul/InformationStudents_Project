@@ -12,6 +12,7 @@ angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorag
       $scope.Fname_User = localStorageService.get('FName_User');
       $scope.LName_User = localStorageService.get('LName_User');
       $scope.Title_User = localStorageService.get('title_user');
+      $scope.fullname_user = localStorageService.get('Fullname_User');
       $http.post('/search_mailbox_subject' , {
         "header" : {
           "index" : "mailbox",

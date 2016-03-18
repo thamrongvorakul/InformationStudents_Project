@@ -46,19 +46,19 @@
                       <a aria-expanded="false" role="button" href="layouts.html"> ยินดีต้อนรับ คุณ : {{fullname_user}}</a>
                   </li>
                   <li class="dropdown">
-                      <a aria-expanded="false" role="button" href="#" > หน้าแรก </a>
+                      <a aria-expanded="false" role="button" href="/" > หน้าแรก </a>
 
                   </li>
                   <li class="dropdown">
-                      <a aria-expanded="false" role="button" href="#" > เลือกวิชา </a>
+                      <a aria-expanded="false" role="button" href="/select_subject_term" > เลือกวิชา </a>
 
                   </li>
                   <li class="dropdown">
-                      <a aria-expanded="false" role="button" href="#" > ติดต่ออาจารย์ผู้สอน </a>
+                      <a aria-expanded="false" role="button" href="/contacts_Lec" > ติดต่ออาจารย์ผู้สอน </a>
 
                   </li>
                   <li class="dropdown">
-                      <a aria-expanded="false" role="button" href="#" > ออกจากระบบ </a>
+                      <a aria-expanded="false" role="button" href="/logout" > ออกจากระบบ </a>
                   </li>
               </ul>
 
@@ -82,11 +82,11 @@
                             </h2><br>
 
                             <div class="search-form">
-                                <form action="index.html" method="get">
+                                <form  >
                                     <div class="input-group">
-                                        <input type="text" placeholder="Admin Theme" name="search" class="form-control input-lg">
+                                        <input type="text" placeholder="Admin Theme" name="search" class="form-control input-lg" ng-model = "keyword_search">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-lg btn-primary" type="submit">
+                                            <button class="btn btn-lg btn-primary" type="submit" ng-click = "search_click()">
                                                 Search
                                             </button>
                                         </div>

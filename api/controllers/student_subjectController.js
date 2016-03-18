@@ -37,7 +37,37 @@ module.exports = {
                 return response.send(hits);
             })
           },
+          update_score_subject: function(request,response){
+            var data = request.allParams();
+            var hits = '';
 
+            client.search({
+              index: 'subject',
+              type : data.year,
+              body: {
+                query: {
+                    bool : {
+                        must : [
+                            { match_phrase: { Term : data.term } },
+                            { match_phrase: { Subject_Name : data.subject_name } }
+                        ]
+                     }
+                }
+              }
+            })
+            .then(function (res) {
+                hits = res.hits.hits;
+                client.bulk({
+                  body :[
+                      { update: { _index: 'subject' , _type:data.year , _id:  hits[0]["_id"]} },
+                      { doc: {Score_Count : parseInt(hits[0]["_source"]["Score_Count"]+1)} },
+                  ]
+                }, function (error, response2){
+                    console.log(error);
+                });
+                return response.send(hits);
+            })
+          },
           insert_data_follower : function (req,res){
             var data = req.allParams();
 

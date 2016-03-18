@@ -12,6 +12,8 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
     $scope.Description = '';
     $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
     $scope.Fullname_User = localStorageService.get('Fullname_User');
+    localStorageService.remove('times_homework_select');
+
       var lec_name = localStorageService.get('Fullname_User');
       var lec_name_split = lec_name.split(" ");
       var lec_name_after_split = '';
@@ -118,7 +120,8 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
           "Lec_Name" : localStorageService.get('Fullname_User'),
           "Created_By" : localStorageService.get('Fullname_User'),
           "Date_Upload" : moment().format('MMMM Do YYYY, h:mm:ss a'),
-          "View_Count" : "0"
+          "View_Count" : "0",
+          "Score_Count" : "0"
         }
       };
       var sub_name_split = $scope.subject_name.split(" ");

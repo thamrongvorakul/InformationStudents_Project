@@ -11,6 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
+    <link href="css/sweetalert.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery-2.1.1.js"></script>
@@ -25,6 +26,9 @@
     <script src="/dist/text/moment.min.js"></script>
     <script src="/dist/angular-momentjs.js"></script>
     <script src="/dist/angular-momentjs.min.js"></script>
+    <script src="/dist/angular-sweetalert.min.js"></script>
+    <script src="/dist/sweet-alert.min.js"></script>
+    <script src="/dist/SweetAlert.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
     <script src="/dist/angular-sanitize.js"></script>
     <script type="text/javascript" src="/angular_script/homework_send.js"></script>
@@ -122,16 +126,14 @@
        <h5>ครั้งที่ : <select  data-toggle="dropdown" class="btn btn-white dropdown-toggle" ng-change = "times_homework_change()" ng-model = "times_homework_select" >
            <option   ng-repeat = "item in times_homework_arr " value="{{item.time}}"  >{{item.time}}</option>
         </select></h5>
-       <button class="btn btn-primary " >สร้างCSVไฟล์  </div> <br>
+      </div> <br><br>
 </div>
 <div class="ibox-content">
 <div class="row m-b-sm m-t-sm">
-    <div class="col-md-1">
-        <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</button>
-    </div>
+
     <div class="col-md-11">
-        <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control" ng-model="search"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+        <div class="input-group"><input type="text"  style="width:200%" placeholder="Search" class="input-sm form-control" ng-model="search"> <span class="input-group-btn">
+                                      </span></div>
     </div>
 
 </div>
@@ -141,7 +143,7 @@
 <table class="table table-hover">
 
 <tbody>
-<tr ng-repeat = "item in homework_send_arr | orderBy : 'data._source.Date_Upload':true | filter:search">
+<tr ng-repeat = "item in homework_send_arr | orderBy : 'data._source.Date_Upload':true | filter:search" ng-if = "item.data._source.Status_Score_Add === 0">
   <td class="project-status">
       <span style="color : red;"><b>{{$index + 1}}</b></span>
   </td>
@@ -171,20 +173,104 @@
         <div class = "col-sm-2"></div>
         <div class = "col-sm-3">กรอกคะแนน : </div>
         <div class = "col-sm-3">
-        <input style="width : 80%; text-align :center;" type="text" class="form-control"  ng-model = "score_for_std"></input></div>
-        <div class = "col-sm-1"><button class = "btn btn-primary" ng-click = "score_save_click()">บันทึก</button></div>
+        <input style="width : 80%; text-align :center;" type="text" class="form-control"  ng-model = "item.data._source.Score"></input></div>
+        <div class = "col-sm-1"><button class = "btn btn-primary" ng-click = "score_save_click(item.data._source.Score,item.data._id)">บันทึก</button></div>
       </div>
     </td>
     <td class="project-actions">
         <a class="btn btn-white btn-sm" ng-click="init_homework_send_value(item.data._source.Path_Upload , item.data._source.Description_Homework_Send , item.data._source.ID_NO ,
         item.data._source.Std_Name , item.data._source.Subject_Send_Homework , item.data._source.Date_Upload , item.data._source.Lec_Name_Upload , item.data._source.File_Name[0].filename)" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder"></i> View </a>
-        <a class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Delete </a>
+        <a class="btn btn-white btn-sm" ng-click = "remove_click(item.data._id,item.data._source.ID_NO,item.data._source.File_Name[0].filename)"><i class="fa fa-trash"></i> Delete </a>
     </td>
+  </div>
 </tr>
 
 </tbody>
 </table>
 </div>
+
+</div><br><br><br>
+<p style="color:red;text-align:center;">คำแนะนำ * การสร้าง CSV ไฟล์ จะสร้างไฟล์ โดยอิงจากข้อมูลตารางของนักศึกษาที่ได้รับคะแนนแล้ว</p>
+<p style="color:red;text-align:center;">เมื่อสร้างไฟล์ CSV แล้ว จะสามารถสร้างซ้ำได้ ถ้ายังไม่มีการลบข้อมูลคะแนน เมื่ออาจารย์ลบข้อมูลคะแนนของนักศึกษาแต่ละคนหลังจากสร้างไฟล์ CSV แล้ว เมื่อมีนักศึกษาส่งการบ้านล่าช้า</p>
+<p style="color:red;text-align:center;">อาจารย์สามารถสร้างไฟล์ CSV ซ้ำได้ แต่ในไฟล์ CSV จะมีชื่อและนักศึกษาทั้งหมดที่แสดงในตารางซ้ำ แต่จะไม่มีคะแนน คะแนนจะมีแค่สำหรับนักศึกษาที่อาจารย์พึ่งกรอกคะแนนเท่านั้น</p>
+<p style="color:red;text-align:center;">อาจารย์จำเป็นจะต้อง นำไฟล์ CSV 2 ไฟล์ ที่สร้างมา ทำการรวมข้อมูลเข้าด้วยกัน ด้วยตนเอง</p><br><br>
+
+
+
+<div class="ibox">
+<div class="ibox-title">
+  <h5>แสดงรายชื่อนักศึกษาที่ได้รับคะแนนเรียบร้อยแล้ว</h5>
+
+     <div class="ibox-tools">
+       <button class="btn btn-primary " ng-click = "create_CSV_file()">สร้างCSVไฟล์</button>&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-warning " ng-click = "clear_score_click()">ลบคะแนนทั้งหมด</button>
+</div>
+
+</div>
+<div class="ibox-content">
+<div class="row m-b-sm m-t-sm">
+
+    <div class="col-md-11">
+        <div class="input-group"><input type="text" style="width:200%"placeholder="Search" class="input-sm form-control" ng-model="search2">
+          <span class="input-group-btn">
+                                      </span></div>
+    </div>
+
+</div>
+
+<div class="project-list">
+
+<table class="table table-hover">
+
+<tbody>
+<tr ng-repeat = "item in homework_send_arr2 | orderBy : 'data._source.Date_Upload':true | filter:search2" ng-if = "item.data._source.Status_Score_Add === 1">
+  <td class="project-status">
+      <span style="color : red;"><b>{{$index + 1}}</b></span>
+  </td>
+    <td class="project-status">
+        <span ><b style="color : green;">รหัส : </b>{{item.data._source.ID_NO}}</span>
+    </td>
+    <td class="project-title">
+        <a ui-sref="project_detail">{{item.data._source.Std_Name}}</a>
+        <br/>
+        <small></small>
+    </td>
+
+    <td class="project-completion">
+        <p><b style="color : green;">หัวข้อ : </b> {{item.data._source.Subject_Send_Homework}}</p>
+
+    </td>
+
+    <td class="project-completion">
+        <b style="color : green;">ส่งเมื่อ : </b> {{item.data._source.Date_Upload}}
+    </td>
+    <td class="project-completion">
+      <p class="label label-primary" ng-if ="item.data._source.Status_Remove === 'active'">Complete</p>
+      <p class="label label-danger" ng-if ="item.data._source.Status_Remove === 'removed'">removed</p>
+
+    </td>
+    <td class="project-completion">
+      <div class = "row">
+        <div class = "col-sm-2"></div>
+        <div class = "col-sm-3">กรอกคะแนน : </div>
+        <div class = "col-sm-7">
+        <p ng-if = "item.data._source.Status_Remove === 'active'">กรอกคะแนนของคนนี้ไปแล้ว คะแนนคือ : {{item.data._source.Score}}</p>
+        <p style="color:red;" ng-if = "item.data._source.Status_Remove === 'removed'">คะแนนถูกลบจากฐานข้อมูลแล้ว </p>
+        </div>
+      </div>
+    </td>
+    <td class="project-actions">
+        <a class="btn btn-white btn-sm" ng-click="init_homework_send_value(item.data._source.Path_Upload , item.data._source.Description_Homework_Send , item.data._source.ID_NO ,
+        item.data._source.Std_Name , item.data._source.Subject_Send_Homework , item.data._source.Date_Upload , item.data._source.Lec_Name_Upload , item.data._source.File_Name[0].filename)" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder"></i> View </a>
+        <a class="btn btn-white btn-sm" ng-click = "remove_click(item.data._id,item.data._source.ID_NO)"><i class="fa fa-trash"></i> Delete </a>
+    </td>
+  </div>
+</tr>
+
+</tbody>
+</table>
+</div>
+
 </div>
 </div>
 </div>

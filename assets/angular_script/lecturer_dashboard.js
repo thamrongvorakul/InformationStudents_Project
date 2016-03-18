@@ -13,6 +13,8 @@ app.controller('lecturerdashboardController', ['$scope', '$http' , '$moment','lo
       $scope.Fullname_User = localStorageService.get('Fullname_User');
       $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
       $scope.search = '';
+      localStorageService.remove('times_homework_select');
+
       $timeout(function(){
         $scope.dataLoaded = true;
       }, 2000);

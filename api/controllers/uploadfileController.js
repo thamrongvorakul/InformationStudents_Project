@@ -3,7 +3,8 @@ var    elasticsearch = require('elasticsearch');
 var    nodemailer    = require  ('nodemailer');
 
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200'
+          host: '161.246.60.104:9200',
+          log : 'trace'
       });
       var path = require('path');
       var fs = require('fs');
@@ -12,15 +13,13 @@ var    client = new elasticsearch.Client({
       var feedname;
       var scripter;
       var typefile;
-
-
       var transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'webinformationstudents@gmail.com',
-                    pass: 'informationstudents'
-                }
-            });
+          service: 'Gmail',
+          auth: {
+            user: 'webinformationstudents@gmail.com',
+            pass: 'informationstudents'
+          }
+      });
 
 
 module.exports = {
@@ -39,19 +38,37 @@ module.exports = {
               var path_doc = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/documents/';
               var path_news = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/news/';
               var path_score = 'D:/InformationStudents/assets/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/score/';
+              var path_hw_tmp= 'D:/InformationStudents/.tmp/public/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/homework/';
+              var path_doc_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/documents/';
+              var path_news_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/news/';
+              var path_score_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/score/';
+              var path_send_homework_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+lec_name+'/'+subject+'/'+data.term+'.'+data.year+'/send_homework/';
+              var path_keep_tmp ;
               var path_keep ;
 
               if (data.path === "homework"){
                 path_keep = path_hw;
+                path_keep_tmp = path_hw_tmp;
+
               }
               else if (data.path === "documents"){
                 path_keep = path_doc;
+                path_keep_tmp = path_doc_tmp;
+
+              }
+              else if (data.path === 'score'){
+                path_keep = path_score;
+                path_keep_tmp = path_score_tmp;
               }
               else {
-                path_keep = path_score;
+                path_keep = path_send_homework;
+                path_keep_tmp = path_send_homework_tmp;
               }
 
               fs.unlink(path_keep + data.files_name , function(err){
+                  if (err) throw err;
+              });
+              fs.unlink(path_keep_tmp + data.files_name , function(err){
                   if (err) throw err;
               });
               client.delete({
@@ -68,25 +85,36 @@ module.exports = {
             upload: function  (req, res)
               {
                   var data = req.allParams();
+                  console.log(data.type_for_followers)
 
                   var path_hw = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/homework/';
                   var path_doc = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/documents/';
                   var path_news = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
                   var path_score = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
                   var path_send_homework = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/send_homework/';
+                  var path_hw_tmp= 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/homework/';
+                  var path_doc_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/documents/';
+                  var path_news_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
+                  var path_score_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
+                  var path_send_homework_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/send_homework/';
+                  var path_keep_tmp ;
                   var path_keep ;
 
                   if (data.path === "homework"){
                     path_keep = path_hw;
+                    path_keep_tmp = path_hw_tmp;
                   }
                   else if (data.path === "documents"){
                     path_keep = path_doc;
+                    path_keep_tmp = path_doc_tmp;
                   }
                   else if (data.path === "score"){
                     path_keep = path_score;
+                    path_keep_tmp = path_score_tmp;
                   }
                   else {
                     path_keep = path_send_homework;
+                    path_keep_tmp = path_send_homework_tmp;
                   }
 
 
@@ -108,6 +136,7 @@ module.exports = {
                       }, function (error, response){
                           console.log(error);
                       });
+
                       client.search({
                           index: 'log_follow',
                           type : data.type_for_followers,
@@ -120,6 +149,8 @@ module.exports = {
                       })
                       .then(function (response) {
                           var hits = response.hits.hits;
+                          console.log(data.type_for_followers)
+
                           for (var i=0 ;i <hits.length ; i++){
                             var mailOptions = {
                                 from: 'webinformationstudents',
@@ -146,6 +177,17 @@ module.exports = {
                             return res.serverError(err);
                         }
                     });
+
+                                      req.file('file').upload({
+
+                                        dirname : path_keep_tmp,
+                                        saveAs: function(__newFile, cb) {
+                                           cb(null, __newFile.filename);
+                                         },
+                                      },
+                                      function (err, files)
+                                        {
+                                        });
               return res.send('Response OK');
             },
 
@@ -157,18 +199,32 @@ module.exports = {
               var path_news = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
               var path_score = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
               var path_send_homework = 'D:/InformationStudents/assets/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/send_homework/' + data.Times_Homework_Select +'/';
+              var path_hw_tmp= 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/homework/';
+              var path_doc_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/documents/';
+              var path_news_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/news/';
+              var path_score_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/score/';
+              var path_send_homework_tmp = 'D:/InformationStudents/.tmp/public/FileUpload/'+data.Lec_Name+'/'+data.subject+'/'+data.term+'.'+data.year+'/send_homework/';
+              var path_keep_tmp ;
               var path_keep ;
               if (data.path === "homework"){
                 path_keep = path_hw;
+                path_keep_tmp = path_hw_tmp;
+
               }
               else if (data.path === "documents"){
                 path_keep = path_doc;
+                path_keep_tmp = path_doc_tmp;
+
               }
               else if (data.path === "score"){
                 path_keep = path_score;
+                path_keep_tmp = path_score_tmp;
+
               }
               else {
                 path_keep = path_send_homework;
+                path_keep_tmp = path_send_homework_tmp;
+
               }
 
 
@@ -185,7 +241,7 @@ module.exports = {
                     body :[
                         { index : { _index: 'send_homework' , _type: data.path } },
                         { Lec_Name_Upload : data.Lec_Name_Default ,Lec_Name : data.Lec_Name,Subject: data.subject,Subject_Name : data.subject_default, Std_Name : data.Std_Name,ID_NO : data.ID_NO,Term : data.term , Year : data.year , Path_Upload : path_keep ,
-                          Date_Upload : data.Date_Upload ,Description_Homework_Send : data.Description_Homework_Send ,Times_Homework_Select : data.Times_Homework_Select,Subject_Send_Homework : data.Subject_Send_Homework, File_Name : files},
+                          Date_Upload : data.Date_Upload ,Description_Homework_Send : data.Description_Homework_Send ,Score:parseInt(data.Score),Status_Score_Add : parseInt(data.Status_Score_Add),Times_Homework_Select : data.Times_Homework_Select,Subject_Send_Homework : data.Subject_Send_Homework, File_Name : files},
                     ]
                   }, function (error, response){
                       console.log(error);
@@ -197,6 +253,16 @@ module.exports = {
                         return res.serverError(err);
                     }
                 });
+                req.file('file').upload({
+
+                  dirname : path_keep_tmp,
+                  saveAs: function(__newFile, cb) {
+                     cb(null, __newFile.filename);
+                   },
+                },
+                function (err, files)
+                  {
+                  });
 
                 return res.send('Response OK');
             },

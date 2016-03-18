@@ -201,6 +201,8 @@
                                             </div>
                                             <a href="#" class="forum-item-title">{{ item.name._source.File_Name[0].filename }}</a>
                                             <div class="forum-sub-title">อัพโหลดเมื่อ : {{item.name._source.Date_Upload}}</div>
+                                          <!--  <a href='{{item.name._source.File_Name[0].fd}}' download ="" >Download</a>-->
+                                          <a href='/FileUpload/{{item.name._source.Lec_Name}}/{{item.name._source.Subject}}/{{item.name._source.Term}}.{{item.name._source.Year}}/{{item.name._type}}/{{item.name._source.File_Name[0].filename}}' download ="" >Download</a>
 
                                         </div>
                                         <div class= "col-lg-2">
