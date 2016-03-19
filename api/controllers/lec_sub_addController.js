@@ -8,8 +8,10 @@ var    client = new elasticsearch.Client({
 
 
 
-var pathforCreateDir = 'D:\\InformationStudents\\assets\\FileUpload\\';
-var pathfortmp = 'D:\\InformationStudents\\.tmp\\public\\FileUpload\\';
+var pathforCreateDir = 'assets\\FileUpload\\';
+var pathfortmp = '.tmp\\public\\FileUpload\\';
+var fs = require('fs');
+
 module.exports = {
 
   insert_data_to_db_teacher: function  (req, res) {
@@ -33,11 +35,14 @@ module.exports = {
     var str_sub = '';
     for (var i =0;i<str_lec_name_split.length; i++){str_name = str_name + str_lec_name_split[i]};
     for (var i =0;i<str_sub_split.length; i++){str_sub = str_sub + str_sub_split[i]};
-
+    var path_hw =
           child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\homework',
           function (error, stdout, stderr)
           {
+            fs.writeFile("assets/FileUpload/"+str_name+'/'+str_sub+'/'+dataJson.data.Term+'.'+dataJson.header.Year+'/homework/log.txt', "This file for storing log upload.", function(err) {
+            });
           });
+
           child = exec('mkdir '+pathfortmp+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\homework',
           function (error, stdout, stderr)
           {
@@ -45,6 +50,8 @@ module.exports = {
           child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\documents',
           function (error, stdout, stderr)
           {
+            fs.writeFile("assets/FileUpload/"+str_name+'/'+str_sub+'/'+dataJson.data.Term+'.'+dataJson.header.Year+'/documents/log.txt', "This file for storing log upload.", function(err) {
+            });
           });
           child = exec('mkdir '+pathfortmp+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\documents',
           function (error, stdout, stderr)
@@ -53,6 +60,8 @@ module.exports = {
           child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\news',
           function (error, stdout, stderr)
           {
+            fs.writeFile("assets/FileUpload/"+str_name+'/'+str_sub+'/'+dataJson.data.Term+'.'+dataJson.header.Year+'/news/log.txt', "This file for storing log upload.", function(err) {
+            });
           });
           child = exec('mkdir '+pathfortmp+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\news',
           function (error, stdout, stderr)
@@ -61,19 +70,30 @@ module.exports = {
           child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\score',
           function (error, stdout, stderr)
           {
+            fs.writeFile("assets/FileUpload/"+str_name+'/'+str_sub+'/'+dataJson.data.Term+'.'+dataJson.header.Year+'/score/log.txt', "This file for storing log upload.", function(err) {
+            });
           });
           child = exec('mkdir '+pathfortmp+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\score',
           function (error, stdout, stderr)
           {
           });
-          child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\send_homework',
-          function (error, stdout, stderr)
-          {
-          });
-          child = exec('mkdir '+pathfortmp+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\send_homework',
-          function (error, stdout, stderr)
-          {
-          });
+          for (var i=1 ;i<= 20 ;i++){
+            child = exec('mkdir '+pathforCreateDir+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\send_homework'+'\\'+i,
+            function (error, stdout, stderr)
+            {
+
+            });
+            child = exec('mkdir '+pathfortmp+str_name+'\\'+str_sub+'\\'+dataJson.data.Term+'.'+dataJson.header.Year+'\\send_homework'+'\\'+i,
+            function (error, stdout, stderr)
+            {
+            });
+
+          }
+          for (var i=1 ; i<=20 ; i++){
+            fs.writeFile("assets/FileUpload/"+str_name+'/'+str_sub+'/'+dataJson.data.Term+'.'+dataJson.header.Year+'/send_homework/'+i+'/log.txt', "This file for storing log upload.", function(err) {
+            });
+          }
+
     return res.ok();
   },
 

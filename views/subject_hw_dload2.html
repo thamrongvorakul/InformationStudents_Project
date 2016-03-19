@@ -30,7 +30,6 @@
     <script src="/dist/sweet-alert.min.js"></script>
     <script src="/dist/SweetAlert.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
-
     <script type="text/javascript" src="/angular_script/getfiles.js"></script>
 
 </head>
@@ -159,7 +158,6 @@
                                     <div class="hr-line-dashed"></div><br>
                               <!--  <button class="btn btn-primary btn-block" ngf-select ngf-change="upload($files)" onclick="this.value = null" >Upload Files</button>-->
                                 <button  type="file" class="btn btn-primary btn-block"   ng-click="uploader.uploadAll()"  ng-disabled="!uploader.getNotUploadedItems().length" >Upload All Files</button>
-
                                   <div class="hr-line-dashed"></div><br>
 
 
@@ -168,6 +166,7 @@
                                 <div class="progress progress-striped active" style="">
                                     <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }">{{uploader.progress}} %</div>
                                 </div>
+
                                 <!--<div class="progress progress-striped active">
                                   <div class="progress-bar progress-bar-danger" style="width:{{todoList.progress}};" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{todoList.progress}}" role="progressbar" >
                                   </div>
@@ -245,6 +244,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

@@ -44,106 +44,65 @@
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
-                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
-                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="profile.html">Profile</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="mailbox.html">Mailbox</a></li>
-                            <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
-                        </ul>
-                    </div>
-                    <div class="logo-element">
-                        IN+
-                    </div>
-                </li>
-            </ul>
+          <ul class="nav metismenu" id="side-menu"><!แถบเมนูข้าง>
+              <li class="nav-header">
+                  <div class="dropdown profile-element"> <span>
+                          <img alt="image" class="img-circle" src="{{path_file_pic_icon}}" style="width:48px; heigth:48px" />
+                           </span>
+                          <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Fullname_User}}</strong>
+
+                  </div>
+                  <div class="logo-element">
+                      CS
+                  </div>
+              </li>
+              <li>
+                  <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">หน้าแรก</span></a>
+              </li>
+              <li>
+                  <a href="/lecturer_detail"><i class="fa fa-th-large"></i> <span class="nav-label ">ข้อมูลเบื้องต้น</span></a>
+              </li>
+              <li>
+                  <a href="/change_password_lecturer"><i class="fa fa-th-large"></i> <span class="nav-label">เปลี่ยนรหัสผ่าน</span></a>
+              </li>
+              <li>
+                  <a href="/change_profile_lecturer"><i class="fa fa-th-large"></i> <span class="nav-label">แก้ไขข้อมูลส่วนตัว</span></a>
+              </li>
+              <li>
+                  <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">จัดการข้อมูลการสอน</span> <span class="fa arrow"></span></a>
+                  <ul class="nav nav-second-level collapse">
+                    <li><a href="/lecturer_add_sub2">เพิ่มรายวิชา</a></li>
+                    <li><a href="/lecturer_mng_sub">จัดการรายวิชาที่สอน</a></li>
+                  </ul>
+              </li>
+
+              <li>
+                  <a href="/logout"><i class="fa fa-th-large"></i> <span class="nav-label">ออกจากระบบ</span></a>
+              </li>
+
+          </ul>
 
         </div>
     </nav>
 
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-        <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
+          <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+          </nav>
         </div>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
-                    </a>
-
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="mailbox.html">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="profile.html">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="grid_options.html">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <div class="text-center link-block">
-                                <a href="notifications.html">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="login.html">
-                        <i class="fa fa-sign-out"></i> Log out
-                    </a>
-                </li>
-            </ul>
-
-        </nav>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-9">
+                <h2>Documents</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/lecturer_detail">Home</a>
+                    </li>
+                    <li class="active">
+                        <strong>กล่องข้อความ</strong>
+                    </li>
+                </ol>
+            </div>
         </div>
-
         <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-8 ibox">

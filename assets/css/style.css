@@ -4368,6 +4368,11 @@ body.mini-navbar.fixed-sidebar .logo-element {
   margin: 0 auto;
   padding: 100px 20px 20px 20px;
 }
+.loginColumns2 {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 20px 20px 20px;
+}
 .passwordBox {
   max-width: 460px;
   margin: 0 auto;

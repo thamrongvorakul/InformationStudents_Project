@@ -15,7 +15,8 @@ module.exports = {
 					title : 'Log In',
 					management : '1',
 					create_sub : '1',
-					create_lecturer : '1'
+					create_lecturer : '1',
+					register_teacher : '1',
 				}
 			});
 		}
@@ -37,6 +38,7 @@ module.exports = {
 						management : '1',
 						create_sub : '1',
 						create_lecturer : '1',
+						register_teacher : '1',
 						title_user : user.Title,
 						name : user.FName,
 						lname : user.LName,
@@ -54,6 +56,7 @@ module.exports = {
 						management : 'Management',
 						create_sub : '1',
 						create_lecturer : '1',
+						register_teacher : '1',
 						title_user : user.Title,
 						name : user.FName,
 						lname : user.LName,
@@ -72,6 +75,7 @@ module.exports = {
 						management : '1',
 						create_sub : 'Create_Subject',
 						create_lecturer : 'Create_Lecturer',
+						register_teacher : 'Register_Lecturer',
 						title_user : user.Title,
 						name : user.FName,
 						lname : user.LName,
@@ -754,7 +758,7 @@ module.exports = {
 			}
 			else if (user.Type_User === 'teacher')
 			{
-				return res.view('mailbox_view');
+				return res.view('mail_detail');
 			}
 
 		});

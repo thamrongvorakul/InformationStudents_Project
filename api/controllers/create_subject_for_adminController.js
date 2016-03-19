@@ -67,6 +67,24 @@ module.exports = {
       function (error, response) {
       });
       return res.ok();
+    },
+
+    search_data_for_create_lecturer : function(req,res){
+      client.search({
+        index : 'teacher',
+        type : 'data',
+        body : {
+          size : 20,
+          query : {
+            match_all : {
+            }
+          }
+        }
+      })
+      .then(function (response) {
+          var hits = response.hits.hits;
+          return res.send(hits);
+      });
     }
 
 

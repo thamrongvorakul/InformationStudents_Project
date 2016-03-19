@@ -89,7 +89,8 @@ module.exports.routes = {
   'POST /search_data_for_log_score'                   : 'student_subjectController.search_data_for_log_score',
   'POST /remove_file_homework_send'                   : 'lecturer_dashboardController.remove_file_homework_send',
   'POST /update_data_add_score_for_homework_send'     : 'lecturer_dashboardController.update_data_add_score_for_homework_send',
-  'POST /remove_field_score'                          : 'lecturer_dashboardController.remove_field_score'
+  'POST /remove_field_score'                          : 'lecturer_dashboardController.remove_field_score',
+  'POST /search_data_for_create_lecturer'             : 'create_subject_for_adminController.search_data_for_create_lecturer'
 
 
 

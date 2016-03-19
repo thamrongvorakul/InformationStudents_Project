@@ -1,6 +1,6 @@
-angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorageModule' ,'ngCookies' , 'summernote' , 'ngSanitize' ])
-.controller('contactslecController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , 'localStorageService' , '$cookies', '$sce' ,
-  function ( $scope, $rootScope,Upload, $http , FileUploader ,  localStorageService , $cookies , $sce )
+angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorageModule' ,'ngCookies' , 'summernote' , 'ngSanitize' ,'oitozero.ngSweetAlert'])
+.controller('contactslecController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , 'localStorageService' , '$cookies', '$sce' , 'SweetAlert' ,
+  function ( $scope, $rootScope,Upload, $http , FileUploader ,  localStorageService , $cookies , $sce , SweetAlert)
   {
 
 
@@ -57,7 +57,10 @@ angular.module('contactsLec', ['ngFileUpload' , 'angularFileUpload','LocalStorag
         };
         $http.post('/put_mailbox_to_elasticsearch' , data)
         .success(function(data){
-          alert('Send Mail Success !!');
+          SweetAlert.swal("ส่งข้อความเรียบร้อยแล้ว!","Success", "success");
+          setTimeout(function(){
+              location.reload();
+          }, 1000);
         });
 
       };

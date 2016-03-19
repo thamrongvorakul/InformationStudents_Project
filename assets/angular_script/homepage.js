@@ -34,9 +34,9 @@ angular.module('homepage', ['LocalStorageModule'])
         $scope.hottest_topic_arr.push({data : data[i]});
       }
     });
-    $scope.init = function (email ,management ,title_user , FName , LName , ID_NO , create_sub , create_lec){
+    $scope.init = function (email ,management ,title_user , FName , LName , ID_NO , create_sub , create_lec , register_lecturer){
       $scope.user_email = email;
-      
+
       localStorageService.set('title_user' , title_user);
       localStorageService.set('FName_User' , FName);
       localStorageService.set('LName_User' , LName);
@@ -48,6 +48,7 @@ angular.module('homepage', ['LocalStorageModule'])
       $scope.management_2 = management;
       $scope.create_sub = create_sub;
       $scope.create_lec = create_lec;
+      $scope.register_lecturer = register_lecturer;
     };
     if ($scope.user_email !== 'undefined'){
       $scope.status_log = 'Log Out';

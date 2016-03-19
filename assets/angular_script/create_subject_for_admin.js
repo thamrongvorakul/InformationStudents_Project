@@ -11,6 +11,7 @@ angular.module('create_subject_for_admin', ['ngFileUpload' ,'angularFileUpload',
         for (var i=0;i<data.length ; i++){
           $scope.subject_arr.push({data : data[i]});
         }
+        $scope.count_no_read = data.length;
     });
     $scope.submit_click = function (){
       $http.post('/insert_subject_to_elasticsearch' , {Subject_Id : $scope.Subject_Id , Subject_Name : $scope.Subject_Name})

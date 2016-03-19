@@ -3,6 +3,8 @@ var app = angular.module('mailbox_view', [ 'angular-momentjs','LocalStorageModul
 app.controller('mailboxviewController', ['$scope', '$http' , '$moment','localStorageService' , '$sce',
   function ( $scope, $http  , $moment ,  localStorageService , $sce )
   {
+    $scope.Fullname_User = localStorageService.get('Fullname_User');
+    $scope.path_file_pic_icon = localStorageService.get('path_file_pic_icon');
     $http.post('/search_mailbox_subject' , {
       mailbox_id : localStorageService.get('mailbox_id'),
       Lec_Name : localStorageService.get('Fullname_User'),

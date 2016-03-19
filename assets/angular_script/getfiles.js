@@ -112,7 +112,11 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
       uploader.filters.push({
           name: 'customFilter',
           fn: function(item /*{File|FileLikeObject}*/, options) {
-              return this.queue.length < 10;
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+              return  this.queue.length < 10;
+            //  return '|jpg|png|jpeg|bmp|gif|pdf|docx|xls|xlsx|application/vnd.ms-excel'.indexOf(type) !== -1 ;
+
+
           }
       });
 
@@ -140,13 +144,15 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
           type_for_followers : type_for_send_email_followers,
           Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
         };
-        console.log(data.type_for_followers)
         item.formData.push(data);
 
       };
       uploader.onProgressItem = function(fileItem, progress) {
       };
       uploader.onProgressAll = function(progress) {
+        if (progress === 100){
+        }
+        console.log(progress);
       };
       uploader.onSuccessItem = function(fileItem, response, status, headers) {
       };
@@ -279,11 +285,13 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
             Date_Upload : moment().format('MMMM Do YYYY, h:mm:ss a')
           }
           item.formData.push(data);
+          location.absUrl = 'http://localhost:35729/livereload.js'
 
         };
         uploader.onProgressItem = function(fileItem, progress) {
         };
         uploader.onProgressAll = function(progress) {
+
         };
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
         };

@@ -44,6 +44,10 @@
                     <small>โดยจะต้องกรอกรหัสวิชา และชื่อวิชา </small>
                 </p>
                 <p><small style = "color:red;">หมายเหตุ* สำหรับการแก้ไขให้ทำการลบวิชาเดิม และเพิ่มเข้าไปใหม่</small></p>
+                <p>
+                    <a data-toggle="modal" data-target= "#myModal5"><u>ดูรายวิชาทั้งหมด</u></a>
+                    <a href="/"><u>กลับหน้าแรก</u></a>
+                </p>
                 <div class="ibox-content" >
                     <form class="m-t" role="form">
                         <div class="form-group" >
@@ -62,9 +66,7 @@
 
 
                     </form>
-                    <p>
-                        <a data-toggle="modal" data-target= "#myModal5">ดูรายวิชาทั้งหมด</a>
-                    </p>
+
                 </div>
               </div>
               <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -79,19 +81,14 @@
                                 <form method="get"  class="pull-right mail-search">
                                     <div class="input-group">
                                         <input type="search" ng-model="search" class="form-control input-sm" name="search" placeholder="Search email">
-                                        <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-sm btn-primary">
-                                                Search
-                                            </button>
-                                        </div>
+
                                     </div>
                                 </form>
                                 <h2>
-                                    Inbox ({{count_no_read}})
+                                    Subjects ({{count_no_read}})
                                 </h2>
                                 <div class="mail-tools tooltip-demo m-t-md">
 
-                                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Refresh</button>
 
 
                                 </div>

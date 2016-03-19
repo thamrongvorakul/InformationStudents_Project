@@ -30,9 +30,9 @@
     <script type="text/javascript" src="/angular_script/create_profile_lecturer.js"></script>
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" ng-controller = "create_profile_lecturerController">
 
-    <div class="middle-box text-center animated fadeInDown" ng-controller = "create_profile_lecturerController">
+    <div class="middle-box text-center animated fadeInDown" >
         <div class="row">
 
             <h2 class="font-bold">Create Lecturer Profile</h2>
@@ -43,7 +43,10 @@
                 <p>
                     <small>โดยจะต้องเพิ่มรูป ทั้งหมด 2 รูป คือรูปสำหรับแสดงหน้าเล็ก และรูปสำหรับแสดงหน้าข้อมูลส่วนตัว</small>
                 </p>
+                <a data-toggle = "modal" data-target="#myModal5"><u>ดูรายชื่ออาจารย์ทั้งหมด</u></a>
+                <a href="/"><u>กลับหน้าแรก</u></a>
 
+                    <br><br>
                 <div class="ibox-content" >
                     <form class="m-t" role="form">
                         <div class="form-group" >
@@ -121,10 +124,68 @@
 
                     </form>
                 </div>
+
               </div>
-        </div>
+
         <hr/>
-    </div>
+        <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-lg" style = "width:700px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <h4 class="modal-title">รายชื่ออาจารย์ทั้งหมด</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mail-box-header">
+                          <form method="get"  class="pull-right mail-search">
+                              <div class="input-group">
+                                  <input type="search" ng-model="search" class="form-control input-sm" name="search" placeholder="Search ">
+
+                              </div>
+                          </form>
+                          <h2>
+                              Lecturers ({{count_no_read}})
+                          </h2>
+                          <div class="mail-tools tooltip-demo m-t-md">
+
+
+
+                          </div>
+                      </div>
+                          <div class="mail-box">
+
+                          <table class="table table-hover table-mail">
+                            <thead>
+                              <tr>
+                                <th> # </th>
+                                <th style="width:50%;"> ชื่อ-สกุล </th>
+
+                                <th></th>
+                              </tr>
+                            </thead>
+                          <tbody >
+
+                          <a><tr class="unread"  ng-repeat = "item in teacher_arr | filter:search | orderBy : 'data._source.Name'"></a>
+
+                              <td >
+                                {{$index + 1}}
+                              </td>
+                              <td class="mail-ontact">{{item.data._source.Name}}</td>
+                              <td><button class="btn btn-white btn-sm pull-right"  data-toggle="tooltip" data-placement="top" title="Move to trash" ng-click = "remove_teacher_click(item.data._id)"><i class="fa fa-trash-o"></i> </button></td>
+
+                          </tr>
+
+                          </tbody>
+                          </table>
+
+
+                          </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
 
 </body>
 

@@ -21,6 +21,15 @@ angular.module('create_profile_lecturer', ['ngFileUpload' ,'angularFileUpload','
         $scope.title_arr.push({data : data[i]["value"]})
       }
     })
+    $http.post('/search_data_for_create_lecturer').
+    success(function(data){
+      $scope.teacher_arr = [];
+      for (var i=0 ; i<data.length ; i++)
+      { 
+        $scope.teacher_arr.push({data : data[i]});
+      }
+      $scope.count_no_read = data.length;
+    })
     $scope.education_arr_push=function(){
       $scope.education_arr.push({})
     };

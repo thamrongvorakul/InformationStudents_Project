@@ -26,7 +26,7 @@ app.controller('lecturerdashboardController', ['$scope', '$http' , '$moment','lo
           }
         };
         $http.post('/remove_mailbox_from_lecturer_dashboard' , data).success(function(data){
-          localtion.reload();
+          location.reload();
         })
       }
       $scope.status_room_click_active = function (){

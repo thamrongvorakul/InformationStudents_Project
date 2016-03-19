@@ -18,7 +18,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
     <script src="/dist/angular-local-storage.min.js"></script>
+
     <script type="text/javascript" src="/angular_script/homepage.js"></script>
+
 
 </head>
 <body id="page-top" class="landing-page" ng-controller = 'homepageController' >
@@ -26,7 +28,7 @@
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container" ng-init = "init( <%= JSON.stringify(me.email) %> , <%= JSON.stringify(me.management) %> ,
               <%= JSON.stringify(me.title_user) %>  , <%= JSON.stringify(me.name) %>,<%= JSON.stringify(me.lname) %> , <%= JSON.stringify(me.ID_NO) %>,<%= JSON.stringify(me.create_sub) %> ,
-              <%= JSON.stringify(me.create_lecturer) %>) ">
+              <%= JSON.stringify(me.create_lecturer) %> ,   <%= JSON.stringify(me.register_teacher) %>) ">
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
@@ -45,7 +47,7 @@
                         <li><a class="page-scroll" ng-if = "management_2 !== '1' " href = "/lecturer_detail">Management</a></li> <!-- ng-click = 'management_click()' -->
                         <li><a class="page-scroll" ng-if = "create_sub !== '1' " href = "/create_subject_for_admin">Create_Subject</a></li> <!-- ng-click = 'management_click()' -->
                         <li><a class="page-scroll" ng-if = "create_lec !== '1' " href = "/create_lecturer_profile">Create_Lecturer</a></li> <!-- ng-click = 'management_click()' -->
-
+                        <li><a class="page-scroll" ng-if = "register_lecturer !== '1' " href = "/register_for_teacher_by_admin">Register_Lecturer</a></li> <!-- ng-click = 'management_click()' -->
                         <li><a class="page-scroll" ng-click = 'login_click(<%= JSON.stringify(me.title) %>)' ><%= me.title %></a></li> <!--  ng-click = 'login_click()' -->
                     </ul>
                 </div>

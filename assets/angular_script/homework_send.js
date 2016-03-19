@@ -139,7 +139,7 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
         })
     }
 
-    $scope.remove_click = function (id , ID_NO m files_name){
+    $scope.remove_click = function (id , ID_NO , files_name){
 
       SweetAlert.swal({
               title: "ยืนยันจะลบการบ้านที่นักศึกษาส่ง?",
@@ -161,7 +161,8 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
                   year : localStorageService.get('year'),
                   Lec_Name : localStorageService.get('Fullname_User'),
                   path : 'send_homework',
-                  id : id
+                  id : id,
+                  times_homework_select : localStorageService.get('times_homework_select')
                 }
                 $http.post('/remove_file_homework_send' , data2)
                 .success(function(data){
