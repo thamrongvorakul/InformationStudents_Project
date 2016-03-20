@@ -106,19 +106,33 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
     });
     $http.post('/search_data_for_log_score' , data).success(function(data){
       var count_score = 0;
-      console.log(data);
+      var reason_count = [0,0,0,0];
+
       for (var i =0 ; i<data.length ; i++){
         if (data[i]["_source"]["Status_Score"] === '1'){
           count_score = count_score + 1;
         }
-
         $scope.score_count_all = count_score;
+        if(data[i]["_source"]["Reason"] === 'เกรดง่าย'){reason_count[0] += 1;}
+        else if (data[i]["_source"]["Reason"] === 'เนื้อหาเข้าใจง่าย'){reason_count[1] += 1;}
+        else if (data[i]["_source"]["Reason"] === 'อาจารย์สอนดี'){reason_count[2] += 1;}
+        else if (data[i]["_source"]["Reason"] === 'เป็นวิชาที่อยากเรียน') {reason_count[3] += 1;}
       }
+      var tmp = 0; var pos ='';
+      for (var i=0 ;i<=3 ;i++){
+        if (tmp < reason_count[i]){tmp = reason_count[i];pos = i;}
+      }
+      if (pos === 0){ $scope.reason_count = 'เกรดง่าย';$scope.max = tmp;}
+      else if (pos === 1){ $scope.reason_count= 'เนื้อหาเข้าใจง่าย';$scope.max = tmp;}
+      else if (pos === 2){ $scope.reason_count= 'อาจารย์สอนดี';$scope.max = tmp;}
+      else if (pos === 3){ $scope.reason_count = 'เป็นวิชาที่อยากเรียน';$scope.max = tmp;}
+
 
 
     });
     $http.post('/search_data_for_the_views' , data).success(function(data){
       $scope.views_count_all = data[0]["_source"]["View_Count"];
+      $scope.description = data[0]["_source"]["Description"];
     });
 
     $http.post('/search_indi_data_in_student_subject' ,data).success(function(data_res){
@@ -322,6 +336,7 @@ app.controller('student_subjectController', ['$scope','$rootScope', '$http' ,'lo
             Lec_Name : lec_name_cut,
             Score :'0',
             Status_Score_Add : '0',
+            Status_Remove : 'active',
             Description_Homework_Send : $scope.description_homework,
             Subject_Send_Homework :  $scope.subject_for_send_homework,
             Times_Homework_Select : $scope.times_homework_select,

@@ -14,6 +14,7 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
       subject_name : localStorageService.get('subject_name'),
       Times_Homework_Select : localStorageService.get('times_homework_select')
     }).success(function(data){
+      console.log(data)
       $scope.homework_send_arr = [];
       $scope.homework_send_arr2 = [];
       $scope.times_all = [];
@@ -78,7 +79,7 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
                   SweetAlert.swal("เคลียร์คะแนนออกจากฐานข้อมูลเรียบร้อยแล้ว!", "success", "success");
                   setTimeout(function(){
                       location.reload();
-                  }, 1000);
+                  }, 2500);
                 })
               } else {
                   SweetAlert.swal("Cancelled", "ยกเลิกการทำรายการเรียบร้อย", "error");
@@ -132,10 +133,10 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
           Status_Score_Add : 1
         }
         $http.post('/update_data_add_score_for_homework_send' , data).success(function(data){
-          SweetAlert.swal("ให้คะแนนเรียบร้อย!", "success", "success");
+          SweetAlert.swal("ให้คะแนนเรียบร้อย!", "success", "โปรดรอ . . .");
           setTimeout(function(){
               location.reload();
-          }, 1000);
+          }, 2500);
         })
     }
 
@@ -153,6 +154,12 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
               closeOnCancel: false },
           function (isConfirm) {
               if (isConfirm) {
+                var subject_name_split = localStorageService.get('subject_name').split(" ");
+                var subject_name = '';
+                for (var i=0 ;i<subject_name_split.length ; i++){subject_name = subject_name + subject_name_split[i]}
+                var lec_name_split = localStorageService.get('Fullname_User').split(" ");
+                var lec_name ='';
+                for (var i=0 ;i<lec_name_split.length ; i++){lec_name = lec_name + lec_name_split[i]}
                 var data2 = {
                   files_name : files_name,
                   subject_default : localStorageService.get('subject_name'),
@@ -162,11 +169,24 @@ app.controller('homework_sendController', ['$scope','$rootScope', '$http' ,'loca
                   Lec_Name : localStorageService.get('Fullname_User'),
                   path : 'send_homework',
                   id : id,
-                  times_homework_select : localStorageService.get('times_homework_select')
+                  times_homework_select : localStorageService.get('times_homework_select'),
+                  sub_name_for_remove : subject_name,
+                  lec_name_for_remove : lec_name
                 }
-                $http.post('/remove_file_homework_send' , data2)
+                console.log(data2.times_homework_select);
+                console.log(data2.files_name);
+               $http.post('/remove_file_homework_send' , data2)
                 .success(function(data){
-                  SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "success", "success");
+                  if (data === 'Good'){
+                    SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "success", "โปรดรอ . . .");
+                    setTimeout(function(){
+                        location.reload();
+                    }, 2500);
+                  }
+                  else if (data === 'Not Found File'){
+                    SweetAlert.swal("ล้มเหลว", "ไม่มีไฟล์ที่เลือก", "error");
+
+                  }
                 })
 
               } else {

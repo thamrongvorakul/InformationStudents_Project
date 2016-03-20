@@ -32,12 +32,16 @@ app.controller('lectureraddsubController', ['$scope','$rootScope','Upload', '$ht
                   closeOnCancel: false },
               function (isConfirm) {
                   if (isConfirm) {
+                      var sub_name_split  = sub_name.split(" ");
+                      var sub_name_for_type = '';
+                      for (var i=0 ;i<sub_name_split.length;i++){sub_name_for_type = sub_name_for_type + sub_name_split[i] + '_'}
                       var data = {
                           "header" : {"type":type , "id" : id},
                           "data" : {
                             Subject_Name : sub_name,
                             Term : term,
-                            Lec_Name : lec_name_after_split
+                            Lec_Name : lec_name_after_split,
+                            sub_name_for_type : sub_name_for_type
                           }
                       };
                       $http.post('/delete_value_in_upload_log' , data).success(function(data){})

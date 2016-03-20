@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard รายวิชา</title>
+    <title>InformationStudents | Dashboard รายวิชา</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -79,6 +79,19 @@
         <div class="wrapper wrapper-content">
             <div class="container">
             <div class="row">
+              <div class="col-md-12">
+                  <div class="ibox float-e-margins">
+                      <div class="ibox-title">
+                          <span class="label label-success pull-right">คำอธิบายวิชา</span>
+                          <h5>Subject Description</h5>
+                      </div>
+                      <div class="ibox-content">
+                          <h1 class="no-margins">{{description}}</h1><br>
+                          <div class="stat-percent font-bold text-success"> <i class="fa fa-bolt"></i></div>
+                          <small>รายละเอียดวิชา</small>
+                      </div>
+                  </div>
+              </div>
                 <div class="col-md-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -150,6 +163,20 @@
                                     <h1 align = "left"> </i>TOTAL SCORE : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{score_count_all}}<h1>
                                     <h1 class="no-margins"></h1><br>
                                     <div class="stat-percent font-bold text-info"> <i class="fa fa-level-up"></i></div>
+                                    <small>คะแนนรวมทั้งหมด</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-info pull-right">ผลสำรวจ</span>
+                            <h5>เหตุผลส่วนใหญ่ที่คนเรียนวิชานี้</h5>
+                        </div>
+                        <div class="ibox-content">
+                                    <h2 align = "left"> เหตุผลคือ : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:green;">{{reason_count}}</span><h2>
+                                    <h1 class="no-margins"></h1><br>
+                                    <div class="stat-percent font-bold text-info"> {{max}}</div>
                                     <small>คะแนนรวมทั้งหมด</small>
                         </div>
                     </div>

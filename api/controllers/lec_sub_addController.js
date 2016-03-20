@@ -247,7 +247,21 @@ module.exports = {
       },
       function (error, response) {
       });
-      client.deleteByQuery({
+      client.delete({
+              index: 'log_follow',
+              type: data.data.sub_name_for_type +  data.data.Term + '_' + data.header.type
+
+      },
+      function (error, response) {
+      });
+      client.delete({
+              index: 'log_score',
+              type: data.data.sub_name_for_type +  data.data.Term + '_' + data.header.type
+
+      },
+      function (error, response) {
+      });
+      /*client.deleteByQuery({
               index: 'log_follow',
               body : {
                 query : {
@@ -278,7 +292,7 @@ module.exports = {
               }
       },
       function (error, response) {
-      });
+      });*/
       return res.ok();
     }
 

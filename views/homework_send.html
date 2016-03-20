@@ -262,7 +262,7 @@
     <td class="project-actions">
         <a class="btn btn-white btn-sm" ng-click="init_homework_send_value(item.data._source.Path_Upload , item.data._source.Description_Homework_Send , item.data._source.ID_NO ,
         item.data._source.Std_Name , item.data._source.Subject_Send_Homework , item.data._source.Date_Upload , item.data._source.Lec_Name_Upload , item.data._source.File_Name[0].filename)" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder"></i> View </a>
-        <a class="btn btn-white btn-sm" ng-click = "remove_click(item.data._id,item.data._source.ID_NO)"><i class="fa fa-trash"></i> Delete </a>
+        <a class="btn btn-white btn-sm" ng-click = "remove_click(item.data._id,item.data._source.ID_NO,item.data._source.File_Name[0].filename)"><i class="fa fa-trash"></i> Delete </a>
     </td>
   </div>
 </tr>

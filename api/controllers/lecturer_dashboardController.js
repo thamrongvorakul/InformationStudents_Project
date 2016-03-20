@@ -5,6 +5,9 @@ var    client = new elasticsearch.Client({
 
       });
 
+      var path = require('path');
+      var fs = require('fs');
+      var path_drive = 'D:/InformationStudents/';
 
 module.exports = {
 
@@ -77,12 +80,30 @@ module.exports = {
 
       remove_file_homework_send : function(req,res){
         var data = req.allParams();
+        var path_send_homework =path_drive + 'assets/FileUpload/'+data.lec_name_for_remove+'/'+data.sub_name_for_remove+'/'+data.term+'.'+data.year+'/send_homework/' + data.times_homework_select + '/';
+        var path_send_homework_tmp = path_drive +'.tmp/public/FileUpload/'+data.lec_name_for_remove+'/'+data.sub_name_for_remove+'/'+data.term+'.'+data.year+'/send_homework/' + data.times_homework_select +'/';
+
         client.delete({
                 index: 'send_homework',
                 type: 'send_homework',
                 id: data.id
-        },function(){});
-        return res.ok();
+        },function(response){
+          if (response.found === true){
+            fs.unlink(path_send_homework + data.files_name , function(err){
+              if (err) throw err;
+
+            });
+            fs.unlink(path_send_homework_tmp + data.files_name , function(err){
+                if (err) throw err;
+            });
+            return res.send('Good');
+          }
+          else if (response.found === false){
+            return res.send('Not Found File');
+          }
+
+        });
+
       },
       update_data_add_score_for_homework_send: function(req,res){
         var data  = req.allParams();

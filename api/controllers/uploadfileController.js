@@ -3,16 +3,12 @@ var    elasticsearch = require('elasticsearch');
 var    nodemailer    = require  ('nodemailer');
 
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200',
-          log : 'trace'
+          host: '161.246.60.104:9200'
       });
       var path = require('path');
       var fs = require('fs');
-      var folderuploadname;
-      var fileuploadname;
-      var feedname;
-      var scripter;
-      var typefile;
+
+
       var transporter = nodemailer.createTransport({
           service: 'Gmail',
           auth: {
@@ -62,21 +58,27 @@ module.exports = {
                 path_keep = path_send_homework;
                 path_keep_tmp = path_send_homework_tmp;
               }
-
-              fs.unlink(path_keep + data.files_name , function(err){
-                  if (err) throw err;
-              });
               client.delete({
                       index: 'upload_log',
                       type: data.path,
                       id: data.id
               },
               function (error, response) {
+                if (response.found === true){
+                  fs.unlink(path_keep + data.files_name , function(err){
+
+                  });
+                  fs.unlink(path_keep_tmp + data.files_name , function(err){
+                      if (err) throw err;
+                  });
+                  return res.send('Good');
+                }
+                else if (response.found === false)
+                {
+                  return res.send('Not Found File');
+                }
               });
-              fs.unlink(path_keep_tmp + data.files_name , function(err){
-                  if (err) throw err;
-              });
-              return res.ok();
+
             },
 
             upload: function  (req, res)
@@ -121,10 +123,7 @@ module.exports = {
                   },
                   function (err, files)
                     {
-                      var uploadLocation = path_keep + files[0].filename;
-                      var tempLocation = path_keep_tmp  + files[0].filename;
-                      console.log(tempLocation);
-                      fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
+
                          client.bulk({
                         body :[
                             { index : { _index: 'upload_log' , _type: data.path } },
@@ -147,7 +146,6 @@ module.exports = {
                       })
                       .then(function (response) {
                           var hits = response.hits.hits;
-                          console.log(data.type_for_followers)
 
                           for (var i=0 ;i <hits.length ; i++){
                             var mailOptions = {
@@ -158,14 +156,7 @@ module.exports = {
                                 + 'รายวิชา ' + data.subject_default + '(' + data.term + '/' + data.year + ') ' +'ได้มีการอัพเดทข้อมูลในหัวข้อ' + '\n'
                                 + data.path + 'โดย อาจารย์' + data.Lec_Name_Default
                             };
-                            console.log(mailOptions.text);
-                            transporter.sendMail(mailOptions, function(error, info){
-
-                                    if(error){
-                                        return console.log(error);
-                                    }
-                                    console.log('Message sent: ' + info.response);
-
+                            transporter.sendMail(mailOptions, function(error, info){  
                             });
                           }
                       })
@@ -174,7 +165,9 @@ module.exports = {
                             return res.negotiate(err);
                             return res.serverError(err);
                         }
-
+                        var uploadLocation = path_keep + files[0].filename;
+                        var tempLocation = path_keep_tmp  + files[0].filename;
+                        fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
                     });
 
 
@@ -222,14 +215,12 @@ module.exports = {
               },
               function (err, files)
                 {
-                  var uploadLocation = path_keep + files[0].filename;
-                  var tempLocation = path_keep_tmp  + files[0].filename;
-                  fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
+
                   client.bulk({
                     body :[
                         { index : { _index: 'send_homework' , _type: data.path } },
                         { Lec_Name_Upload : data.Lec_Name_Default ,Lec_Name : data.Lec_Name,Subject: data.subject,Subject_Name : data.subject_default, Std_Name : data.Std_Name,ID_NO : data.ID_NO,Term : data.term , Year : data.year , Path_Upload : path_keep ,
-                          Date_Upload : data.Date_Upload ,Description_Homework_Send : data.Description_Homework_Send ,Score:parseInt(data.Score),Status_Score_Add : parseInt(data.Status_Score_Add),Times_Homework_Select : data.Times_Homework_Select,Subject_Send_Homework : data.Subject_Send_Homework, File_Name : files},
+                          Date_Upload : data.Date_Upload ,Description_Homework_Send : data.Description_Homework_Send ,Score:parseInt(data.Score),Status_Score_Add : parseInt(data.Status_Score_Add),Status_Remove : data.Status_Remove,Times_Homework_Select : data.Times_Homework_Select,Subject_Send_Homework : data.Subject_Send_Homework, File_Name : files},
                     ]
                   }, function (error, response){
                       console.log(error);
@@ -240,6 +231,9 @@ module.exports = {
                         return res.negotiate(err);
                         return res.serverError(err);
                     }
+                    var uploadLocation = path_keep + files[0].filename;
+                    var tempLocation = path_keep_tmp  + files[0].filename;
+                    fs.createReadStream(uploadLocation).pipe(fs.createWriteStream(tempLocation));
                 });
                 return res.send('Response OK');
             },

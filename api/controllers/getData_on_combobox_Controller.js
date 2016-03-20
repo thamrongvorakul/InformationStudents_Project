@@ -1,9 +1,4 @@
-/**
- * GetdataController
- *
- * @description :: Server-side logic for managing Getdatas
- * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
- */
+
  var    elasticsearch = require('elasticsearch');
  var    client = new elasticsearch.Client({
            host: '161.246.60.104:9200'

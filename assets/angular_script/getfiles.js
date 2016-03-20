@@ -78,16 +78,23 @@ app.controller('getfilesHomeworkController', ['$scope','$rootScope','Upload', '$
                       x.remove(index);
                       $http.post('/remove_files' , data2)
                       .success(function(data ,status,headers,config){
-                        SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้ว", "success");
-                        setTimeout(function(){
-                            location.reload();
-                        }, 1000);
+                        if (data === 'Good'){
+                          SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้วโปรดรอ. . .", "success");
+
+                          setTimeout(function(){
+                              location.reload();
+                          }, 2500);
+                        }
+                        else if (data === 'Not Found File'){
+                          SweetAlert.swal("ล้มเหลว", "ไม่มีไฟล์ที่เลือก", "error");
+                        }
+
                       })
                       .error(function(data,status,headers,config){
                       });
                   })
                 } else {
-                    SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    SweetAlert.swal("Cancelled", "ยกเลิกการลบไฟล์", "error");
                 }
             });
     };
@@ -234,16 +241,22 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
                       x.remove(index);
                       $http.post('/remove_files' , data2)
                       .success(function(data ,status,headers,config){
-                        SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้ว", "success");
-                        setTimeout(function(){
-                            location.reload();
-                        }, 1000);
+                        if (data === 'Good'){
+                          SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้วโปรดรอ. . .", "success");
+
+                          setTimeout(function(){
+                              location.reload();
+                          }, 2500);
+                        }
+                        else if (data === 'Not Found File'){
+                          SweetAlert.swal("ล้มเหลว", "ไม่มีไฟล์ที่เลือก", "error");
+                        }
                       })
                       .error(function(data,status,headers,config){
                       });
                   })
                 } else {
-                    SweetAlert.swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    SweetAlert.swal("Cancelled", "ยกเลิกการลบไฟล์", "error");
                 }
             });
       }
@@ -305,8 +318,8 @@ app.controller('getfilesDocumentsController', ['$scope','$rootScope','Upload', '
         };
 
   }]);
-app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , '$sce' ,'localStorageService' ,
-      function ( $scope, $rootScope,Upload, $http , FileUploader , $sce , localStorageService )
+app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http', 'FileUploader' , '$sce' ,'localStorageService' , 'SweetAlert',
+      function ( $scope, $rootScope,Upload, $http , FileUploader , $sce , localStorageService , SweetAlert)
       {
         var todoList = this;
         $scope.name_of_file = '';
@@ -341,22 +354,38 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
             }
         });
         $scope.news_message = '';
-
         $scope.remove_click = function (type,id){
-          var data = {
-            "header" : {
-              index : 'news',
-              type : type,
-              id : id
-            }
-          }
-          $http.post('/remove_news' , data)
-          .success(function(){
-            alert("ลบกล่องข้อความเรียบร้อย !!");
-            location.reload();
-          })
-
-        };
+          SweetAlert.swal({
+                  title: "ยืนยันที่จะลบวิชา?",
+                  text: files_name,
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#DD6B55",
+                  confirmButtonText: "ตกลง",
+                  cancelButtonText: "ยกเลิก",
+                  closeOnConfirm: false,
+                  closeOnCancel: false },
+              function (isConfirm) {
+                  if (isConfirm) {
+                    var data = {
+                      "header" : {
+                        index : 'news',
+                        type : type,
+                        id : id
+                      }
+                    }
+                    $http.post('/remove_news' , data)
+                    .success(function(){
+                      SweetAlert.swal("ลบกล่องข้อความที่เลือกเรียบร้อยแล้ว!", "โปรดรอ. . .", "success");
+                      setTimeout(function(){
+                          location.reload();
+                      }, 2500);
+                    })
+                  } else {
+                      SweetAlert.swal("Cancelled", "ยกเลิกการลบไฟล์", "error");
+                  }
+              });
+        }
 
         $scope.submit_news_message = function (){
           var sub_name_split_for_log = localStorageService.get('subject_name').split(" ");
@@ -447,7 +476,6 @@ app.controller('getfilesNewsController', ['$scope','$rootScope','Upload', '$http
 
             $http.post('/insert_news_data' , Json_data)
             .success (function (){
-                console.log("PUT NEWS's data to Elasticsearch success");
             })
 
 
@@ -565,10 +593,16 @@ app.controller('getfilesScoreController', ['$scope','$rootScope','Upload', '$htt
                           x.remove(index);
                           $http.post('/remove_files' , data2)
                           .success(function(data ,status,headers,config){
-                            SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้ว", "success");
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1000);
+                            if (data === 'Good'){
+                              SweetAlert.swal("ลบไฟล์ที่เลือกเรียบร้อยแล้ว!", "ไฟล์" + files_name + "ได้ทำการลบเรียบร้อยแล้วโปรดรอ. . .", "success");
+
+                              setTimeout(function(){
+                                  location.reload();
+                              }, 2500);
+                            }
+                            else if (data === 'Not Found File'){
+                              SweetAlert.swal("ล้มเหลว", "ไม่มีไฟล์ที่เลือก", "error");
+                            }
                           })
                           .error(function(data,status,headers,config){
                           });
