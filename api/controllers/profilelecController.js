@@ -43,7 +43,6 @@ module.exports = {
           })
           .then (function(res){
             var hits = res.hits.hits;
-            console.log(hits.length);
             response.send(hits);
           })
         }

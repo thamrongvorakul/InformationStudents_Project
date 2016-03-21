@@ -63,24 +63,3 @@ module.exports = {
           }
 
 };
-
-
-/*var education_arr = ["วท.บ. วิทยาการคอมพิวเตอร์ (ม.ศิลปากร)" ,"วท.ม. วิทยาการคอมพิวเตอร์และเทคโนโลยีสารสนเทศ (สถาบันเทคโนฯ ลาดกระบัง)"];
-var research_arr = ["Object-Oriented Technology","Component-Based Technology","Software Development",
-                      "ปฏิบัติการ การโปรแกรมเบื้องต้น","XML Programming","Web Programming"];
-var subject_holding_arr = [  "Information Systems",  "Web Programming","Software Design","Introduce to Microcomputer"];*/
-/*  var x = [];
-var y = [];
-var z = [];
-client.bulk({
-  body : [
-      { index:  { _index: 'teacher' , _type:'data' , _id: dataJson.Title + dataJson.FName +"_"+ dataJson.LName} },
-      {
-          Name: dataJson.Title + dataJson.FName + " " +dataJson.LName ,position : " " ,education: x,research:y
-        , subject_holding : z , aboutme : {room:" " , homepage : " " , email : " " , tel_no: " "}
-        , path_file_pic_main: " " , path_file_pic_icon :" "
-      }
-  ]
-}, function (error, response){
-    console.log(error);
-});*/

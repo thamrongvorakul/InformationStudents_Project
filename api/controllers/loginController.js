@@ -72,7 +72,6 @@ module.exports = {
                   },
                   // OK.
                   success: function(encryptedPassword) {
-                    console.log(encryptedPassword);
                     User.update({email:data.data.email_id},{password:data.data.new_password} ,{encryptedPassword:encryptedPassword})
                     .exec(function afterwards(err, updated)
                     {

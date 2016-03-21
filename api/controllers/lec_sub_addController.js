@@ -261,38 +261,7 @@ module.exports = {
       },
       function (error, response) {
       });
-      /*client.deleteByQuery({
-              index: 'log_follow',
-              body : {
-                query : {
-                  bool : {
-                    must : [
-                      {match_phrase : {Subject_Name : data.data.Subject_Name}},
-                      {match_phrase : {Subject_Term : data.data.Term}},
-                      {match_phrase : {Subject_Year : data.header.type}}
-                    ]
-                  }
-                }
-              }
-      },
-      function (error, response) {
-      });
-      client.deleteByQuery({
-              index: 'send_homework',
-              body : {
-                query : {
-                  bool : {
-                    must : [
-                      {match_phrase : {Subject_Name : data.data.Subject_Name}},
-                      {match_phrase : {Term : data.data.Term}},
-                      {match_phrase : {Year : data.header.type}}
-                    ]
-                  }
-                }
-              }
-      },
-      function (error, response) {
-      });*/
+    
       return res.ok();
     }
 

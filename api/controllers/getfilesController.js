@@ -110,10 +110,7 @@ module.exports = {
                       console.log(mailOptions.text);
                       transporter.sendMail(mailOptions, function(error, info){
 
-                              if(error){
-                                  return console.log(error);
-                              }
-                              console.log('Message sent: ' + info.response);
+
 
                       });
                     }
@@ -150,13 +147,8 @@ module.exports = {
                           + 'รายวิชา ' + dataJson.data.Subject_Name_Default + '(' + dataJson.data.Subject_Term + ') ' +'ได้มีการอัพเดทข้อมูลในหัวข้อ' + '\n'
                           + 'อัพเดทข่าวสาร ' + 'โดย อาจารย์' + dataJson.data.Lec_Name
                       };
-                      console.log(mailOptions.text);
                       transporter.sendMail(mailOptions, function(error, info){
 
-                              if(error){
-                                  return console.log(error);
-                              }
-                              console.log('Message sent: ' + info.response);
 
                       });
                     }

@@ -1,7 +1,8 @@
 'use strict';
 var    elasticsearch = require('elasticsearch');
 var    client = new elasticsearch.Client({
-          host: '161.246.60.104:9200'
+          host: '161.246.60.104:9200',
+          log : 'trace'
       });
       var path = require('path');
       var fs = require('fs');
@@ -153,7 +154,17 @@ module.exports = {
 
                 });
           return res.send('Response OK');
-            }
+        },
+
+        remove_lecturer_profile : function(req,res){
+          var data = req.allParams();
+          client.delete({
+                  index: 'teacher',
+                  type: 'data',
+                  id: data.id
+          },function(){});
+          return res.ok();
+        }
 
 
 

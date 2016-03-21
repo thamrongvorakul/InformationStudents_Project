@@ -25,7 +25,7 @@ angular.module('create_profile_lecturer', ['ngFileUpload' ,'angularFileUpload','
     success(function(data){
       $scope.teacher_arr = [];
       for (var i=0 ; i<data.length ; i++)
-      { 
+      {
         $scope.teacher_arr.push({data : data[i]});
       }
       $scope.count_no_read = data.length;
@@ -54,7 +54,11 @@ angular.module('create_profile_lecturer', ['ngFileUpload' ,'angularFileUpload','
     $scope.test_click = function (){
       console.log(JSON.stringify($scope.education_arr));
     }
-
+    $scope.remove_teacher_click = function(id){
+      $http.post('/remove_lecturer_profile' , {id :id}).success(function(data){
+        location.reload();
+      })
+    }
 
     var uploader = $scope.uploader = new FileUploader({
         url: '/lecturer_profile_upload'

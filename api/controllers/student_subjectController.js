@@ -84,7 +84,6 @@ module.exports = {
           },
           insert_data_score : function (req,res){
             var data = req.allParams();
-            console.log(data.Reason);
             client.bulk({
               body :[
                   { index : { _index: 'log_score' , _type:data.subject_name + data.subject_term + "_" +data.subject_year} },

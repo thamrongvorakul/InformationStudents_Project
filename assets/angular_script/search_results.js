@@ -8,6 +8,8 @@ app.controller('search_resultsController', ['$scope','$rootScope', '$http' ,'loc
     $scope.fullname_user = localStorageService.get('Fullname_User');
     $scope.keyword_search = '';
     $scope.search_click = function (){
+      localStorageService.set('keyword_search' , $scope.keyword_search);
+      $scope.keyword = localStorageService.get('keyword_search');
       $http.post('/search_data_by_keyword_subject' , {keyword : $scope.keyword})
       .success(function(data){
         $scope.search_results_arr = [];
